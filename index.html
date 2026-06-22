@@ -1486,6 +1486,7 @@
   </a>
 </section>
 
+
 <!-- ════════════════════════════════
      04  CASE 1  INTRO
 ════════════════════════════════ -->
@@ -1497,26 +1498,21 @@
   <div class="case-accent reveal"></div>
   <p class="case-num reveal reveal-d1">#1</p>
   <p class="case-eyebrow reveal reveal-d2">Case Study</p>
-  <h2 class="case-title reveal reveal-d3">개발 PM으로서,<br>빌드 구조를 공부하다</h2>
+  <h2 class="case-title reveal reveal-d3">BNS NEO<br>기술 파이프라인 가이드</h2>
   <p class="case-sub reveal reveal-d4">
-    블레이드 &amp; 소울 NEO 개발 PM으로 재직하며 직접 부딪힌 빌드·배포 파이프라인.<br>
-    매일 쓰는 시스템인데 정확히 어떻게 돌아가는지 몰랐다는 사실이 불편했습니다.<br>
-    그래서 Perforce부터 Jenkins, CheckerWeb, 배포까지 직접 정리해봤습니다.
+    개발 PM으로 재직하며 공부한, 현행 블레이드 &amp; 소울의 빌드·배포 체계를 정리했습니다.<br>
+    기획 확정 단계부터 소스 관리, 빌드, 검증, 배포까지의 전 과정을 담았습니다.
   </p>
 </section>
 
 <!-- ════════════════════════════════
-     05  PIPELINE OVERVIEW
+     05  전체 흐름 개요
 ════════════════════════════════ -->
 <section class="bg-white">
-  <p class="eyebrow eyebrow--light reveal">The Pipeline</p>
-  <h2 class="headline headline--light reveal reveal-d1">BNS NEO 빌드·배포<br>전체 파이프라인</h2>
-  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:660px;">
-    개발 PM으로 재직하며 공부한, 현행 블레이드 &amp; 소울의 빌드·배포 체계를 정리했습니다.<br>
-    새로운 환경에서도 이와 같은 방식으로 구조를 파악하고, 빠르게 이해하기 위해 노력하겠습니다.
-  </p>
+  <p class="eyebrow eyebrow--light reveal">Overview</p>
+  <h2 class="headline headline--light reveal reveal-d1">전체 흐름 개요</h2>
 
-  <div class="pipeline-flow reveal reveal-d3">
+  <div class="pipeline-flow reveal reveal-d2">
     <div class="pipe-node">
       <span class="pipe-node__num">01</span>
       <span class="pipe-node__name">Confluence<br>+ Jira</span>
@@ -1531,8 +1527,8 @@
     <div class="pipe-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
     <div class="pipe-node pipe-node--hl">
       <span class="pipe-node__num">03</span>
-      <span class="pipe-node__name">Jenkins<br>Build</span>
-      <span class="pipe-node__sub">5카테고리 빌드<br>170 노드</span>
+      <span class="pipe-node__name">Jenkins<br>빌드</span>
+      <span class="pipe-node__sub">5카테고리 자동 빌드<br>170 노드</span>
     </div>
     <div class="pipe-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
     <div class="pipe-node">
@@ -1548,59 +1544,28 @@
     </div>
   </div>
 
-  <div class="stats-row reveal reveal-d4">
-    <div class="stat">
-      <p class="stat__num">5</p>
-      <p class="stat__label stat__label--light">핵심 시스템</p>
-    </div>
-    <div class="stat">
-      <p class="stat__num">170<span style="font-size:.55em;">+</span></p>
-      <p class="stat__label stat__label--light">Jenkins 노드</p>
-    </div>
-    <div class="stat">
-      <p class="stat__num">5</p>
-      <p class="stat__label stat__label--light">빌드 카테고리</p>
-    </div>
-    <div class="stat">
-      <p class="stat__num">4</p>
-      <p class="stat__label stat__label--light">글로벌 퍼블리셔</p>
-    </div>
-  </div>
-
-  <p class="sec-label sec-label--light reveal reveal-d5">등장하는 시스템</p>
-  <div class="tech-table-wrap reveal reveal-d5">
+  <p class="sec-label sec-label--light reveal">등장하는 시스템</p>
+  <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
-      <thead><tr>
-        <th>시스템</th><th>역할</th><th>비고</th>
-      </tr></thead>
+      <thead><tr><th>시스템</th><th>역할</th><th>비고</th></tr></thead>
       <tbody>
         <tr><td><strong>Perforce</strong></td><td>소스 코드, 게임 데이터, 그래픽 에셋 버전 관리</td><td>NC·ZNCS·ZTX 공통 메인라인</td></tr>
         <tr><td><strong>Jenkins</strong></td><td>빌드 자동화 및 배포 실행</td><td>170 노드, 타이머 트리거 기반</td></tr>
-        <tr><td><strong>CheckerWeb</strong></td><td>빌드 결과 유효성 검증 및 이력 관리</td><td>Pack_Product 완료 후 자동 레코드 등록</td></tr>
+        <tr><td><strong>CheckerWeb</strong></td><td>빌드 결과 유효성 검증 및 이력 관리</td><td>Pack_Product 완료 후 자동 등록</td></tr>
         <tr><td><strong>StreamInfoWeb</strong></td><td>스트림별 빌드 대상 및 퍼블리셔 설정 관리</td><td>Jenkins가 매 빌드 시 API 조회</td></tr>
         <tr><td><strong>Jira / Confluence</strong></td><td>태스크 및 배포 이력 관리, 스펙 문서</td><td>Live 배포 시 배포 티켓 생성</td></tr>
       </tbody>
     </table>
   </div>
 
-  <p class="sec-label sec-label--light reveal">ZNCS와 ZNCG — 두 서비스의 코드명</p>
-  <div class="tech-table-wrap reveal reveal-d1">
-    <table class="tech-table">
-      <thead><tr>
-        <th>코드명</th><th>서비스</th><th>스트림 접두사</th><th>퍼블리셔</th>
-      </tr></thead>
-      <tbody>
-        <tr><td><code>ZNCS</code></td><td>BNS NEO 한국</td><td><code>bns_zncs_10XXX</code></td><td>NC Korea</td></tr>
-        <tr><td><code>ZNCG</code></td><td>BNS NEO 글로벌 (ZNCS에서 파생)</td><td><code>bns_zncg_10XXX</code></td><td>NeoNCT · NeoNCA · NeoINV · NeoTX</td></tr>
-      </tbody>
-    </table>
-  </div>
-
+  <p class="sec-label sec-label--light reveal">ZNCS와 ZNCG</p>
+  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:680px;">
+    <strong>ZNCS</strong>는 BNS NEO 한국 서비스의 코드명입니다. 배포 버전 스트림에서는 <code>bns_zncs_10XXX</code> 형태로 표기되며, 개발 메인라인은 NC·ZTX와 함께 공유 스트림 <code>bns_nc_souldev</code>를 사용합니다.<br><br>
+    <strong>ZNCG</strong>는 ZNCS에서 파생된 글로벌 NEO의 코드명입니다. 코드베이스는 하나지만 서비스 지역에 따라 퍼블리셔가 4개로 나뉩니다.
+  </p>
   <div class="tech-table-wrap reveal reveal-d2">
     <table class="tech-table">
-      <thead><tr>
-        <th>퍼블리셔</th><th>서비스 지역</th><th>현재 스트림</th><th>배포 서버</th>
-      </tr></thead>
+      <thead><tr><th>퍼블리셔 코드</th><th>서비스 지역</th><th>현재 스트림</th><th>배포 서버</th></tr></thead>
       <tbody>
         <tr><td><code>NeoNCT</code></td><td>대만 (NCTaiwan)</td><td><code>bns_zncg_10141</code></td><td><code>blznct01</code></td></tr>
         <tr><td><code>NeoNCA</code></td><td>북미·유럽 (NCWest)</td><td><code>bns_zncg_10141</code></td><td><code>blznca01</code></td></tr>
@@ -1608,31 +1573,47 @@
         <tr><td><code>NeoTX</code></td><td>중국 (Tencent)</td><td><code>bns_zncg_10131</code></td><td><code>blzntx01</code></td></tr>
       </tbody>
     </table>
-    <p class="tech-table-caption">퍼블리셔마다 다른 스트림 번호를 사용하는 것은 패치 적용 일정이 다르기 때문이며 정상 상태입니다.</p>
+  </div>
+
+  <div class="stats-row reveal reveal-d3">
+    <div class="stat"><p class="stat__num">5</p><p class="stat__label stat__label--light">핵심 시스템</p></div>
+    <div class="stat"><p class="stat__num">170<span style="font-size:.55em;">+</span></p><p class="stat__label stat__label--light">Jenkins 노드</p></div>
+    <div class="stat"><p class="stat__num">5</p><p class="stat__label stat__label--light">빌드 카테고리</p></div>
+    <div class="stat"><p class="stat__num">4</p><p class="stat__label stat__label--light">글로벌 퍼블리셔</p></div>
   </div>
 </section>
 
 <!-- ════════════════════════════════
-     06  PERFORCE
+     06  작업 투입 + 소스 관리 구조 (Perforce)
 ════════════════════════════════ -->
 <section class="bg-parchment">
-  <p class="eyebrow eyebrow--light reveal">Step 01 — 작업 투입 &amp; 소스 관리</p>
-  <h2 class="headline headline--light reveal reveal-d1">Perforce 스트림 구조,<br>직접 파악해봤습니다</h2>
-  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:660px;">
-    git의 브랜치 개념으로 접근했다가 upstream 방향이 반대임을 뒤늦게 알았습니다.<br>
-    복제 출처 방향과 Perforce parent(머지 전파) 방향이 다르다는 것을 도식화하면서 이해했습니다.
+  <p class="eyebrow eyebrow--light reveal">Step 01</p>
+  <h2 class="headline headline--light reveal reveal-d1">작업 투입 — 빌드의 재료가<br>만들어지는 과정</h2>
+  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:680px;">
+    Confluence에서 스펙이 확정되고 Jira 태스크가 만들어지면, 각 직군은 아래와 같이 파일을 Perforce에 올립니다(submit). 이것이 빌드에 들어가는 실제 작업의 첫 단위입니다.
   </p>
 
-  <p class="sec-label sec-label--light reveal">모든 직군의 작업 투입 경로</p>
-  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:660px;">
+  <p class="sec-label sec-label--light reveal">모든 직군의 작업 투입 위치</p>
+  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:680px;">
     프로그래머·기획자·아티스트 <strong>모두</strong> <code>bns_nc_souldev</code> 스트림 하나에 submit합니다.<br>
-    NC, ZNCS, ZTX 세 퍼블리셔가 동일한 코드베이스를 공유합니다.
+    이 하나의 Perforce 스트림이 NC, ZNCS, ZTX 세 퍼블리셔의 공통 코드베이스입니다.
   </p>
-  <div class="tech-table-wrap reveal reveal-d2">
+  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:680px;margin-top:12px;">
+    Jenkins와 StreamInfoWeb에서는 같은 스트림을 퍼블리셔별로 구별하기 위해 논리적 이름을 붙여 사용합니다. 세 이름은 동일한 Perforce 경로를 가리킵니다.
+  </p>
+  <div class="tech-table-wrap reveal reveal-d3">
     <table class="tech-table">
-      <thead><tr>
-        <th>경로</th><th>직군</th><th>파일 종류</th><th>설명</th>
-      </tr></thead>
+      <thead><tr><th>Jenkins/StreamInfoWeb 논리명</th><th>실제 Perforce 경로</th><th>담당 퍼블리셔</th></tr></thead>
+      <tbody>
+        <tr><td><code>bns_nc_souldev</code></td><td><code>//stream/bns_nc_souldev</code></td><td>NC Korea</td></tr>
+        <tr><td><code>bns_zncs_souldev</code></td><td><code>//stream/bns_nc_souldev</code></td><td>ZNCS (한국 NEO)</td></tr>
+        <tr><td><code>bns_ztx_souldev</code></td><td><code>//stream/bns_nc_souldev</code></td><td>ZTX (중국)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tech-table-wrap reveal reveal-d4" style="margin-top:8px;">
+    <table class="tech-table">
+      <thead><tr><th>경로</th><th>직군</th><th>파일 종류</th><th>설명</th></tr></thead>
       <tbody>
         <tr><td><code>.../Program/client/</code></td><td>프로그래머</td><td><code>.cpp</code>, <code>.h</code></td><td>게임 클라이언트 로직</td></tr>
         <tr><td><code>.../Program/Server/</code></td><td>프로그래머</td><td><code>.cpp</code>, <code>.h</code></td><td>게임 서버 로직</td></tr>
@@ -1641,25 +1622,23 @@
         <tr><td><code>.../GameDesign/</code></td><td>기획자</td><td><code>.xml</code>, <code>.bin</code></td><td>캐릭터 스탯, 스킬 수치, 퀘스트 등</td></tr>
       </tbody>
     </table>
-    <p class="tech-table-caption">코드와 데이터가 같은 스트림 안에 있기 때문에, 배포 버전 스트림 분기 시 코드와 데이터가 함께 묶입니다. 이것이 Jenkins 5개 빌드 카테고리가 같은 폴더 아래 묶인 이유입니다.</p>
+    <p class="tech-table-caption">코드와 데이터가 같은 스트림 안에 있으므로, 배포 버전 스트림이 분기될 때 코드와 데이터가 함께 묶입니다. 이것이 Jenkins 5개 빌드 카테고리가 같은 폴더 아래에 있는 이유입니다.</p>
   </div>
 
-  <p class="sec-label sec-label--light reveal">Jenkins 논리명 vs 실제 Perforce 경로</p>
-  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:660px;">
-    Jenkins와 StreamInfoWeb은 퍼블리셔별 구별을 위해 논리적 이름을 따로 붙여 사용합니다.<br>
-    세 이름이 동일한 Perforce 경로를 가리키며, 빌드 시 환경 설정만 다르게 적용됩니다.
+  <p class="sec-label sec-label--light reveal">소스 관리 구조 — Perforce 스트림</p>
+  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:680px;">
+    Perforce의 스트림(Stream)은 Git의 브랜치와 비슷한 개념입니다. 다른 점은 스트림이 <strong>계층 구조(parent-child)</strong>를 가지며, 하위 스트림의 변경사항을 상위 스트림으로 올리는 것을 <strong>업스트림(upstream)</strong>이라 합니다.<br><br>
+    스트림을 이해할 때 두 가지 개념이 헷갈릴 수 있습니다. <strong>복제 출처</strong>(어느 스트림을 원본으로 복사했는가)와 <strong>Perforce parent</strong>(변경사항이 어느 방향으로 전파되는가)는 방향이 반대입니다.
   </p>
   <div class="tech-table-wrap reveal reveal-d2">
     <table class="tech-table">
-      <thead><tr>
-        <th>Jenkins/StreamInfoWeb 논리명</th><th>실제 Perforce 경로</th><th>담당 퍼블리셔</th>
-      </tr></thead>
+      <thead><tr><th>개념</th><th>의미</th><th>확인 위치</th></tr></thead>
       <tbody>
-        <tr><td><code>bns_nc_souldev</code></td><td><code>//stream/bns_nc_souldev</code></td><td>NC Korea</td></tr>
-        <tr><td><code>bns_zncs_souldev</code></td><td><code>//stream/bns_nc_souldev</code></td><td>ZNCS (한국 NEO) — 동일 경로</td></tr>
-        <tr><td><code>bns_ztx_souldev</code></td><td><code>//stream/bns_nc_souldev</code></td><td>ZTX (중국) — 동일 경로</td></tr>
+        <tr><td><strong>복제 출처</strong></td><td>어느 스트림을 원본으로 복사해서 만들었는가</td><td>StreamInfoWeb <code>parent_name</code> 필드</td></tr>
+        <tr><td><strong>Perforce parent</strong></td><td>이 스트림의 변경사항이 어느 스트림 방향으로 전파되는가</td><td>Perforce <code>p4 stream -o</code></td></tr>
       </tbody>
     </table>
+    <p class="tech-table-caption">예: 10200 → 10201 순서로 복제됐지만, Perforce에서는 10201의 parent = 10202, 10202의 parent = 10203, 10203의 parent = souldev 방향으로 변경사항이 전파됩니다.</p>
   </div>
 
   <p class="sec-label sec-label--light reveal">스트림 계층 구조 — 복제 출처 기준</p>
@@ -1668,94 +1647,81 @@
 │
 │  ① 한 달에 한 번, souldev에서 복제 → 월 메인 스트림 생성
 │
-├─ <strong>bns_zncs_10200</strong>  <em>[월 메인, souldev 복제, 현재 Retired]</em>
+├─ <strong>bns_zncs_10200</strong>  <em>[월 메인 / souldev 복제 / 현재 Retired]</em>
 │   │
 │   │  ② 그 다음 주마다 이전 스트림에서 복제 → 주간 스트림 생성
 │   │
-│   ├─ <strong>bns_zncs_10201</strong>  <em>[주간 1, 10200 복제]  ← QA_3_Live</em>
-│   │   └─ <strong>bns_zncs_10202</strong>  <em>[주간 2, 10201 복제]  ← QA_2_NextLive</em>
-│   │       └─ <strong>bns_zncs_10203</strong>  <em>[주간 3, 10202 복제]  ← QA_1_RESERVE (최신)</em>
+│   ├─ <strong>bns_zncs_10201</strong>  <em>[주간 1 / 10200 복제] ← QA_3_Live (현행 라이브)</em>
+│   │   └─ <strong>bns_zncs_10202</strong>  <em>[주간 2 / 10201 복제] ← QA_2_NextLive</em>
+│   │       └─ <strong>bns_zncs_10203</strong>  <em>[주간 3 / 10202 복제] ← QA_1_RESERVE (최신)</em>
 │   │
-│   └─ <em>(다음 달: bns_zncs_10210 → souldev 재복제)</em>
+│   └─ <em>(다음 달: bns_zncs_10210 생성 → souldev에서 재복제)</em>
 │
-└─ <strong>bns_nc_feature_XXXXX</strong>  <em>[임시 피처 스트림, souldev 복제]</em>
+└─ <strong>bns_nc_feature_XXXXX</strong>  <em>[임시 피처 스트림 / souldev 복제]</em>
         <em>기능 개발 완료 후 souldev로 머지, 이후 Retire</em>
 
-<em>※ Perforce upstream 머지 방향 (변경사항 전파 방향):</em>
+<em>※ Perforce upstream — 변경사항 전파 방향 (복제 방향과 반대):</em>
    <strong>bns_zncs_10201 → 10202 → 10203 → bns_nc_souldev</strong></pre>
-  </div>
-  <div class="info-block reveal reveal-d2">
-    <strong>복제 출처와 Perforce parent는 방향이 반대입니다.</strong><br>
-    스트림은 10200 → 10201 → 10202 순서로 복제되었지만, Perforce parent는 반대 방향(10201의 parent = 10202)입니다. 즉, 10201에서 발생한 버그 픽스는 10202 → 10203 → souldev 방향으로 upstream 머지가 전파됩니다. 처음 접했을 때 이 방향이 헷갈렸고, 도식화를 통해 이해했습니다.
   </div>
 
   <p class="sec-label sec-label--light reveal">스트림 번호 체계</p>
   <div class="process-list process-list--wide reveal reveal-d1">
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">끝자리 0</span>
-      <span class="process-t process-t--light"><strong>월 메인 스트림</strong> — <code>bns_zncs_10200</code>, <code>bns_zncs_10210</code> 처럼 souldev에서 한 달에 한 번 복제. 다음 달 업데이트 시 10자리 순번이 올라감</span>
+      <span class="process-t process-t--light"><strong>월 메인 스트림</strong> — <code>bns_zncs_10200</code>, <code>bns_zncs_10210</code> 처럼 souldev에서 한 달에 한 번 복제. 다음 달 업데이트 시 10단위 순번이 올라감</span>
     </div>
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">끝자리 1~N</span>
-      <span class="process-t process-t--light"><strong>주간 스트림</strong> — <code>bns_zncs_10201</code>, <code>10202</code>, <code>10203</code> 처럼 이전 스트림에서 주 단위로 복제. 현재 활성 버전 3개 운용 중</span>
+      <span class="process-t process-t--light"><strong>주간 스트림</strong> — <code>bns_zncs_10201</code>, <code>10202</code>, <code>10203</code> 처럼 이전 스트림에서 주 단위로 복제</span>
     </div>
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">ZNCG</span>
-      <span class="process-t process-t--light"><strong>ZNCS 월 메인 기반 복제</strong> — ZNCG는 ZNCS 월 메인 스트림을 기반으로 다음 달에 분기 생성. 퍼블리셔마다 분기 시점이 달라 현재 <code>10141</code>(NeoNCT·NCA) / <code>10131</code>(NeoTX) / <code>10111</code>(NeoINV) 으로 각기 다른 버전을 사용</span>
+      <span class="process-t process-t--light"><strong>ZNCS 월 메인 기반 복제</strong> — ZNCG는 ZNCS 월 메인 스트림을 기반으로 다음 달에 분기 생성. 퍼블리셔마다 분기 시점이 달라 현재 <code>10141</code>(NeoNCT·NCA) / <code>10131</code>(NeoTX) / <code>10111</code>(NeoINV)으로 각기 다른 버전 사용</span>
     </div>
     <div class="process-item process-item--light">
-      <span class="process-n process-n--light">피처</span>
-      <span class="process-t process-t--light"><strong>임시 feature 스트림</strong> — 규모가 큰 기능은 <code>bns_nc_feature_20347</code>, <code>20354</code>~<code>20360</code> 같이 별도 스트림에서 작업. 완료 후 souldev 머지 → Retire</span>
+      <span class="process-n process-n--light">feature</span>
+      <span class="process-t process-t--light"><strong>임시 피처 스트림</strong> — 규모가 큰 기능은 <code>bns_nc_feature_20347</code>, <code>20354~20360</code>처럼 별도 스트림에서 작업. 완료 후 souldev 머지 → Retire</span>
     </div>
   </div>
 </section>
 
 <!-- ════════════════════════════════
-     07  JENKINS
+     07  빌드 — Jenkins
 ════════════════════════════════ -->
 <section class="bg-dark">
   <div class="glow glow--blue glow--tl"></div>
   <div class="glow glow--purple glow--br"></div>
 
-  <p class="eyebrow eyebrow--dark reveal">Step 02 — 빌드</p>
-  <h2 class="headline headline--dark reveal reveal-d1">Jenkins의 BNS 활용 방식,<br>배우면서 정리했습니다</h2>
+  <p class="eyebrow eyebrow--dark reveal">Step 02</p>
+  <h2 class="headline headline--dark reveal reveal-d1">빌드 — Jenkins</h2>
+  <p class="body body--dark reveal reveal-d2" style="text-align:center;max-width:680px;">
+    Jenkins는 2011년 Oracle이 관리하던 Hudson 프로젝트에서 fork된 오픈소스 자동화 서버입니다. 원래는 "코드가 올라오면 자동으로 빌드·테스트·배포"하기 위해 만들어졌지만, BNS에서는 이와 다른 방식으로 사용합니다.
+  </p>
 
-  <div class="ba-grid reveal reveal-d2" style="max-width:900px;">
-    <div class="ba-card ba-before">
-      <span class="ba-icon">💡</span>
-      <span class="ba-tag ba-tag--before">일반적으로 알려진 Jenkins</span>
-      <p class="ba-text ba-text--before">코드 커밋이 트리거 → 자동 빌드·테스트·배포. Job 설정에 빌드 대상과 설정이 하드코딩. 파이프라인 스크립트는 Jenkins 내부에 저장. 빌드 서버와 배포 대상 서버는 분리.</p>
-    </div>
-    <div class="ba-card ba-after">
-      <span class="ba-icon">📖</span>
-      <span class="ba-tag ba-tag--after">BNS에서의 실제 사용</span>
-      <p class="ba-text ba-text--after">타이머 트리거(매일 02:00). StreamInfoWeb API를 실시간 조회하여 빌드 대상을 동적 결정. 파이프라인 스크립트는 Perforce에 저장 → 매 빌드마다 최신 버전 로드. 게임 서버 자체가 Jenkins Agent로 등록되어 배포 Job이 직접 실행.</p>
-      <p class="ba-result">→ 단순 CI가 아닌 게임 서비스 전체 인프라 오케스트레이터</p>
-    </div>
-  </div>
-
-  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d3" style="margin-top:40px;">
+  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d3">
     <table class="tech-table tech-table--dark">
-      <thead><tr>
-        <th>항목</th><th>Jenkins 원래 목적</th><th>BNS에서의 실제 사용</th>
-      </tr></thead>
+      <thead><tr><th>항목</th><th>Jenkins 원래 목적</th><th>BNS에서의 실제 사용</th></tr></thead>
       <tbody>
-        <tr><td><strong style="color:#fff;">빌드 트리거</strong></td><td>코드 커밋</td><td>타이머 (매일 02:00). 변경 없으면 "Build is Skipped"</td></tr>
-        <tr><td><strong style="color:#fff;">빌드 대상 결정</strong></td><td>Job 설정에 하드코딩</td><td>StreamInfoWeb API 실시간 조회로 동적 결정</td></tr>
-        <tr><td><strong style="color:#fff;">파이프라인 스크립트</strong></td><td>Jenkins 내부 저장</td><td>Perforce <code>.../buildTemplate/</code>에 저장, 매 빌드 시 최신본 로드</td></tr>
-        <tr><td><strong style="color:#fff;">노드(Agent) 역할</strong></td><td>빌드 전용 서버</td><td>빌드 서버 + 실제 게임 서버 + 인프라 서버 통합 관리</td></tr>
-        <tr><td><strong style="color:#fff;">배포(CD)</strong></td><td>산출물을 서버에 전송</td><td><code>GameServer_bl*</code> 노드가 실제 게임 서버, 배포 Job이 그 위에서 직접 실행</td></tr>
+        <tr><td><strong style="color:#fff;">빌드 트리거</strong></td><td>코드 커밋 시 자동 실행</td><td><strong style="color:#fff;">타이머 트리거</strong> (매일 02:00 등). 커밋과 무관</td></tr>
+        <tr><td><strong style="color:#fff;">빌드 대상 결정</strong></td><td>Job 설정에 하드코딩</td><td><strong style="color:#fff;">StreamInfoWeb API 실시간 조회</strong>로 동적 결정</td></tr>
+        <tr><td><strong style="color:#fff;">파이프라인 스크립트</strong></td><td>Jenkins 내부에 저장</td><td><strong style="color:#fff;">Perforce에 저장</strong>, 실행 시마다 최신본 로드</td></tr>
+        <tr><td><strong style="color:#fff;">노드(Agent) 역할</strong></td><td>빌드 전용 서버</td><td>빌드 서버 + <strong style="color:#fff;">실제 게임 서버까지</strong> 통합 관리</td></tr>
+        <tr><td><strong style="color:#fff;">배포(CD)</strong></td><td>산출물을 서버로 전송</td><td><code>GameServer_bl*</code> 노드가 실제 게임 서버이며, 배포 Job이 그 위에서 직접 실행</td></tr>
         <tr><td><strong style="color:#fff;">테스트</strong></td><td>자동 단위·통합 테스트</td><td>자동 테스트 없음. CheckerWeb이 사후 유효성 검증 담당</td></tr>
+        <tr><td><strong style="color:#fff;">변경 감지</strong></td><td>변경 있을 때만 실행</td><td>타이머로 실행하되, Perforce 변경사항 없으면 <strong style="color:#fff;">"Build is Skipped"</strong></td></tr>
       </tbody>
     </table>
   </div>
 
-  <p class="sec-label sec-label--dark reveal">노드 구성 — 총 170개</p>
-  <div class="node-grid reveal reveal-d1">
+  <p class="sec-label sec-label--dark reveal">노드(Agent) 구성 — 170개</p>
+  <p class="body body--dark reveal reveal-d1" style="text-align:center;max-width:680px;">
+    Jenkins에 연결된 노드(= 실제로 작업을 실행하는 서버)는 총 170개이며, 역할별로 전용 서버군이 분리되어 있습니다.
+  </p>
+  <div class="node-grid reveal reveal-d2">
     <div class="node-card">
       <div class="node-card__count">11대</div>
       <div class="node-card__name">BNSRFastBuild 01~11</div>
-      <div class="node-card__desc">BNSR 클라이언트 바이너리 고속 컴파일 전용 서버</div>
+      <div class="node-card__desc">BNSR 클라이언트 바이너리 고속 컴파일 전용</div>
     </div>
     <div class="node-card">
       <div class="node-card__count">11대</div>
@@ -1770,7 +1736,7 @@
     <div class="node-card">
       <div class="node-card__count">20+대</div>
       <div class="node-card__name">Graphic_UE4_*_hyper_*</div>
-      <div class="node-card__desc">UE4 에셋 쿠킹. GPU 집약 작업으로 전용 고사양 머신</div>
+      <div class="node-card__desc">UE4 에셋 쿠킹. 그래픽 처리(GPU) 집약 작업이라 전용 고사양 머신 사용</div>
     </div>
     <div class="node-card">
       <div class="node-card__count">17대</div>
@@ -1780,31 +1746,27 @@
     <div class="node-card">
       <div class="node-card__count">80+대</div>
       <div class="node-card__name">GameServer_bl*</div>
-      <div class="node-card__desc"><strong style="color:#fff;">실제 게임 서버</strong>. <code>blzncs01~04</code>, <code>blstream01~23</code> 등 배포 Job이 이 노드 위에서 직접 실행됨</div>
+      <div class="node-card__desc"><strong style="color:#fff;">실제 게임 서버</strong>. <code>blzncs01~04</code>, <code>blstream01~23</code> 등. 배포 Job이 이 서버 위에서 직접 실행</div>
     </div>
   </div>
 
-  <p class="sec-label sec-label--dark reveal">StreamInfoWeb — Jenkins의 두뇌</p>
-  <p class="body body--dark reveal reveal-d1" style="text-align:center;max-width:660px;">
-    Jenkins는 빌드 대상을 스스로 결정하지 않습니다. 매 빌드마다 StreamInfoWeb API를 조회하여<br>
-    "어느 스트림을, 어느 퍼블리셔 설정으로 빌드할지"를 동적으로 결정합니다.
+  <p class="sec-label sec-label--dark reveal">Jenkins가 빌드를 결정하는 원리 — StreamInfoWeb</p>
+  <p class="body body--dark reveal reveal-d1" style="text-align:center;max-width:680px;">
+    Jenkins는 빌드 대상과 설정을 스스로 하드코딩하지 않습니다. 매 빌드마다 <strong>StreamInfoWeb</strong>을 조회하여 "무엇을, 어떻게 빌드할지"를 동적으로 결정합니다.
+    StreamInfoWeb에서 각 스트림의 <code>mang</code> 값이 바뀌면, Jenkins Job 설정을 건드리지 않아도 자동으로 빌드 대상이 바뀝니다.
   </p>
   <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d2">
     <table class="tech-table tech-table--dark">
-      <thead><tr>
-        <th>StreamInfoWeb API</th><th>용도</th>
-      </tr></thead>
+      <thead><tr><th>StreamInfoWeb API</th><th>용도</th></tr></thead>
       <tbody>
         <tr><td><code>GET /api/v1/stream_list</code></td><td>전체 스트림 목록 + 각 스트림의 배포 망(mang) 할당 정보 조회</td></tr>
         <tr><td><code>GET /api/v1/stream_detail?stream={name}</code></td><td>특정 스트림의 퍼블리셔 설정 (게임코드, 서버주소, App ID 등) 조회</td></tr>
       </tbody>
     </table>
   </div>
-  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d3">
+  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d3" style="margin-top:8px;">
     <table class="tech-table tech-table--dark">
-      <thead><tr>
-        <th>스트림</th><th>mang (망)</th><th>의미</th>
-      </tr></thead>
+      <thead><tr><th>스트림</th><th>mang (배포 망)</th><th>의미</th></tr></thead>
       <tbody>
         <tr><td><code>bns_zncs_souldev</code></td><td>QA_4_Longterm</td><td>개발 메인라인 → 장기 QA망</td></tr>
         <tr><td><code>bns_zncs_10203</code></td><td>QA_1_RESERVE</td><td>최신 배포 후보 → 1번 예비망</td></tr>
@@ -1815,45 +1777,45 @@
         <tr><td><code>bns_zncg_10111</code></td><td>QA_1_RESERVE</td><td>NeoINV 최신 후보</td></tr>
       </tbody>
     </table>
-    <p class="tech-table-caption tech-table-caption--dark">mang 값이 StreamInfoWeb에서 변경되면 Jenkins Job 설정을 건드리지 않아도 자동으로 빌드 대상이 바뀝니다.</p>
   </div>
 
   <p class="sec-label sec-label--dark reveal">빌드 전체 실행 순서</p>
   <div class="process-list process-list--wide reveal reveal-d1">
     <div class="process-item process-item--dark">
       <span class="process-n process-n--dark">①</span>
-      <span class="process-t process-t--dark"><strong>스케줄러 발화</strong> — 매일 02:00 타이머. <code>_Schedule/Cooking_*</code> Job이 StreamInfoWeb <code>stream_list</code> API 조회 → 해당 mang에 할당된 스트림 목록 확정 → 개별 빌드 트리거</span>
+      <span class="process-t process-t--dark"><strong>스케줄러 발화</strong> — 매일 02:00 타이머. <code>_Schedule/Cooking_*</code> Job이 StreamInfoWeb <code>stream_list</code> API를 조회하여, 현재 해당 <code>mang</code>에 할당된 스트림 목록을 확정하고 개별 빌드를 트리거</span>
     </div>
     <div class="process-item process-item--dark">
       <span class="process-n process-n--dark">②</span>
-      <span class="process-t process-t--dark"><strong>개별 빌드 실행</strong> — <code>stream_detail</code> API 조회로 퍼블리셔 설정 획득 → Perforce에서 소스 sync → 변경사항 없으면 "Build is Skipped" → 있으면 빌드 실행 → 산출물 Perforce submit → ReleaseWeb 등록 → 완료 메일 발송</span>
+      <span class="process-t process-t--dark"><strong>개별 빌드 실행</strong> — <code>stream_detail</code> API 조회로 퍼블리셔 설정 획득 → Perforce에서 소스 sync → 변경사항 없으면 "Build is Skipped" → 변경사항 있으면 빌드 실행 → 산출물 Perforce submit → ReleaseWeb 등록 → 완료 메일 발송</span>
     </div>
     <div class="process-item process-item--dark">
       <span class="process-n process-n--dark">③</span>
-      <span class="process-t process-t--dark"><strong>Pack_Product_Stream</strong> (08:00경) — ReleaseWeb API로 최신 컴포넌트 버전 조회. ProgramBinary·GameData·GraphicData 세 컴포넌트를 묶어 Product 패키지 생성 → ProductVer 확정 (예: <code>8.20.20000.2506</code>) → 모두 동일하면 "Not Changed"</span>
+      <span class="process-t process-t--dark"><strong>Pack_Product_Stream</strong> (08:00경) — ReleaseWeb API로 최신 컴포넌트 버전 조회. ProgramBinary·GameData·GraphicData 세 컴포넌트를 묶어 Product 패키지 생성 → ProductVer 확정 (예: <code>8.20.20000.2506</code>). 모두 동일하면 "Not Changed"로 건너뜀</span>
     </div>
     <div class="process-item process-item--dark">
       <span class="process-n process-n--dark">④</span>
-      <span class="process-t process-t--dark"><strong>CheckerWeb 레코드 등록</strong> — Product 생성 완료 시 CheckerWeb에 자동 등록 (State=InProgress) → 자동 유효성 검사 실행 (Crash, InValid, GamedState, RankingdState)</span>
+      <span class="process-t process-t--dark"><strong>CheckerWeb 레코드 등록</strong> — Product 패키지 생성 완료 시 CheckerWeb에 자동 등록 (<code>State=InProgress</code>) → 데이터 무결성·실행파일 기동·게임데이터 자동 유효성 검사 실행</span>
     </div>
     <div class="process-item process-item--dark">
       <span class="process-n process-n--dark">⑤</span>
-      <span class="process-t process-t--dark"><strong>State=Complete 업데이트</strong> — 검증 완료 → 배포 담당자가 결과 확인 후 6단계(배포) 진행</span>
+      <span class="process-t process-t--dark"><strong>State=Complete 업데이트</strong> — 검증 완료 → 배포 담당자가 결과 확인 후 배포 단계로 진행</span>
     </div>
   </div>
 
-  <p class="sec-label sec-label--dark reveal">5개 빌드 카테고리</p>
-  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d1">
+  <p class="sec-label sec-label--dark reveal">빌드 폴더 구조 — 5개 카테고리</p>
+  <p class="body body--dark reveal reveal-d1" style="text-align:center;max-width:680px;">
+    Jenkins 폴더명은 Perforce 스트림 논리명을 그대로 사용합니다. 각 스트림 폴더 아래 5개 빌드 카테고리 폴더가 있고, 그 안에 실제 빌드 Job들이 세분화되어 있습니다.
+  </p>
+  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d2">
     <table class="tech-table tech-table--dark">
-      <thead><tr>
-        <th>카테고리</th><th>입력 소스</th><th>주요 세부 Job</th><th>설명</th>
-      </tr></thead>
+      <thead><tr><th>카테고리</th><th>입력 소스 경로</th><th>주요 세부 Job</th><th>설명</th></tr></thead>
       <tbody>
         <tr><td><strong style="color:#fff;">Binary</strong></td><td><code>.../Program/client/</code></td><td><code>BNSR</code>, <code>DataConverter</code>, <code>PlatformBinary</code>, <code>ExtraBinary</code></td><td>클라이언트 실행파일 컴파일</td></tr>
         <tr><td><strong style="color:#fff;">BinaryServer</strong></td><td><code>.../Program/Server/</code></td><td><code>GameDaemon</code>, <code>LobbyDaemon</code>, <code>ArenaLobby</code>, <code>AccountInventoryDaemon</code>, <code>AchievementDaemon</code> 등 (서버 데몬 하나당 Job 하나)</td><td>서버 실행파일 컴파일</td></tr>
         <tr><td><strong style="color:#fff;">Definition</strong></td><td><code>.../Program/definition/</code></td><td><code>Datasheet</code></td><td>게임 데이터 구조 스키마를 바이너리로 변환</td></tr>
         <tr><td><strong style="color:#fff;">GameData</strong></td><td>스트림 내 게임 데이터</td><td><code>AIData</code>, <code>CombatData</code>, <code>ItemData</code>, <code>LocalizationData</code>, <code>QuestData</code>, <code>ZoneData0~9</code>, <code>ZoneDataInter</code></td><td>기획자 작업물 패킹. 데이터 종류별 병렬 빌드</td></tr>
-        <tr><td><strong style="color:#fff;">Graphic</strong></td><td>스트림 내 언리얼 에셋</td><td><code>GraphicData_UE4</code></td><td>3D·이펙트 에셋 쿠킹. GPU 집약 작업, 전용 고사양 머신 사용</td></tr>
+        <tr><td><strong style="color:#fff;">Graphic</strong></td><td>스트림 내 언리얼 에셋</td><td><code>GraphicData_UE4</code></td><td>3D·이펙트 에셋 쿠킹(변환). GPU 집약 작업</td></tr>
       </tbody>
     </table>
   </div>
@@ -1861,16 +1823,14 @@
   <p class="sec-label sec-label--dark reveal">ZNCG 전용 추가 Job &amp; ReleaseWeb</p>
   <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d1">
     <table class="tech-table tech-table--dark">
-      <thead><tr>
-        <th>Job</th><th>설명</th>
-      </tr></thead>
+      <thead><tr><th>Job</th><th>설명</th></tr></thead>
       <tbody>
         <tr><td><code>GamePacketListCreate</code></td><td>클라이언트가 서버로부터 받아야 할 패킷 목록 파일 생성. 지역별 최신화 필요 (파라미터: <code>StreamName=bns_zncg_10131</code>)</td></tr>
-        <tr><td><code>MapFileCreateBNSR</code></td><td>크래시 발생 시 분석에 쓰이는 <code>.map</code>/<code>.pdb</code> 심볼 파일 생성</td></tr>
+        <tr><td><code>MapFileCreateBNSR</code></td><td>크래시 발생 시 원인 분석에 쓰이는 <code>.map</code>/<code>.pdb</code> 심볼 파일 생성</td></tr>
         <tr><td><code>Pack_ProgramBinary_Stream</code></td><td>프로그램 실행파일을 ReleaseWeb ProgramBinary 패키지로 등록</td></tr>
         <tr><td><code>Pack_GameData_Stream</code></td><td>게임 데이터를 ReleaseWeb GameData 패키지로 등록</td></tr>
         <tr><td><code>Pack_GraphicData_Stream</code></td><td>그래픽 에셋을 ReleaseWeb GraphicData 패키지로 등록</td></tr>
-        <tr><td><code>Pack_Product_Stream</code></td><td>세 컴포넌트를 조합해 Product 패키지 생성 + CheckerWeb 자동 등록</td></tr>
+        <tr><td><code>Pack_Product_Stream</code></td><td>위 세 컴포넌트를 조합해 Product 패키지 생성 + CheckerWeb 자동 등록</td></tr>
         <tr><td><code>Check_MarioLog</code></td><td>빌드 로그 이상 감지 자동 검사</td></tr>
       </tbody>
     </table>
@@ -1878,17 +1838,16 @@
 </section>
 
 <!-- ════════════════════════════════
-     08  CHECKERWEB
+     08  빌드 검증 — CheckerWeb
 ════════════════════════════════ -->
 <section class="bg-white">
-  <p class="eyebrow eyebrow--light reveal">Step 03 — 빌드 검증</p>
-  <h2 class="headline headline--light reveal reveal-d1">CheckerWeb의 역할과<br>검증 구조를 파악했습니다</h2>
-  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:660px;">
-    빌드 산출물이 실제로 배포 가능한지 판단하는 기준이 무엇인지,<br>
-    상태 필드와 버전 체계를 통해 이해하고자 했습니다.
+  <p class="eyebrow eyebrow--light reveal">Step 03</p>
+  <h2 class="headline headline--light reveal reveal-d1">빌드 검증 — CheckerWeb</h2>
+  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:680px;">
+    CheckerWeb은 빌드 유효성 검증 결과를 퍼블리셔·버전별로 관리하는 시스템입니다. <code>Daily/Pack_Product_Stream</code>이 Product 패키지를 생성하면 자동으로 레코드가 등록되고, 검증이 완료되면 배포 판정을 내립니다.
   </p>
 
-  <p class="sec-label sec-label--light reveal">CheckerWeb 동작 흐름</p>
+  <p class="sec-label sec-label--light reveal">동작 흐름</p>
   <div class="process-list process-list--wide reveal reveal-d1">
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">01</span>
@@ -1896,50 +1855,43 @@
     </div>
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">02</span>
-      <span class="process-t process-t--light"><strong>자동 유효성 검사</strong> — 데이터 무결성 확인(<code>InValid</code>), 실행파일 기동 테스트(<code>Crash</code>), 게임데이터 검증(<code>GamedState</code>), 랭킹데이터 검증(<code>RankingdState</code>)</span>
+      <span class="process-t process-t--light"><strong>자동 유효성 검사 실행</strong> — 데이터 무결성 확인(<code>InValid</code>), 실행파일 기동 테스트(<code>Crash</code>), 게임데이터 검증(<code>GamedState</code>), 랭킹데이터 검증(<code>RankingdState</code>)</span>
     </div>
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">03</span>
-      <span class="process-t process-t--light"><strong>State=Complete</strong> — 검증 완료 후 상태 업데이트. 배포 담당자가 세 조건을 확인 후 배포 단계로 진행. 배포 Job 실행 시 <code>ChangeToIng</code> API로 해당 레코드를 "배포 진행 중" 표시</span>
+      <span class="process-t process-t--light"><strong>State=Complete 업데이트</strong> — 배포 담당자가 결과 확인 후 배포 단계로 진행. 배포 Job 실행 시 <code>ChangeToIng</code> API를 호출하여 레코드를 "배포 진행 중" 상태로 표시</span>
     </div>
   </div>
 
   <div class="stats-row reveal reveal-d2" style="margin-top:48px;">
     <div class="stat">
-      <p class="stat__num" style="-webkit-text-fill-color:var(--primary);background:none;font-size:clamp(16px,2.2vw,26px);letter-spacing:-.02em;line-height:1.4;font-weight:800;">State<br>=Complete</p>
+      <p class="stat__num" style="-webkit-text-fill-color:var(--primary);background:none;font-size:clamp(16px,2.2vw,24px);letter-spacing:-.02em;line-height:1.4;font-weight:800;">State<br>=Complete</p>
       <p class="stat__label stat__label--light">검증 완료</p>
     </div>
-    <div class="stat">
-      <p class="stat__num">0</p>
-      <p class="stat__label stat__label--light">InValid (데이터 오류)</p>
-    </div>
-    <div class="stat">
-      <p class="stat__num">0</p>
-      <p class="stat__label stat__label--light">Crash (기동 크래시)</p>
-    </div>
+    <div class="stat"><p class="stat__num">0</p><p class="stat__label stat__label--light">InValid (데이터 오류)</p></div>
+    <div class="stat"><p class="stat__num">0</p><p class="stat__label stat__label--light">Crash (기동 크래시)</p></div>
   </div>
 
-  <p class="sec-label sec-label--light reveal">버전 3종 세트 — 레코드의 핵심 필드</p>
-  <div class="tech-table-wrap reveal reveal-d1">
+  <p class="sec-label sec-label--light reveal">버전 3종 세트</p>
+  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:680px;">
+    CheckerWeb 레코드의 버전은 세 가지이며 각각 다른 빌드 산출물을 가리킵니다.<br>
+    버전 번호 형식: <code>메이저.마이너.스트림번호.빌드번호</code> — 3번째 자리만 봐도 어느 스트림에서 빌드된 것인지 알 수 있습니다.
+  </p>
+  <div class="tech-table-wrap reveal reveal-d2">
     <table class="tech-table">
-      <thead><tr>
-        <th>필드</th><th>산출물</th><th>실제 예시 (ZNCS)</th><th>3번째 자리의 의미</th>
-      </tr></thead>
+      <thead><tr><th>필드</th><th>산출물</th><th>실제 예시 (ZNCS)</th><th>3번째 자리 의미</th></tr></thead>
       <tbody>
         <tr><td><code>BinaryVer</code></td><td>ProgramBinary (Binary 빌드)</td><td><code>8.16.20000.1150</code></td><td><code>20000</code> = bns_nc_souldev 메인라인</td></tr>
         <tr><td><code>DataVer</code></td><td>GameData (GameData 빌드)</td><td><code>8.16.20000.8300</code></td><td><code>10203</code> = bns_zncs_10203 스트림</td></tr>
         <tr><td><code>ProductVer</code></td><td>Product 패키지 (Binary+Data+Graphic 합산)</td><td><code>8.15.20000.2184</code></td><td><code>10141</code> = bns_zncg_10141 스트림</td></tr>
       </tbody>
     </table>
-    <p class="tech-table-caption">버전 번호 형식: <code>메이저.마이너.스트림번호.빌드번호</code>. 3번째 자리만 봐도 어느 스트림에서 빌드된 것인지 알 수 있습니다.</p>
   </div>
 
   <p class="sec-label sec-label--light reveal">상태 필드</p>
   <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
-      <thead><tr>
-        <th>필드</th><th>정상값</th><th>이상값의 의미</th>
-      </tr></thead>
+      <thead><tr><th>필드</th><th>정상값</th><th>이상값의 의미</th></tr></thead>
       <tbody>
         <tr><td><code>State</code></td><td><code>Complete</code></td><td><code>InProgress</code>: 검증 진행 중 또는 배포 진행 중</td></tr>
         <tr><td><code>InValid</code></td><td><code>0</code></td><td><code>1</code>: 데이터 패킹 유효성 오류</td></tr>
@@ -1952,29 +1904,26 @@
   </div>
 
   <p class="sec-label sec-label--light reveal">ZNCG 4개 퍼블리셔의 독립 검증 레코드</p>
-  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:660px;">
+  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:680px;">
     ZNCG는 퍼블리셔마다 다른 스트림 버전을 사용하므로 CheckerWeb에도 퍼블리셔별로 독립된 레코드가 생성됩니다.
   </p>
   <div class="tech-table-wrap reveal reveal-d2">
     <table class="tech-table">
-      <thead><tr>
-        <th>퍼블리셔</th><th>TemplateName</th><th>ProductVer 예시</th><th>스트림 해석</th>
-      </tr></thead>
+      <thead><tr><th>퍼블리셔</th><th>TemplateName</th><th>ProductVer 예시</th><th>스트림 해석</th></tr></thead>
       <tbody>
-        <tr><td><code>NeoNCT</code></td><td><code>Product_NeoNCT_UE4</code></td><td><code>13.7.10141.44</code></td><td>3번째 자리 10141 = bns_zncg_10141</td></tr>
-        <tr><td><code>NeoNCA</code></td><td><code>Product_NeoNCA_UE4</code></td><td><code>14.11.10141.43</code></td><td>3번째 자리 10141 = bns_zncg_10141</td></tr>
-        <tr><td><code>NeoINV</code></td><td><code>Product_NeoINV_UE4</code></td><td><code>15.8.10111.35</code></td><td>3번째 자리 10111 = bns_zncg_10111</td></tr>
-        <tr><td><code>NeoTX</code></td><td><code>Product_NeoTX_UE4</code></td><td><code>11.10.10131.38</code></td><td>3번째 자리 10131 = bns_zncg_10131</td></tr>
+        <tr><td><code>NeoNCT</code></td><td><code>Product_NeoNCT_UE4</code></td><td><code>13.7.10141.44</code></td><td>10141 = bns_zncg_10141</td></tr>
+        <tr><td><code>NeoNCA</code></td><td><code>Product_NeoNCA_UE4</code></td><td><code>14.11.10141.43</code></td><td>10141 = bns_zncg_10141</td></tr>
+        <tr><td><code>NeoINV</code></td><td><code>Product_NeoINV_UE4</code></td><td><code>15.8.10111.35</code></td><td>10111 = bns_zncg_10111</td></tr>
+        <tr><td><code>NeoTX</code></td><td><code>Product_NeoTX_UE4</code></td><td><code>11.10.10131.38</code></td><td>10131 = bns_zncg_10131</td></tr>
       </tbody>
     </table>
+    <p class="tech-table-caption">실제 배포에 사용할 버전은 이 레코드의 <code>ProductVer</code>가 아니라, 배포 Job(<code>ProductClientQA</code>)의 <code>ProductPackageVersion</code> 파라미터를 기준으로 할 것.</p>
   </div>
 
-  <p class="sec-label sec-label--light reveal">CheckerWeb API 엔드포인트</p>
+  <p class="sec-label sec-label--light reveal">API 엔드포인트</p>
   <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
-      <thead><tr>
-        <th>엔드포인트</th><th>방식</th><th>용도</th>
-      </tr></thead>
+      <thead><tr><th>엔드포인트</th><th>방식</th><th>용도</th></tr></thead>
       <tbody>
         <tr><td><code>/api/CheckerResult/get?Publisher={id}</code></td><td>GET</td><td>퍼블리셔별 검증 결과 목록 조회</td></tr>
         <tr><td><code>/api/CheckerResult/ChangeToIng/{id}</code></td><td>POST</td><td>레코드 상태를 배포 진행 중으로 변경</td></tr>
@@ -1987,14 +1936,13 @@
 </section>
 
 <!-- ════════════════════════════════
-     09  DEPLOY + STREAM LIFECYCLE
+     09  배포 + 스트림 생명주기
 ════════════════════════════════ -->
 <section class="bg-parchment">
-  <p class="eyebrow eyebrow--light reveal">Step 04 — 배포 &amp; 스트림 관리</p>
-  <h2 class="headline headline--light reveal reveal-d1">배포 흐름과 스트림 생명주기,<br>단계별로 정리했습니다</h2>
-  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:660px;">
-    검증이 완료된 빌드가 실서비스에 반영되기까지 Jenkins의 어떤 Job이 어떤 순서로 실행되는지,<br>
-    실제 파라미터까지 파악했습니다.
+  <p class="eyebrow eyebrow--light reveal">Step 04</p>
+  <h2 class="headline headline--light reveal reveal-d1">배포 — Internal → QA → Live</h2>
+  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:680px;">
+    검증이 통과된 빌드는 Jenkins <code>UpdateStream_SuperMario</code> 폴더의 Job들을 통해 단계적으로 배포됩니다.
   </p>
 
   <p class="sec-label sec-label--light reveal">배포 단계 전체 흐름</p>
@@ -2002,10 +1950,10 @@
     <div class="jira-card">
       <span class="jira-card__step">개발 중 공유</span>
       <div class="jira-card__marker">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       </div>
       <h3 class="jira-card__title">SharingClientInternal<br>SharingServer</h3>
-      <p class="jira-card__body">feature 스트림 또는 개발 중 라인을 팀 내부 공유망에 즉시 배포. 정식 버전 스트림이 아닌 개발 중인 스트림을 직접 올릴 수 있음.</p>
+      <p class="jira-card__body">feature 스트림 또는 개발 중인 라인을 팀 내부 공유망에 즉시 배포. 정식 배포 버전 스트림이 아닌 개발 중인 스트림을 직접 배포할 수 있습니다.</p>
       <div class="code-params">
         <code>StreamName = bns_nc_feature_20347</code>
         <code>Publisher  = ZNCS</code>
@@ -2017,40 +1965,38 @@
     <div class="jira-card">
       <span class="jira-card__step">내부망</span>
       <div class="jira-card__marker">
-        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke-width="1.8"/><line x1="8" y1="21" x2="16" y2="21" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="17" x2="12" y2="21" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
       </div>
       <h3 class="jira-card__title">ProductClientInternal</h3>
-      <p class="jira-card__body">CheckerWeb에서 확인한 정식 배포 버전 스트림을 개발팀 전용 내부망에 배포. QA 전 내부 확인 단계.</p>
+      <p class="jira-card__body">정식 배포 버전 스트림을 개발팀 전용 내부망에 배포합니다. QA 전 내부 확인 단계입니다.</p>
       <span class="jira-card__tag">내부 개발망</span>
     </div>
 
     <div class="jira-card jira-card--accent">
       <span class="jira-card__step">QA 검증망</span>
       <div class="jira-card__marker">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke-width="1.8"/><path d="m21 21-4.35-4.35" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </div>
       <h3 class="jira-card__title">ProductClientQA</h3>
-      <p class="jira-card__body">QA팀이 플레이하며 버그를 검증하는 망에 배포. CheckerWeb의 <code>ProductVer</code>를 파라미터로 지정. Binary·GameData·Graphic 각각 업데이트 여부를 개별 지정 가능.</p>
+      <p class="jira-card__body">QA팀이 플레이하며 버그를 검증하는 망에 배포합니다. CheckerWeb에서 확인한 <code>ProductVer</code>를 파라미터로 지정하며, Binary·GameData·Graphic 각각 업데이트 여부를 개별로 지정할 수 있습니다.</p>
       <span class="jira-card__tag">QA 검증망</span>
     </div>
 
     <div class="jira-card">
       <span class="jira-card__step">서버 배포</span>
       <div class="jira-card__marker">
-        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2" stroke-width="1.8"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2" stroke-width="1.8"/><line x1="6" y1="6" x2="6.01" y2="6" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="18" x2="6.01" y2="18" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6" stroke-width="2.5"/><line x1="6" y1="18" x2="6.01" y2="18" stroke-width="2.5"/></svg>
       </div>
       <h3 class="jira-card__title">ProductServer</h3>
-      <p class="jira-card__body">클라이언트와 별도로 <strong>서버 실행파일</strong>을 게임 서버에 배포. 클라이언트와 서버의 배포 타이밍이 다를 수 있으므로 별도 Job으로 분리.</p>
-      <span class="jira-card__tag">게임 서버</span>
+      <p class="jira-card__body">클라이언트 배포와 별도로 <strong>서버 실행파일</strong>을 게임 서버에 배포합니다. 클라이언트와 서버의 배포 타이밍이 다를 수 있으므로 별도 Job으로 분리되어 있습니다.</p>
+      <span class="jira-card__tag">게임 서버 (Live)</span>
     </div>
   </div>
 
   <p class="sec-label sec-label--light reveal">ProductClientQA 파라미터 상세</p>
   <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
-      <thead><tr>
-        <th>파라미터</th><th>실제 예시 (ZNCS)</th><th>의미</th>
-      </tr></thead>
+      <thead><tr><th>파라미터</th><th>실제 예시 (ZNCS)</th><th>의미</th></tr></thead>
       <tbody>
         <tr><td><code>StreamName</code></td><td><code>bns_zncs_souldev</code></td><td>배포할 스트림의 논리명 (Jenkins/StreamInfoWeb 기준)</td></tr>
         <tr><td><code>Publisher</code></td><td><code>ZNCS</code></td><td>어느 퍼블리셔(서비스 지역) 설정으로 배포할 것인가</td></tr>
@@ -2067,14 +2013,12 @@
   </div>
 
   <p class="sec-label sec-label--light reveal">ZNCG 4개 퍼블리셔 — 각각 별도 배포</p>
-  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:660px;">
-    ZNCG는 퍼블리셔마다 다른 스트림과 서버를 사용하므로 4개 Job을 각각 실행합니다.
+  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:680px;">
+    ZNCG는 퍼블리셔마다 다른 스트림과 서버를 사용하므로 4개 Job을 각각 실행합니다. 퍼블리셔마다 스트림 번호가 다른 것은 패치 적용 일정이 다르기 때문이며 정상 상태입니다.
   </p>
   <div class="tech-table-wrap reveal reveal-d2">
     <table class="tech-table">
-      <thead><tr>
-        <th>퍼블리셔</th><th>StreamName</th><th>HostName</th><th>ProductPackageVersion</th>
-      </tr></thead>
+      <thead><tr><th>퍼블리셔</th><th>StreamName</th><th>HostName</th><th>ProductPackageVersion</th></tr></thead>
       <tbody>
         <tr><td><code>NeoNCT</code></td><td><code>bns_zncg_10141</code></td><td><code>blznct01</code></td><td><code>13.11.10141.44</code></td></tr>
         <tr><td><code>NeoNCA</code></td><td><code>bns_zncg_10141</code></td><td><code>blznca01</code></td><td><code>14.11.10141.43</code></td></tr>
@@ -2092,32 +2036,30 @@
     </div>
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">처리 규칙</span>
-      <span class="process-t process-t--light"><code>SC:Update Date</code> 필드는 티켓 복제 시 원본 값을 그대로 유지. <code>Present Product</code> 값을 <code>Previous Product</code>로 이동한 후 신규 버전 입력</span>
+      <span class="process-t process-t--light"><code>SC:Update Date</code> 필드는 티켓 복제 시 원본 값을 그대로 유지. <code>Present Product</code> 값을 <code>Previous Product</code>로 이동한 후 신규 버전을 입력</span>
     </div>
   </div>
 
-  <p class="sec-label sec-label--light reveal">스트림 생명주기 — StreamTools_SuperMario</p>
-  <div class="tech-table-wrap reveal reveal-d1">
+  <p class="sec-label sec-label--light reveal">스트림 생명주기</p>
+  <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:680px;">
+    패치가 거듭될수록 새 스트림이 만들어지고 오래된 스트림은 폐기됩니다. 스트림의 생성·관리·폐기는 Jenkins <code>StreamTools_SuperMario</code> 폴더가 담당합니다.
+  </p>
+  <div class="tech-table-wrap reveal reveal-d2">
     <table class="tech-table">
-      <thead><tr>
-        <th>Job</th><th>역할</th>
-      </tr></thead>
+      <thead><tr><th>Job</th><th>역할</th></tr></thead>
       <tbody>
-        <tr><td><code>Create</code></td><td>새 배포 버전 스트림 생성. <code>bns_nc_souldev</code> 최신 상태 동기화 → Jenkins에 5개 빌드 카테고리 폴더 자동 생성</td></tr>
+        <tr><td><code>Create</code></td><td>새 배포 버전 스트림 생성. <code>bns_nc_souldev</code> 최신 상태를 동기화하고 Jenkins에 5개 빌드 카테고리 폴더를 자동 생성</td></tr>
         <tr><td><code>Merge</code></td><td>하위 스트림의 변경사항을 상위 스트림으로 합침</td></tr>
         <tr><td><code>UpStream</code></td><td>변경사항을 parent 스트림으로 반영 (버그 픽스 전파)</td></tr>
         <tr><td><code>Copy</code></td><td>기존 스트림을 복사하여 새 스트림 생성 (ZNCG 분기 시 사용)</td></tr>
-        <tr><td><code>Retire</code></td><td>서비스 종료된 스트림을 <code>_Retired</code> 폴더로 이동 및 쓰기 잠금. 분기 출처였던 ZNCS 월 메인 스트림은 ZNCG 생성 후 퇴역</td></tr>
+        <tr><td><code>Retire</code></td><td>서비스 종료된 스트림을 <code>_Retired</code> 폴더로 이동 및 쓰기 잠금. ZNCG 생성의 분기 출처였던 ZNCS 월 메인 스트림은 생성 후 퇴역 처리</td></tr>
         <tr><td><code>StreamDiffReport</code></td><td>두 스트림 사이의 변경사항 차이를 자동 리포트. 퍼블리셔 간 버전 차이 확인 또는 머지 전 검토 시 활용</td></tr>
       </tbody>
     </table>
   </div>
-
-  <p class="body reveal reveal-d2" style="text-align:center;margin-top:52px;color:var(--ink-48);font-size:16px;line-height:1.9;max-width:640px;">
-    새로운 빌드 환경을 마주하더라도, 이처럼 시스템의 이름과 역할부터 시작해<br>
-    실제 파라미터와 흐름을 하나씩 파악해가는 방식으로 빠르게 이해하기 위해 노력하겠습니다.
-  </p>
 </section>
+
+
 
      10  CASE 2  INTRO
 ════════════════════════════════ -->
