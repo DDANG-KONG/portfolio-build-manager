@@ -1,0 +1,2777 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>윤세찬 — Portfolio 2026</title>
+  <style>
+    :root {
+      --primary:       #0066cc;
+      --primary-focus: #0071e3;
+      --primary-dark:  #2997ff;
+      --ink:           #1d1d1f;
+      --ink-80:        #333333;
+      --ink-48:        #7a7a7a;
+      --muted:         #cccccc;
+      --canvas:        #ffffff;
+      --parchment:     #f5f5f7;
+      --tile-1:        #272729;
+      --tile-2:        #2a2a2c;
+      --surface-black: #000000;
+      --on-dark:       #ffffff;
+      --hairline:      #e0e0e0;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'AppleSDGothicNeo', 'Noto Sans KR',
+                   'Malgun Gothic', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      color: var(--ink);
+      background: var(--surface-black);
+      cursor: none;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    /* ── Custom Cursor ── */
+    .cursor-dot {
+      position: fixed; top: 0; left: 0;
+      width: 6px; height: 6px;
+      background: #fff; border-radius: 50%;
+      pointer-events: none; z-index: 10000;
+      will-change: transform;
+      transition: width .2s, height .2s, background .2s, opacity .3s;
+      opacity: 0;
+    }
+    .cursor-ring {
+      position: fixed; top: 0; left: 0;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(255,255,255,.4);
+      border-radius: 50%;
+      pointer-events: none; z-index: 10000;
+      will-change: transform;
+      transition: width .3s cubic-bezier(.22,1,.36,1),
+                  height .3s cubic-bezier(.22,1,.36,1),
+                  border-color .3s, opacity .3s;
+      opacity: 0;
+    }
+    .cursor-dot.active  { opacity: 1; }
+    .cursor-ring.active { opacity: 1; }
+    .cursor-dot.hovered  { width: 8px; height: 8px; background: var(--primary-dark); }
+    .cursor-ring.hovered { width: 54px; height: 54px; border-color: rgba(41,151,255,.55); }
+    .cursor-dot.on-light  { background: var(--ink); }
+    .cursor-ring.on-light { border-color: rgba(0,0,0,.25); }
+
+    /* ── Global Nav ── */
+    .g-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 44px;
+      background: rgba(0,0,0,.82);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 22px; z-index: 999;
+    }
+    .g-nav__logo {
+      font-size: 17px; font-weight: 700; color: var(--on-dark);
+      letter-spacing: -.5px; text-decoration: none; cursor: none;
+    }
+    .g-nav__links { display: flex; gap: 24px; list-style: none; }
+    .g-nav__links a {
+      font-size: 12px; font-weight: 400; color: rgba(255,255,255,.65);
+      text-decoration: none; letter-spacing: -.12px; transition: color .2s; cursor: none;
+    }
+    .g-nav__links a:hover { color: #fff; }
+
+    /* ── Section base ── */
+    section {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 200px 48px 180px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+
+    .bg-black     { background: var(--surface-black); }
+    .bg-dark      { background: var(--tile-1); }
+    .bg-white     { background: var(--canvas); }
+    .bg-parchment { background: var(--parchment); }
+
+    .bg-img {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      z-index: 0; pointer-events: none;
+    }
+    .bg-img--dim10 { opacity: .10; }
+    .bg-img--dim35 { opacity: .35; }
+
+    .bg-grad {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 50%, rgba(0,0,0,.72) 100%);
+    }
+
+    .glow {
+      position: absolute; border-radius: 50%;
+      filter: blur(120px); pointer-events: none; z-index: 0;
+    }
+    .glow--blue   { background: #2997ff; opacity: .10; }
+    .glow--purple { background: #9b59b6; opacity: .08; }
+    .glow--teal   { background: #2ecc71; opacity: .07; }
+    .glow--tl  { width: 700px; height: 700px; top: -250px; left: -250px; }
+    .glow--br  { width: 700px; height: 700px; bottom: -250px; right: -250px; }
+    .glow--c   { width: 500px; height: 500px; top: 50%; left: 50%;
+                 transform: translate(-50%,-50%); }
+
+    section > *:not(.bg-img):not(.bg-grad):not(.glow):not(.cover__spline):not(.cover__vignette):not(.cover__scroll):not(.cover__contacts) {
+      position: relative; z-index: 2;
+    }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .75s cubic-bezier(.22,1,.36,1),
+                  transform .75s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+    .reveal-d4 { transition-delay: .4s; }
+    .reveal-d5 { transition-delay: .5s; }
+
+    /* ── Type helpers ── */
+    .eyebrow {
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .eyebrow--light { color: var(--primary); }
+    .eyebrow--dark  { color: var(--primary-dark); }
+
+    .headline {
+      font-size: clamp(40px,5.5vw,56px); font-weight: 700;
+      line-height: 1.07; letter-spacing: -.03em; margin-bottom: 20px;
+    }
+    .headline--light { color: var(--ink); }
+    .headline--dark  { color: var(--on-dark); }
+
+    .subhead {
+      font-size: clamp(18px,2.2vw,22px); font-weight: 300;
+      line-height: 1.55; max-width: 680px; margin-bottom: 48px;
+    }
+    .subhead--light { color: var(--ink-80); }
+    .subhead--dark  { color: var(--muted); }
+
+    .body {
+      font-size: 17px; font-weight: 400; line-height: 1.6;
+      letter-spacing: -.3px; max-width: 640px;
+    }
+    .body--light { color: var(--ink-80); }
+    .body--dark  { color: var(--muted); }
+
+    /* ── Pill button ── */
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--primary); color: #fff;
+      font-size: 15px; font-weight: 500; letter-spacing: -.2px;
+      padding: 10px 22px; border-radius: 9999px;
+      text-decoration: none; cursor: none;
+      transition: background .15s, box-shadow .15s;
+      box-shadow: 0 0 0 0 rgba(41,151,255,0);
+      will-change: transform;
+    }
+    .pill:hover {
+      background: var(--primary-focus);
+      box-shadow: 0 4px 24px rgba(0,102,204,.35);
+    }
+    .pill:active { transform: scale(0.95) !important; }
+    .pill--ghost {
+      background: transparent;
+      border: 1.5px solid var(--primary-dark);
+      color: var(--primary-dark);
+    }
+    .pill--ghost:hover {
+      background: rgba(41,151,255,.08);
+      box-shadow: 0 4px 20px rgba(41,151,255,.2);
+    }
+    .pill--sm { font-size: 13px; padding: 7px 16px; }
+
+    .rule { width: 40px; height: 2px; background: var(--primary);
+            margin: 0 auto 32px; border-radius: 2px; }
+    .rule--dark { background: var(--primary-dark); }
+
+    /* ════════════════════════════
+       01  COVER — Spline Hero
+    ════════════════════════════ */
+    .cover {
+      background: transparent;
+      padding: 0;           /* override section padding */
+      height: 100vh;
+      min-height: 100vh;
+      justify-content: center;
+    }
+
+    /* Spline — fixed global backdrop, fades out on scroll past About */
+    .cover__spline {
+      position: fixed; inset: 0; z-index: 0;
+      transition: opacity 0.5s ease;
+      will-change: opacity;
+    }
+    .cover__spline iframe {
+      width: 100%; height: 100%; border: none; display: block;
+    }
+
+    /* Dark vignette — top only; bottom removed so Spline flows into About naturally */
+    .cover__vignette {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 40% at 50% -5%, rgba(0,0,0,.44) 0%, transparent 100%),
+        linear-gradient(to bottom, rgba(0,0,0,.12) 0%, transparent 30%);
+    }
+
+    /* Text sits above Spline; pointer-events:none lets mouse reach the iframe */
+    .cover__content {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+      padding: 120px 48px 96px;
+      pointer-events: none;   /* pass mouse → iframe */
+      will-change: transform;
+      transition: transform .05s linear;
+    }
+    /* Re-enable clicks on actual interactive children */
+    .cover__content a,
+    .cover__content button { pointer-events: auto; }
+
+    .cover__kicker {
+      font-size: 11px; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--primary-dark);
+      margin-bottom: 28px; opacity: .8;
+    }
+    .cover__name {
+      font-size: clamp(48px,6.5vw,80px); font-weight: 800;
+      letter-spacing: -.05em; line-height: .92; margin-bottom: 24px;
+      background: linear-gradient(145deg, #fff 0%, rgba(255,255,255,.72) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 40px rgba(41,151,255,.18));
+    }
+    .cover__tagline {
+      font-size: clamp(20px,2.5vw,26px); font-weight: 300;
+      color: rgba(255,255,255,.52); line-height: 1.5; margin-bottom: 52px;
+    }
+    .cover__contacts {
+      position: absolute; bottom: 148px; left: 50%;
+      translate: -50% 0;   /* individual transform — won't conflict with .reveal's transform */
+      z-index: 3;
+      display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+      white-space: nowrap;
+    }
+    .cover__contacts a {
+      font-size: 14px; color: rgba(0,0,0,.75); text-decoration: none;
+      letter-spacing: -.2px; transition: color .2s; cursor: none;
+    }
+    .cover__contacts a:hover { color: rgba(0,0,0,1); }
+
+    /* Scroll indicator */
+    .cover__scroll {
+      position: absolute; bottom: 44px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 3; pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      transition: opacity .5s;
+    }
+    .cover__scroll__label {
+      font-size: 9px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: rgba(255,255,255,.22);
+    }
+    .cover__scroll__line {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.35), transparent);
+      transform-origin: top; animation: scrollLine 2.4s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); opacity: 1; }
+      60%  { transform: scaleY(1); opacity: 1; }
+      100% { transform: scaleY(1); opacity: 0; }
+    }
+
+    /* ════════════════════════════
+       02  ABOUT ME
+    ════════════════════════════ */
+    .about-section {
+      align-items: flex-start; text-align: left;
+      padding-left: max(48px, calc(50vw - 520px));
+      padding-right: 48px;
+    }
+    .about-inner {
+      display: grid; grid-template-columns: 1fr 320px;
+      gap: 72px; width: 100%; max-width: 1040px; align-items: start;
+      margin-top: 8px;
+    }
+    .about-right { display: flex; flex-direction: column; gap: 20px; padding-top: 48px; }
+    .about-img { border-radius: 16px; overflow: hidden; box-shadow: rgba(0,0,0,.3) 0 8px 40px; }
+    .about-img img { width: 100%; display: block; }
+    .about-badge {
+      background: var(--tile-1); border-radius: 14px;
+      padding: 20px 24px; border: 1px solid rgba(255,255,255,.07);
+    }
+    .about-badge__label {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--primary-dark); margin-bottom: 8px;
+    }
+    .about-badge__val {
+      font-size: 28px; font-weight: 700; color: var(--on-dark);
+      letter-spacing: -.04em; line-height: 1;
+    }
+    .about-badge__sub { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* 수상내역 패널 */
+    .award-panel {
+      background: var(--tile-1); border-radius: 14px;
+      padding: 24px 28px; border: 1px solid rgba(255,255,255,.07);
+    }
+    .award-panel__label {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--primary-dark); margin-bottom: 20px;
+    }
+    .award-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; }
+    .award-item { display: flex; gap: 16px; align-items: flex-start; }
+    .award-year { font-size: 12px; font-weight: 700; color: var(--primary-dark); min-width: 36px; padding-top: 3px; }
+    .award-name { font-size: 16px; font-weight: 700; color: var(--on-dark); letter-spacing: -.03em; line-height: 1.2; }
+    .award-event { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* Timeline */
+    .timeline { width: 100%; max-width: 640px; margin-top: 48px; position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 80px; top: 8px; bottom: 8px; width: 1px;
+      background: linear-gradient(to bottom,
+        transparent, var(--hairline) 10%, var(--hairline) 90%, transparent);
+    }
+    .tl-item {
+      display: grid; grid-template-columns: 80px 1fr;
+      margin-bottom: 24px; position: relative;
+    }
+    .tl-item::before {
+      content: ''; position: absolute; left: 76px; top: 6px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--parchment); border: 2px solid var(--hairline);
+      transition: border-color .3s, background .3s;
+    }
+    .tl-item--highlight::before {
+      background: var(--primary); border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(0,102,204,.15);
+    }
+    .tl-year {
+      font-size: 11px; font-weight: 700; color: var(--primary);
+      letter-spacing: .02em; padding-top: 4px; text-align: right; padding-right: 22px;
+    }
+    .tl-body { padding-left: 18px; }
+    .tl-event {
+      font-size: 16px; font-weight: 400; color: var(--ink);
+      line-height: 1.5; letter-spacing: -.3px;
+    }
+    .tl-event--highlight { font-weight: 700; color: var(--primary); }
+    .tl-event + .tl-event { margin-top: 4px; }
+
+    /* Sections 02–03: transparent so Spline shows through; Spline fades via JS */
+    #about, #games { background: transparent; }
+    #about .headline--light { color: var(--on-dark); }
+    #about .tl-event { color: rgba(255,255,255,.82); }
+    #about .tl-event--highlight { color: var(--primary-dark); }
+    #about .tl-item::before {
+      background: #18181c; border-color: rgba(255,255,255,.18);
+    }
+    #about .tl-item--highlight::before {
+      background: var(--primary-dark); border-color: var(--primary-dark);
+      box-shadow: 0 0 0 4px rgba(41,151,255,.2);
+    }
+    #about .timeline::before {
+      background: linear-gradient(to bottom,
+        transparent, rgba(255,255,255,.25) 10%, rgba(255,255,255,.25) 90%, transparent);
+    }
+
+    /* ════════════════════════════
+       03  GAMES
+    ════════════════════════════ */
+    .game-banner {
+      width: 100%; max-width: 880px; border-radius: 16px; overflow: hidden;
+      box-shadow: rgba(0,0,0,.5) 0 12px 48px; margin-bottom: 32px; position: relative;
+      height: 160px;
+    }
+    .game-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .game-banner::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,.5) 100%);
+    }
+
+    .games-grid {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 2px; width: 100%; max-width: 880px;
+    }
+    .game-card {
+      background: var(--tile-2); padding: 20px 24px 24px;
+      text-align: left; cursor: none; position: relative; overflow: hidden;
+      transition: background .2s;
+    }
+
+    /* Game card thumbnail image */
+    .game-card__thumb {
+      margin: -20px -24px 16px;
+      width: calc(100% + 48px);
+      height: 110px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .game-card__thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center; display: block;
+      transition: transform .5s cubic-bezier(.22,1,.36,1);
+    }
+    .game-card:hover .game-card__thumb img { transform: scale(1.06); }
+    .game-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(41,151,255,.05) 0%, transparent 60%);
+      opacity: 0; transition: opacity .3s; pointer-events: none;
+    }
+    .game-card:hover::before { opacity: 1; }
+    .game-card:hover { background: #313133; }
+    .game-card__top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .game-year { font-size: 11px; font-weight: 600; color: var(--primary-dark); letter-spacing: .05em; }
+    .game-badge {
+      font-size: 10px; font-weight: 700; color: var(--primary-dark);
+      background: rgba(41,151,255,.12); border: 1px solid rgba(41,151,255,.25);
+      border-radius: 4px; padding: 2px 7px; letter-spacing: .05em; text-transform: uppercase;
+    }
+    .game-title {
+      font-size: 20px; font-weight: 700; color: var(--on-dark);
+      letter-spacing: -.02em; margin-bottom: 10px; line-height: 1.2;
+    }
+    .game-desc {
+      font-size: 14px; color: var(--muted); line-height: 1.5;
+      letter-spacing: -.2px; margin-bottom: 16px;
+    }
+    .game-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 13px; font-weight: 500; color: var(--primary-dark);
+      text-decoration: none; cursor: none; transition: gap .2s, opacity .2s;
+    }
+    .game-link:hover { gap: 8px; opacity: .8; }
+    .game-link svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    .qr-wrap {
+      display: flex; align-items: center; gap: 16px; margin-top: 24px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px; padding: 14px 20px;
+      text-decoration: none; transition: background .2s; cursor: none;
+    }
+    .qr-wrap:hover { background: rgba(255,255,255,.07); }
+    .qr-wrap img { width: 60px; height: 60px; border-radius: 6px; }
+    .qr-label { font-size: 13px; color: var(--muted); text-align: left; line-height: 1.5; }
+    .qr-label strong { display: block; color: var(--primary-dark); font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+
+    /* ════════════════════════════
+       CASE INTRO
+    ════════════════════════════ */
+    .case-intro { background: var(--surface-black); }
+    .case-num {
+      font-size: clamp(120px,20vw,200px); font-weight: 900;
+      color: rgba(255,255,255,.04); letter-spacing: -.08em; line-height: 1;
+      margin-bottom: -20px; font-variant-numeric: tabular-nums;
+      position: relative; z-index: 2;
+    }
+    .case-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--primary-dark);
+      margin-bottom: 16px; margin-top: 16px;
+    }
+    .case-title {
+      font-size: clamp(30px,4.5vw,48px); font-weight: 700;
+      color: var(--on-dark); letter-spacing: -.03em; line-height: 1.1;
+      max-width: 720px; margin-bottom: 24px;
+    }
+    .case-sub {
+      font-size: 18px; font-weight: 300; color: rgba(255,255,255,.82);
+      line-height: 1.6; max-width: 580px;
+    }
+    .case-intro .bg-grad {
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,.18) 0%, rgba(0,0,0,.06) 50%, rgba(0,0,0,.32) 100%);
+    }
+    .case-accent {
+      width: 48px; height: 2px; border-radius: 2px;
+      background: var(--primary-dark); margin: 0 auto 32px;
+    }
+
+    /* ════════════════════════════
+       STATS
+    ════════════════════════════ */
+    .stats-row {
+      display: flex; gap: 0; justify-content: center;
+      flex-wrap: wrap; margin-top: 64px; width: 100%; max-width: 800px;
+    }
+    .stat { flex: 1 1 160px; padding: 32px 24px; text-align: center; position: relative; }
+    .stat + .stat::before {
+      content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 1px; background: var(--hairline);
+    }
+    .stat + .stat--dark::before { background: rgba(255,255,255,.1); }
+    .stat__num {
+      font-size: clamp(52px,8vw,80px); font-weight: 800;
+      letter-spacing: -.05em; line-height: 1; margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat__label { font-size: 14px; font-weight: 400; letter-spacing: -.2px; }
+    .stat__label--light { color: var(--ink-48); }
+    .stat__label--dark  { color: var(--muted); }
+
+    /* ════════════════════════════
+       HIGHLIGHT
+    ════════════════════════════ */
+    .big-number {
+      font-size: clamp(96px,16vw,160px); font-weight: 900;
+      letter-spacing: -.05em; line-height: 1; margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .highlight-label {
+      font-size: 16px; font-weight: 400; color: var(--ink-80);
+      letter-spacing: -.3px; margin-bottom: 40px;
+    }
+
+    /* ════════════════════════════
+       BEFORE / AFTER
+    ════════════════════════════ */
+    .ba-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; width: 100%; max-width: 840px; margin-top: 48px;
+    }
+    .ba-card { border-radius: 20px; padding: 36px; text-align: left; }
+    .ba-before { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); }
+    .ba-after  {
+      background: linear-gradient(135deg, rgba(41,151,255,.08) 0%, rgba(41,151,255,.04) 100%);
+      border: 1px solid rgba(41,151,255,.2);
+    }
+    .ba-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; margin-bottom: 16px; display: block;
+    }
+    .ba-tag--before { color: rgba(255,255,255,.25); }
+    .ba-tag--after  { color: var(--primary-dark); }
+    .ba-icon { font-size: 28px; margin-bottom: 14px; display: block; line-height: 1; }
+    .ba-text { font-size: 16px; line-height: 1.65; letter-spacing: -.3px; }
+    .ba-text--before { color: rgba(255,255,255,.42); }
+    .ba-text--after  { color: var(--on-dark); }
+    .ba-result {
+      margin-top: 16px; font-size: 13px; font-weight: 600;
+      color: var(--primary-dark); display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ════════════════════════════
+       PROCESS LIST
+    ════════════════════════════ */
+    .process-list {
+      display: flex; flex-direction: column; gap: 2px;
+      width: 100%; max-width: 680px; margin-top: 48px;
+    }
+    .process-item {
+      padding: 22px 28px; display: flex; align-items: center; gap: 20px;
+      text-align: left;
+    }
+    .process-item--dark  { background: rgba(255,255,255,.03); }
+    .process-item--light { background: rgba(0,0,0,.03); border-radius: 4px; }
+    .process-n { font-size: 11px; font-weight: 700; letter-spacing: .08em; min-width: 26px; }
+    .process-n--dark  { color: var(--primary-dark); }
+    .process-n--light { color: var(--primary); }
+    .process-t { font-size: 16px; line-height: 1.5; letter-spacing: -.3px; }
+    .process-t--dark  { color: var(--on-dark); }
+    .process-t--light { color: var(--ink); }
+
+    /* ════════════════════════════
+       SCREENSHOTS
+    ════════════════════════════ */
+    .shot {
+      border-radius: 10px; overflow: hidden;
+      box-shadow: rgba(0,0,0,.28) 0 8px 32px, rgba(0,0,0,.12) 0 2px 8px;
+      flex-shrink: 0; background: var(--canvas);
+    }
+    .shot img { width: 100%; display: block; }
+
+    .shots-row {
+      display: flex; gap: 14px; justify-content: center;
+      align-items: flex-start; flex-wrap: wrap;
+      margin-top: 40px; width: 100%; max-width: 1100px;
+    }
+    .shots-row .shot { flex: 1 1 280px; max-width: 360px; }
+
+    .game-shots {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 14px; width: 100%; max-width: 760px; margin-top: 36px;
+    }
+
+    /* ── Section 11 Publisher 2-col layout ── */
+    .publisher-section { text-align: left; }
+    .publisher-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; width: 100%; max-width: 1040px; align-items: center;
+    }
+    .publisher-left .stats-row { justify-content: flex-start; margin-top: 32px; }
+    .publisher-left .stat + .stat::before { display: none; }
+    .publisher-left .stat { padding: 20px 28px 20px 0; flex: 0 0 auto; }
+    .publisher-right {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .publisher-right .shot img { width: 100%; display: block; }
+
+    .resource-shots {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 14px; width: 100%; max-width: 960px; margin-top: 36px;
+    }
+    .resource-shots .shot { border-radius: 8px; }
+    .res-label { font-size: 12px; color: var(--ink-48); text-align: center; margin-top: 8px; }
+
+    .shot-single { max-width: 520px; width: 100%; margin-top: 36px; }
+
+    /* ════════════════════════════
+       THREE PILLARS
+    ════════════════════════════ */
+    .pillars {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; width: 100%; max-width: 1100px; margin-top: 56px;
+    }
+    .pillar {
+      background: var(--tile-2); padding: 52px 40px; text-align: left;
+      position: relative; overflow: hidden;
+    }
+    .pillar__img { width: 44px; height: 44px; object-fit: contain; margin-bottom: 20px; display: block; filter: invert(1) opacity(.65); }
+    .pillar__img--lg { width: 72px; height: 72px; margin-bottom: 12px; }
+    .pillar__since { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--primary-dark); margin-bottom: 10px; }
+    .pillar__title { font-size: 21px; font-weight: 700; color: var(--on-dark); letter-spacing: -.02em; line-height: 1.2; margin-bottom: 14px; }
+    .pillar__desc  { font-size: 15px; color: var(--muted); line-height: 1.6; letter-spacing: -.2px; }
+    .pillar__tag   { display: inline-block; margin-top: 20px; font-size: 13px; font-weight: 600; color: var(--primary-dark); }
+
+    /* ════════════════════════════
+       CLOSING
+    ════════════════════════════ */
+    .closing { background: var(--surface-black); }
+    .closing__h {
+      font-size: clamp(60px,10vw,104px); font-weight: 800;
+      letter-spacing: -.05em; line-height: .95; margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.7) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .closing__sub { font-size: 20px; font-weight: 300; color: rgba(255,255,255,.5); margin-bottom: 48px; line-height: 1.5; }
+    .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    footer {
+      background: var(--parchment); padding: 48px 48px; text-align: center;
+    }
+    footer p { font-size: 12px; color: var(--ink-48); }
+
+    /* ── Mobile Nav ── */
+    .g-nav__hamburger {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      width: 28px; height: 20px;
+      flex-direction: column; justify-content: space-between;
+      padding: 0; flex-shrink: 0;
+    }
+    .g-nav__hamburger span {
+      display: block; width: 100%; height: 1.5px;
+      background: rgba(255,255,255,.75); border-radius: 2px;
+      transition: transform .3s cubic-bezier(.22,1,.36,1), opacity .2s;
+      transform-origin: center;
+    }
+    .g-nav__hamburger.open span:nth-child(1) { transform: translateY(9.25px) rotate(45deg); }
+    .g-nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .g-nav__hamburger.open span:nth-child(3) { transform: translateY(-9.25px) rotate(-45deg); }
+
+    .g-nav__mobile {
+      display: none;
+      position: fixed; inset: 0; z-index: 997;
+      background: rgba(4,4,8,.96);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      flex-direction: column; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .28s cubic-bezier(.22,1,.36,1);
+    }
+    .g-nav__mobile.open { opacity: 1; pointer-events: auto; }
+    .g-nav__mobile ul { list-style: none; text-align: center; }
+    .g-nav__mobile ul li { padding: 14px 0; }
+    .g-nav__mobile ul a {
+      font-size: 30px; font-weight: 700;
+      color: rgba(255,255,255,.82); text-decoration: none;
+      letter-spacing: -.04em;
+      transition: color .18s;
+    }
+    .g-nav__mobile ul a:hover { color: var(--primary-dark); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring { display: none; }
+
+      section { padding: 110px 22px 100px; }
+      .cover__content { padding: 110px 22px 80px; pointer-events: auto; }
+
+      /* Nav */
+      .g-nav { padding: 0 18px; }
+      .g-nav__links { display: none; }
+      .g-nav__hamburger { display: flex; }
+      .g-nav__mobile { display: flex; }
+
+      /* Cover: hide heavy Spline on mobile, use CSS gradient */
+      .cover__spline { display: none; }
+      .cover { background: radial-gradient(ellipse 130% 100% at 30% 35%, #0c1e3a 0%, #060810 55%, #000 100%); }
+      .cover__vignette { display: none; }
+
+      /* About: center-align on mobile for better readability */
+      .about-section { align-items: center; text-align: center; }
+      #about .timeline { text-align: left; }
+
+      /* Pillar icons: normalize size when stacked */
+      .pillar__img, .pillar__img--lg { width: 52px; height: 52px; margin-bottom: 16px; }
+
+      /* About */
+      .about-section {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+      .about-inner { grid-template-columns: 1fr; gap: 0; }
+      .about-right { display: none; }
+      .timeline { max-width: 100%; margin-top: 36px; }
+      .timeline::before { left: 60px; }
+      .tl-item { grid-template-columns: 60px 1fr; margin-bottom: 20px; }
+      .tl-item::before { left: 56px; }
+      .tl-year { font-size: 10px; padding-right: 16px; }
+      .tl-event { font-size: 14px; }
+
+      /* Typography */
+      .headline { font-size: clamp(30px, 7.5vw, 48px); margin-bottom: 16px; }
+      .subhead { font-size: clamp(15px, 3.8vw, 20px); margin-bottom: 36px; }
+      .body { font-size: 15px; }
+      .eyebrow { font-size: 11px; margin-bottom: 12px; }
+
+      /* Case intro */
+      .case-num { font-size: clamp(80px, 18vw, 140px); }
+      .case-title { font-size: clamp(24px, 6vw, 36px); }
+      .case-sub { font-size: 15px; }
+
+      /* Stats */
+      .stats-row { gap: 0; flex-wrap: wrap; margin-top: 40px; }
+      .stat { flex: 1 1 120px; padding: 24px 16px; }
+      .stat__num { font-size: clamp(40px, 10vw, 64px); }
+      .stat__label { font-size: 12px; }
+
+      /* Games */
+      .games-grid { grid-template-columns: 1fr; }
+      .game-banner { height: 120px; }
+      .game-title { font-size: 18px; }
+      .game-desc { font-size: 13px; }
+
+      /* QR */
+      .qr-wrap { padding: 12px 16px; }
+
+      /* Before/After */
+      .ba-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+      .ba-card { padding: 28px 24px; }
+      .ba-text { font-size: 14px; }
+
+      /* Process list */
+      .process-list { margin-top: 36px; }
+      .process-item { padding: 18px 20px; gap: 14px; }
+      .process-t { font-size: 14px; }
+
+      /* Shots */
+      .shots-row { margin-top: 32px; gap: 10px; }
+      .shots-row .shot { flex: 1 1 100%; max-width: 100%; }
+      .game-shots { grid-template-columns: 1fr; gap: 10px; }
+      .shot-single { margin-top: 28px; }
+
+      /* Publisher */
+      .publisher-inner { grid-template-columns: 1fr; gap: 40px; }
+      .publisher-section { text-align: center; padding: 110px 22px 100px; }
+      .publisher-left .stats-row { justify-content: center; flex-wrap: wrap; }
+      .publisher-left .stat { padding: 16px 20px; }
+
+      /* Resource shots */
+      .resource-shots { grid-template-columns: 1fr; gap: 10px; margin-top: 28px; }
+
+      /* Pillars */
+      .pillars { grid-template-columns: 1fr; margin-top: 40px; }
+      .pillar { padding: 36px 28px; }
+      .pillar__title { font-size: 18px; }
+      .pillar__desc { font-size: 14px; }
+
+      /* Closing */
+      .closing__h { font-size: clamp(44px, 11vw, 80px); }
+      .closing__sub { font-size: 16px; }
+      .cta-row { flex-direction: column; align-items: center; gap: 10px; }
+      .pill { font-size: 14px; padding: 12px 24px; width: 100%; max-width: 320px; justify-content: center; }
+
+      /* Cover */
+      .cover__name { font-size: clamp(40px, 10vw, 64px); }
+      .cover__tagline { font-size: clamp(16px, 4vw, 22px); margin-bottom: 36px; }
+      .cover__contacts { gap: 16px; bottom: 80px; }
+      .cover__contacts a { font-size: 13px; }
+
+      /* Big number */
+      .big-number { font-size: clamp(72px, 18vw, 120px); }
+
+      footer { padding: 40px 22px; }
+    }
+
+    @media (max-width: 480px) {
+      section { padding: 100px 18px 90px; }
+      .stats-row { flex-direction: column; align-items: center; }
+      .stat + .stat::before { display: none; }
+      .stat { width: 100%; padding: 16px 0; border-top: 1px solid rgba(0,0,0,.07); }
+      .stat--dark + .stat--dark { border-top-color: rgba(255,255,255,.08); }
+      .cover__contacts { flex-direction: column; gap: 10px; }
+    }
+
+    /* ════════════════════════════
+       MODERN ENHANCEMENTS
+    ════════════════════════════ */
+
+    /* Scroll offset for fixed nav */
+    section { scroll-margin-top: 44px; }
+
+    /* ── Scroll Progress Bar ── */
+    .scroll-progress {
+      position: fixed; top: 44px; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 55%, #a78bfa 100%);
+      transform-origin: left center; transform: scaleX(0);
+      z-index: 998; will-change: transform; pointer-events: none;
+    }
+
+    /* ── DQ Slime Progress Character ── */
+    #slimeProg {
+      position: fixed; top: 46px; left: 0;
+      z-index: 1000; pointer-events: none; will-change: transform;
+    }
+    .slime-svg {
+      display: block;
+      animation: dqSquish .55s steps(2, end) infinite alternate;
+      transform-origin: 50% 100%;
+      transform-box: fill-box;
+      filter: drop-shadow(0 1px 4px rgba(32,128,216,.5));
+    }
+    @keyframes dqSquish {
+      0%   { transform: scaleX(1)    scaleY(1); }
+      100% { transform: scaleX(1.22) scaleY(0.80); }
+    }
+    .slime-eye-l, .slime-eye-r {
+      animation: dqBlink 3.8s step-end infinite;
+    }
+    .slime-eye-r { animation-delay: .12s; }
+    @keyframes dqBlink {
+      0%,  89% { opacity: 1; }
+      90%, 93% { opacity: 0; }
+      94%, 100%{ opacity: 1; }
+    }
+
+    /* ── Nav active section indicator ── */
+    .g-nav__links a { position: relative; }
+    .g-nav__links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: var(--primary-dark);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform .35s cubic-bezier(.22,1,.36,1);
+    }
+    .g-nav__links a:hover::after,
+    .g-nav__links a.nav-active::after { transform: scaleX(1); }
+    .g-nav__links a.nav-active { color: #fff; }
+
+    /* ── 3D card tilt — smooth transition ── */
+    .game-card {
+      transition: transform .14s cubic-bezier(.22,1,.36,1), background .2s,
+                  box-shadow .2s;
+    }
+    .pillar {
+      transition: transform .14s cubic-bezier(.22,1,.36,1);
+    }
+    .game-card:hover {
+      box-shadow: 0 24px 64px rgba(0,0,0,.5), 0 0 0 1px rgba(41,151,255,.12);
+    }
+
+    /* ── Image tilt transitions (site-wide) ── */
+    .shot, .game-banner, .ba-card, .about-img, .about-badge {
+      transition: transform .16s cubic-bezier(.22,1,.36,1), box-shadow .2s;
+      will-change: transform;
+    }
+    .groundrule-img-wide, .partyrush-img-wrap {
+      transition: transform .16s cubic-bezier(.22,1,.36,1);
+      will-change: transform;
+    }
+
+    /* ── Animated gradient sweep on big-number ── */
+    @keyframes gradSweep {
+      0%   { background-position:   0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position:   0% 50%; }
+    }
+    .big-number {
+      background: linear-gradient(90deg,
+        var(--primary) 0%, var(--primary-dark) 35%, #60a5fa 60%, var(--primary) 100%);
+      background-size: 300% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: gradSweep 5s ease infinite;
+    }
+
+    /* ── Eyebrow scramble: preserve inline-block for width ── */
+    .eyebrow, .case-eyebrow { display: inline-block; }
+
+    /* ── Cover text shadows (readable against 3D background) ── */
+    .cover__name {
+      filter: drop-shadow(0 0 40px rgba(41,151,255,.18))
+              drop-shadow(0 2px 18px rgba(0,0,0,.72));
+    }
+    .cover__tagline {
+      text-shadow: 0 1px 14px rgba(0,0,0,.8), 0 4px 28px rgba(0,0,0,.5);
+    }
+    .cover__kicker {
+      text-shadow: 0 1px 10px rgba(0,0,0,.7);
+    }
+
+    /* ── Section natural scroll transition ── */
+    section:not(.cover) {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.85s cubic-bezier(.22,1,.36,1),
+                  transform 0.85s cubic-bezier(.22,1,.36,1);
+    }
+    section:not(.cover).s-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+
+    /* Summary → Closing: JS scroll-driven fade handled in script */
+
+    /* ── Tool Logo Badge ── */
+    .tool-badge-row {
+      display: flex; gap: 32px; justify-content: center; align-items: center;
+      margin-top: 36px;
+    }
+    .tool-badge {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .tool-badge img, .tool-badge svg {
+      width: 60px; height: 60px; object-fit: contain; flex-shrink: 0;
+    }
+    .tool-badge__label {
+      font-size: 13px; font-weight: 600; color: var(--ink-48); letter-spacing: -.15px;
+    }
+
+    /* ── Jira Card News ── */
+    .jira-cards {
+      display: flex; gap: 0; justify-content: center; align-items: stretch;
+      margin-top: 48px; width: 100%; max-width: 900px; flex-wrap: wrap;
+    }
+    .jira-card {
+      flex: 1 1 220px; max-width: 280px;
+      background: var(--canvas); border: 1px solid var(--hairline);
+      padding: 32px 28px; text-align: left;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .jira-card:first-child { border-radius: 20px 0 0 20px; }
+    .jira-card:last-child  { border-radius: 0 20px 20px 0; border-left: none; }
+    .jira-card + .jira-card { border-left: none; }
+    .jira-card--accent {
+      background: linear-gradient(135deg, rgba(0,102,204,.06) 0%, rgba(41,151,255,.03) 100%);
+    }
+    .jira-card__step {
+      font-size: 10px; font-weight: 700; letter-spacing: .1em;
+      color: var(--primary); text-transform: uppercase; margin-bottom: 2px;
+    }
+    .jira-card__marker {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(0,102,204,.08);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .jira-card__marker svg {
+      width: 18px; height: 18px; stroke: var(--primary);
+      fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .jira-card--accent .jira-card__marker { background: rgba(0,102,204,.12); }
+    .jira-card__title {
+      font-size: 15px; font-weight: 700; color: var(--ink);
+      letter-spacing: -.35px; line-height: 1.35;
+    }
+    .jira-card__body {
+      font-size: 13px; color: var(--ink-48); line-height: 1.7; flex: 1;
+    }
+    .jira-card__tag {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      padding: 3px 9px; border-radius: 100px; margin-top: 4px;
+      background: rgba(0,102,204,.07); color: var(--primary); letter-spacing: -.05px;
+    }
+    .jira-card--accent .jira-card__tag {
+      background: rgba(0,102,204,.12);
+    }
+    @media (max-width: 768px) {
+      .jira-cards { flex-direction: column; gap: 2px; max-width: 480px; }
+      .jira-card { max-width: 100%; border-radius: 14px !important; border: 1px solid var(--hairline) !important; }
+      .jira-card + .jira-card { border-left: 1px solid var(--hairline) !important; }
+    }
+
+    /* ── Ground Rule: landscape image stacked above ba-grid ── */
+    .groundrule-row {
+      display: flex; flex-direction: column; gap: 32px; align-items: stretch;
+      width: 100%; max-width: 760px; margin-top: 48px;
+    }
+    .groundrule-img-wide {
+      width: 100%; display: block;
+    }
+    .groundrule-row .ba-grid { margin-top: 0; flex: 1; max-width: none; }
+
+    @media (max-width: 768px) {
+      .groundrule-row { gap: 24px; }
+    }
+
+
+    /* ── Pipeline Flow Diagram ── */
+    .pipeline-flow {
+      display: flex; align-items: stretch; justify-content: center;
+      width: 100%; max-width: 1060px; margin-top: 52px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+    }
+    .pipe-node {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 28px 18px; background: var(--parchment);
+      border: 1px solid var(--hairline); border-radius: 16px;
+      min-width: 148px; flex: 1 1 148px; gap: 8px;
+      transition: transform .2s cubic-bezier(.22,1,.36,1), box-shadow .2s;
+    }
+    .pipe-node:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,.09); }
+    .pipe-node--hl {
+      background: linear-gradient(135deg,rgba(0,102,204,.08),rgba(41,151,255,.04));
+      border-color: rgba(41,151,255,.25);
+    }
+    .pipe-node__num { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--primary); }
+    .pipe-node__name { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -.3px; line-height: 1.2; }
+    .pipe-node--hl .pipe-node__name { color: var(--primary); }
+    .pipe-node__sub { font-size: 12px; color: var(--ink-48); line-height: 1.45; }
+    .pipe-arrow { display: flex; align-items: center; padding: 0 6px; flex-shrink: 0; color: var(--primary); opacity: .45; }
+    .pipe-arrow svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    @media (max-width: 900px) {
+      .pipeline-flow { flex-direction: column; align-items: center; gap: 0; overflow-x: visible; }
+      .pipe-node { flex-direction: row; text-align: left; padding: 16px 18px; min-width: 0; width: 100%; max-width: 420px; gap: 14px; border-radius: 12px; }
+      .pipe-arrow { transform: rotate(90deg); padding: 4px 0; }
+      .pipe-node__num { display: none; }
+    }
+
+    /* ── Tech Table ── */
+    .tech-table-wrap { width: 100%; max-width: 900px; margin-top: 36px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tech-table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+    }
+    .tech-table th {
+      background: rgba(0,0,0,.04); padding: 10px 16px; text-align: left;
+      font-weight: 700; color: var(--primary); font-size: 11px;
+      letter-spacing: .06em; text-transform: uppercase;
+      border-bottom: 2px solid var(--hairline); white-space: nowrap;
+    }
+    .tech-table td {
+      padding: 10px 16px; color: var(--ink-80); line-height: 1.65;
+      border-bottom: 1px solid rgba(0,0,0,.05); vertical-align: top;
+    }
+    .tech-table tr:last-child td { border-bottom: none; }
+    .tech-table--dark th { background: rgba(255,255,255,.05); color: var(--primary-dark); border-bottom-color: rgba(255,255,255,.1); }
+    .tech-table--dark td { color: var(--muted); border-bottom-color: rgba(255,255,255,.05); }
+    .tech-table-caption {
+      font-size: 12px; color: var(--ink-48); text-align: left;
+      margin-top: 10px; padding: 0 4px; line-height: 1.5;
+    }
+    .tech-table-caption--dark { color: rgba(255,255,255,.3); }
+
+    /* ── Inline code ── */
+    code {
+      font-family: 'SF Mono', 'Menlo', 'Monaco', Consolas, monospace;
+      font-size: .84em; background: rgba(0,102,204,.07);
+      color: var(--primary); padding: 2px 7px; border-radius: 4px;
+      word-break: break-word; overflow-wrap: break-word; display: inline;
+    }
+    .bg-dark code { background: rgba(41,151,255,.14); color: var(--primary-dark); }
+
+    /* ── Sub-section label ── */
+    .sec-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; margin-bottom: 14px; margin-top: 56px;
+      align-self: center; padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,.07); width: 100%; max-width: 900px;
+      text-align: left;
+    }
+    .sec-label--light { color: var(--primary); border-top-color: rgba(0,0,0,.07); }
+    .sec-label--dark  { color: var(--primary-dark); border-top-color: rgba(255,255,255,.08); }
+
+    /* ── Node grid ── */
+    .node-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; width: 100%; max-width: 900px; margin-top: 36px;
+    }
+    .node-card {
+      background: rgba(255,255,255,.03); padding: 22px 24px;
+      border: 1px solid rgba(255,255,255,.07); text-align: left;
+    }
+    .node-card:first-child { border-radius: 12px 0 0 0; }
+    .node-card:nth-child(3) { border-radius: 0 12px 0 0; }
+    .node-card:nth-last-child(3) { border-radius: 0 0 0 12px; }
+    .node-card:last-child { border-radius: 0 0 12px 0; }
+    .node-card__count { font-size: 30px; font-weight: 800; color: var(--primary-dark); letter-spacing: -.04em; line-height: 1; margin-bottom: 8px; }
+    .node-card__name { font-size: 13px; font-weight: 700; color: var(--on-dark); margin-bottom: 5px; letter-spacing: -.2px; }
+    .node-card__desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+    @media (max-width: 768px) {
+      .node-grid { grid-template-columns: 1fr 1fr; }
+      .node-card { border-radius: 0 !important; }
+    }
+    @media (max-width: 480px) {
+      .node-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Wide process list ── */
+    .process-list--wide { max-width: 780px; }
+
+    /* ── Info block (callout) ── */
+    .info-block {
+      width: 100%; max-width: 680px; margin-top: 24px;
+      padding: 18px 22px; border-radius: 12px;
+      border-left: 3px solid var(--primary);
+      background: rgba(0,102,204,.04);
+      text-align: left; font-size: 14px; line-height: 1.75; color: var(--ink-80);
+    }
+    .info-block--dark {
+      border-left-color: var(--primary-dark);
+      background: rgba(41,151,255,.06);
+      color: var(--muted);
+    }
+
+    /* ── Stream tree ── */
+    .stream-tree {
+      width: 100%; max-width: 700px; margin-top: 36px;
+      background: rgba(0,0,0,.035); border-radius: 12px;
+      border: 1px solid rgba(0,0,0,.06);
+      padding: 28px 32px; text-align: left; overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .stream-tree pre {
+      font-family: 'SF Mono', 'Menlo', 'Monaco', Consolas, monospace;
+      font-size: 12.5px; line-height: 1.85; color: var(--ink-80);
+      white-space: pre; margin: 0;
+    }
+    .stream-tree pre strong { color: var(--primary); font-weight: 700; }
+    .stream-tree pre em { color: var(--ink-48); font-style: normal; }
+
+    /* ── Tech table: add visual container ── */
+    .tech-table-wrap {
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+      background: var(--canvas);
+    }
+    .tech-table-wrap--dark {
+      background: rgba(255,255,255,.03);
+      border-color: rgba(255,255,255,.08);
+    }
+    .tech-table-caption { padding: 10px 16px 12px; }
+
+    /* ── 4-card jira layout ── */
+    .jira-cards--4up { max-width: 1060px; }
+    .jira-cards--4up .jira-card { flex: 1 1 200px; }
+    @media (max-width: 900px) {
+      .jira-cards--4up { flex-wrap: wrap; gap: 2px; }
+      .jira-cards--4up .jira-card {
+        flex: 1 1 calc(50% - 2px); max-width: none;
+        border-radius: 12px !important;
+        border: 1px solid var(--hairline) !important;
+      }
+      .jira-cards--4up .jira-card + .jira-card { border-left: 1px solid var(--hairline) !important; }
+    }
+    @media (max-width: 560px) {
+      .jira-cards--4up .jira-card { flex: 1 1 100%; }
+    }
+
+    /* ── Code block inside card ── */
+    .code-params {
+      margin-top: 10px; display: flex; flex-direction: column; gap: 3px;
+    }
+    .code-params code {
+      display: block; font-size: .8em;
+      padding: 3px 9px; border-radius: 4px;
+    }
+    /* iOS Safari: prevent URL-bar resize from clipping cover */
+    @supports (-webkit-touch-callout: none) {
+      .cover { min-height: -webkit-fill-available; }
+    }
+  </style>
+</head>
+<style>
+/* 숨김: 인터랙티브 UI 요소들 (JS가 참조하므로 HTML 유지, CSS로만 숨김) */
+nav.g-nav, .g-nav__mobile, .cursor-dot, .cursor-ring,
+#slimeProg, #scrollProgress, .cover__vignette,
+.cover__scroll { display:none !important; }
+
+/* Spline 제거로 투명해진 섹션 배경 복원 (다크 유지) */
+.cover  { background: radial-gradient(ellipse 130% 100% at 30% 35%, #0c1e3a 0%, #060810 55%, #000 100%) !important; }
+#about, #games { background: #060810 !important; }
+
+/* 이미지 절대경로 사용으로 로컬 파일 열어도 표시됨 */
+</style>
+<script>
+/* reveal 요소를 즉시 모두 표시 (스크롤 없이 전체 내용 보임) */
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    el.classList.add('in-view');
+  });
+});
+</script>
+<body>
+
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" id="scrollProgress"></div>
+<div id="slimeProg" aria-hidden="true">
+  <!-- 32×28 pixel art slime: P=4, 8×7 logical grid, round oval + top bump -->
+  <svg class="slime-svg" viewBox="0 0 32 28" width="32" height="28" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+    <!-- bump: cols 3-4 (centered 2-wide) -->
+    <rect x="12" y="0"  width="8"  height="4" fill="#2080d8"/>
+    <!-- row 1: cols 2-5 (4 wide) -->
+    <rect x="8"  y="4"  width="16" height="4" fill="#2080d8"/>
+    <!-- row 2: cols 1-6 (6 wide) -->
+    <rect x="4"  y="8"  width="24" height="4" fill="#2080d8"/>
+    <!-- row 3: full (eyes here) -->
+    <rect x="0"  y="12" width="32" height="4" fill="#2080d8"/>
+    <!-- row 4: full (eyes here) -->
+    <rect x="0"  y="16" width="32" height="4" fill="#2080d8"/>
+    <!-- row 5: cols 1-6 (6 wide) -->
+    <rect x="4"  y="20" width="24" height="4" fill="#2080d8"/>
+    <!-- row 6: cols 2-5, darker base -->
+    <rect x="8"  y="24" width="16" height="4" fill="#1060b0"/>
+    <!-- left eye: 2×2 logical (8×8 px) white + pupil -->
+    <g class="slime-eye-l">
+      <rect x="8"  y="12" width="8" height="8" fill="#e8f4ff"/>
+      <rect x="12" y="16" width="4" height="4" fill="#061020"/>
+    </g>
+    <!-- right eye: 2×2 logical (8×8 px) white + pupil -->
+    <g class="slime-eye-r">
+      <rect x="20" y="12" width="8" height="8" fill="#e8f4ff"/>
+      <rect x="20" y="16" width="4" height="4" fill="#061020"/>
+    </g>
+  </svg>
+</div>
+
+<!-- Custom Cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Mobile nav overlay -->
+<div class="g-nav__mobile" id="navMobile" aria-hidden="true">
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#case1">Blade &amp; Soul</a></li>
+    <li><a href="#case2">파티랏슈!!</a></li>
+    <li><a href="#closing">Contact</a></li>
+  </ul>
+</div>
+
+<!-- ── Global Nav ── -->
+<nav class="g-nav">
+  <a class="g-nav__logo" href="#cover">윤세찬</a>
+  <ul class="g-nav__links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#case1">Blade &amp; Soul</a></li>
+    <li><a href="#case2">파티랏슈!!</a></li>
+    <li><a href="#closing">Contact</a></li>
+  </ul>
+  <button class="g-nav__hamburger" id="navHamburger" aria-label="메뉴" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ════════════════════════════════
+     01  COVER — Spline 3D Hero
+════════════════════════════════ -->
+<section class="cover" id="cover">
+  <div class="cover__vignette"></div>
+
+  <div class="cover__content" id="coverContent">
+    <p class="cover__kicker reveal">Portfolio 2026</p>
+    <h1 class="cover__name reveal reveal-d1">윤세찬</h1>
+    <p class="cover__tagline reveal reveal-d2">인디게임 제작자에서,<br>PM이 되기까지</p>
+  </div>
+
+  <div class="cover__contacts reveal reveal-d3">
+    <a href="tel:01022660219">010 – 2266 – 0219</a>
+    <a href="mailto:sechan-baram@naver.com">sechan-baram@naver.com</a>
+  </div>
+
+  <div class="cover__scroll" id="coverScroll">
+    <span class="cover__scroll__label">Scroll</span>
+    <div class="cover__scroll__line"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     02  ABOUT ME
+════════════════════════════════ -->
+<section class="about-section" id="about">
+  <p class="eyebrow eyebrow--dark reveal">About Me</p>
+  <h2 class="headline headline--light reveal reveal-d1">걸어온 길</h2>
+  <p class="body reveal reveal-d2" style="text-align:center;max-width:640px;color:rgba(255,255,255,.6);line-height:1.85;margin-bottom:52px;">10대 때는 인디게임 제작자로, 현재는 개발 과정에 기여하는 PM이 되었습니다.</p>
+
+  <div class="about-inner">
+    <div class="timeline reveal reveal-d2">
+      <div class="tl-item">
+        <span class="tl-year">2001</span>
+        <div class="tl-body"><p class="tl-event">출생</p></div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2015</span>
+        <div class="tl-body">
+          <p class="tl-event">'슬라임 스크럼블', '우리 아빠는 용사랍니다' 제작 및 출시</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2017</span>
+        <div class="tl-body">
+          <p class="tl-event">'모두를 위한 정통 RPG' 출시 — Play Store 인기 유료 6위</p>
+          <p class="tl-event">BIC Festival 2017 전시작 선정 (SHWA)</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2020</span>
+        <div class="tl-body"><p class="tl-event">국립공주대학교 게임디자인학과 입학</p></div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2021</span>
+        <div class="tl-body">
+          <p class="tl-event">BIC Festival 2021 전시작 선정 (RAISE HELL)</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2022</span>
+        <div class="tl-body">
+          <p class="tl-event">'파티랏슈!!' 글로벌 5개국어 런칭</p>
+          <p class="tl-event">버닝비버 2022 참가</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2023</span>
+        <div class="tl-body"><p class="tl-event">대한민국 해군 특수전전단 입대</p></div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2024</span>
+        <div class="tl-body"><p class="tl-event">병장 만기전역</p></div>
+      </div>
+      <div class="tl-item tl-item--highlight">
+        <span class="tl-year">2025</span>
+        <div class="tl-body">
+          <p class="tl-event">G-STAR 2025 전시 총괄</p>
+          <p class="tl-event">Zero-base PM 스쿨 43기 수료</p>
+          <p class="tl-event tl-event--highlight">NC 'Blade &amp; Soul' 개발PM 입사</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2026</span>
+        <div class="tl-body">
+          <p class="tl-event">국립공주대학교 게임디자인학과 졸업 (4.05 / 4.5)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-right reveal reveal-d3">
+      <div class="award-panel">
+        <p class="award-panel__label">수상내역</p>
+        <ul class="award-list">
+          <li class="award-item">
+            <span class="award-year">2020</span>
+            <div>
+              <p class="award-name">한국콘텐츠진흥원장상</p>
+              <p class="award-event">게임문화창작콘텐츠공모전</p>
+            </div>
+          </li>
+          <li class="award-item">
+            <span class="award-year">2021</span>
+            <div>
+              <p class="award-name">한국게임개발자협회장상</p>
+              <p class="award-event">GIGDC 2021</p>
+            </div>
+          </li>
+          <li class="award-item">
+            <span class="award-year">2022</span>
+            <div>
+              <p class="award-name">우수상</p>
+              <p class="award-event">2022년 대전 뉴비 게임개발 공모전</p>
+            </div>
+          </li>
+          <li class="award-item">
+            <span class="award-year">2025</span>
+            <div>
+              <p class="award-name">우수작품상</p>
+              <p class="award-event">한국경제TV</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     03  MY GAMES
+════════════════════════════════ -->
+<section id="games">
+  <div class="glow glow--blue" style="width:700px;height:700px;top:160px;left:-250px;"></div>
+
+  <p class="eyebrow eyebrow--dark reveal">My Games</p>
+  <h2 class="headline headline--dark reveal reveal-d1" style="margin-bottom:12px;">10대부터 완성한 게임들</h2>
+  <p class="subhead subhead--dark reveal reveal-d2" style="font-size:clamp(15px,1.8vw,18px);margin-bottom:20px;">하나의 프로덕트를 몇 년씩 이끌며 여러 번 완수했던 경험이,<br>지금의 책임감을 만들었다고 생각합니다.</p>
+
+  <div class="game-banner reveal reveal-d2">
+    <img src="https://ddang-kong.github.io/portfolio-build-manager/assets/slide02_img33.png" alt="파티랏슈!! 키아트" style="object-position:center 72%;">
+  </div>
+
+  <div class="games-grid reveal reveal-d3">
+    <div class="game-card">
+      <div class="game-card__thumb">
+        <img src="https://ddang-kong.github.io/portfolio-build-manager/assets/Games/Slime2.png" alt="슬라임 스크럼블">
+      </div>
+      <div class="game-card__top"><span class="game-year">2015</span></div>
+      <h3 class="game-title">슬라임 스크럼블</h3>
+      <p class="game-desc">슬라임이 주인공인 장편 스토리 동료 수집형 RPG.<br>13살부터 2년간 제작, 플레이 타임 5시간.</p>
+      <a href="https://namu.wiki/w/%EC%8A%AC%EB%9D%BC%EC%9E%84%20%EC%8A%A4%ED%81%AC%EB%9F%BC%EB%B8%94" target="_blank" class="game-link">
+        나무위키에서 보기
+        <svg viewBox="0 0 12 12"><path d="M6.5 1H11v4.5M11 1L5 7M1 3h3.5v8H11V7"/></svg>
+      </a>
+    </div>
+    <div class="game-card">
+      <div class="game-card__thumb">
+        <img src="https://ddang-kong.github.io/portfolio-build-manager/assets/Games/Mydad2.png" alt="우리 아빠는 용사랍니다">
+      </div>
+      <div class="game-card__top">
+        <span class="game-year">2016</span>
+        <span class="game-badge">Steam</span>
+      </div>
+      <h3 class="game-title">우리 아빠는 용사랍니다</h3>
+      <p class="game-desc">두 명의 주인공을 교차하며 플레이하는 액션 RPG.<br>14살부터 2년간 제작, 총 3막 스토리, 플레이 타임 4시간.</p>
+      <a href="https://store.steampowered.com/app/3429120" target="_blank" class="game-link">
+        Steam에서 보기
+        <svg viewBox="0 0 12 12"><path d="M6.5 1H11v4.5M11 1L5 7M1 3h3.5v8H11V7"/></svg>
+      </a>
+    </div>
+    <div class="game-card">
+      <div class="game-card__thumb">
+        <img src="https://ddang-kong.github.io/portfolio-build-manager/assets/Games/SHWA.png" alt="SHWA">
+      </div>
+      <div class="game-card__top">
+        <span class="game-year">2017</span>
+        <span class="game-badge">BIC Festival</span>
+      </div>
+      <h3 class="game-title">SHWA [ʃwɑː]</h3>
+      <p class="game-desc">신이 되어 세상을 구하거나 삭제하는 어드벤처 게임.<br>부산 인디커넥트 페스티벌 2017 전시작 선정.</p>
+      <a href="https://store.steampowered.com/app/3425720" target="_blank" class="game-link">
+        Steam에서 보기
+        <svg viewBox="0 0 12 12"><path d="M6.5 1H11v4.5M11 1L5 7M1 3h3.5v8H11V7"/></svg>
+      </a>
+    </div>
+    <div class="game-card">
+      <div class="game-card__thumb">
+        <img src="https://ddang-kong.github.io/portfolio-build-manager/assets/Games/RPGforEveryone.png" alt="모두를 위한 정통 RPG">
+      </div>
+      <div class="game-card__top">
+        <span class="game-year">2017</span>
+        <span class="game-badge">인기유료 6위</span>
+      </div>
+      <h3 class="game-title">모두를 위한 정통 RPG</h3>
+      <p class="game-desc">개발자가 되어 게임을 만들고 출시하는 시뮬레이션 게임.<br>Google Play 인기 유료 순위 최고 6위 달성.</p>
+      <a href="https://store.steampowered.com/app/3425350" target="_blank" class="game-link">
+        Steam에서 보기
+        <svg viewBox="0 0 12 12"><path d="M6.5 1H11v4.5M11 1L5 7M1 3h3.5v8H11V7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <a href="https://motley-mechanic-129.notion.site/16ff2060cc8980cea8b8ceab1e6c52d8?pvs=143" target="_blank" class="qr-wrap reveal reveal-d4">
+    <img src="https://ddang-kong.github.io/portfolio-build-manager/assets/slide03_img13.png" alt="QR 코드">
+    <p class="qr-label"><strong>게임 프로젝트 링크</strong>전체 작품 목록 · Notion으로 보기 →</p>
+  </a>
+</section>
+
+
+
+<style>
+/* ─── Diagram System ──────────────────────────── */
+.vd { display:flex; flex-direction:column; align-items:center; width:100%; max-width:900px; margin-top:36px; }
+.vd-row { display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; }
+.vd-col { display:flex; flex-direction:column; align-items:center; gap:6px; }
+
+.vd-n { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:12px 18px; border-radius:10px; gap:3px; }
+.vd-n--base  { background:#fff; border:1.5px solid rgba(0,0,0,.1); }
+.vd-n--hl    { background:rgba(0,102,204,.09); border:1.5px solid rgba(0,102,204,.35); }
+.vd-n--parch { background:var(--parchment); border:1.5px solid rgba(0,0,0,.09); }
+.vd-n--dk    { background:rgba(255,255,255,.16); border:1.5px solid rgba(255,255,255,.28); }
+.vd-n--hl-dk { background:rgba(41,151,255,.24); border:1.5px solid rgba(41,151,255,.55); }
+.vd-n--del   { background:rgba(220,50,50,.07); border:1.5px solid rgba(220,50,50,.3); }
+.vd-n--ok    { background:rgba(39,174,96,.12); border:1.5px solid rgba(39,174,96,.4); }
+.vd-n--fail  { background:rgba(220,53,69,.1); border:1.5px solid rgba(220,53,69,.35); }
+.vd-n--product { background:var(--primary); border:none; }
+.vd-n--warn  { background:rgba(255,165,0,.1); border:1.5px solid rgba(255,165,0,.4); }
+.vd-n--state { background:rgba(0,102,204,.06); border:1.5px solid rgba(0,102,204,.2); border-radius:20px; padding:8px 20px; }
+.vd-n--state-dk { background:rgba(41,151,255,.18); border:1.5px solid rgba(41,151,255,.5); border-radius:20px; padding:8px 20px; }
+
+.vd-nt { font-size:13px; font-weight:700; color:var(--ink); line-height:1.3; }
+.vd-ns { font-size:11px; color:var(--ink-48); line-height:1.4; margin-top:1px; }
+.vd-n--hl .vd-nt   { color:var(--primary); }
+.vd-n--dk .vd-nt   { color:#ffffff; }
+.vd-n--dk .vd-ns   { color:rgba(255,255,255,.72); }
+.vd-n--hl-dk .vd-nt{ color:#9dd4ff; }
+.vd-n--hl-dk .vd-ns{ color:rgba(157,212,255,.65); }
+.vd-n--del .vd-nt  { color:#c0392b; }
+.vd-n--ok .vd-nt   { color:#1a7a3c; }
+.vd-n--fail .vd-nt { color:#c0392b; }
+.vd-n--warn .vd-nt { color:#b36000; }
+.vd-n--product .vd-nt { color:#fff; font-size:16px; }
+.vd-n--product .vd-ns { color:rgba(255,255,255,.7); }
+.vd-n--state .vd-nt { color:var(--primary); font-size:12px; }
+.vd-n--state-dk .vd-nt { color:#9dd4ff; font-size:12px; }
+
+.vd-ah { font-size:22px; color:var(--primary); opacity:.55; line-height:1; flex-shrink:0; }
+.vd-av { font-size:20px; color:var(--primary); opacity:.55; line-height:1; text-align:center; padding:2px 0; }
+.vd-ah-dk { color:var(--primary-dark); opacity:.7; }
+.vd-av-dk { color:var(--primary-dark); opacity:.7; }
+
+.vd-lbl { font-size:11px; color:var(--ink-48); letter-spacing:.04em; text-align:center; margin:4px 0; }
+.vd-lbl-dk { color:rgba(255,255,255,.58); }
+.vd-divider { width:100%; max-width:860px; border:none; border-top:1px dashed rgba(0,0,0,.1); margin:28px 0; }
+.vd-divider-dk { border-top-color:rgba(255,255,255,.15); }
+
+.vd-group { border-left:3px solid rgba(0,102,204,.35); padding-left:12px; display:flex; flex-direction:column; gap:5px; }
+
+/* Panels 2-col */
+.vd-panels { display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%; max-width:900px; margin-top:36px; }
+.vd-panel { display:flex; flex-direction:column; gap:0; border:1.5px solid var(--hairline); border-radius:14px; padding:24px 20px; background:#fff; }
+.vd-panel--hl { border-color:rgba(0,102,204,.3); background:rgba(0,102,204,.04); }
+.vd-panel--dk { border-color:rgba(41,151,255,.3); background:rgba(255,255,255,.05); }
+.vd-panel__hd { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-48); margin-bottom:16px; }
+.vd-panel__hd--hl { color:var(--primary); }
+.vd-panel__hd--dk { color:#9dd4ff; }
+
+/* Step cards */
+.vd-steps { display:flex; flex-direction:column; gap:0; width:100%; max-width:680px; margin-top:36px; }
+.vd-step { display:flex; align-items:flex-start; gap:16px; text-align:left; }
+.vd-step__bubble { flex-shrink:0; width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; }
+.vd-step__body { flex:1; padding-top:6px; }
+.vd-step__title { font-size:14px; font-weight:700; color:var(--ink); display:block; margin-bottom:4px; }
+.vd-step__desc { font-size:13px; color:var(--ink-48); line-height:1.65; display:block; }
+.vd-step__sub { display:flex; flex-direction:column; gap:3px; margin-top:8px; }
+.vd-step__sub span { font-size:12px; color:var(--ink-48); line-height:1.5; padding-left:.8em; text-indent:-.8em; }
+.vd-step__sub span::before { content:'→ '; color:var(--primary); }
+.vd-step-sep { display:flex; align-items:center; padding-left:17px; height:28px; }
+.vd-step-sep::before { content:''; display:block; width:1px; height:100%; background:rgba(0,102,204,.2); }
+
+/* Accent cards */
+.vd-cards { display:flex; flex-direction:column; gap:10px; width:100%; max-width:720px; margin-top:32px; text-align:left; }
+.vd-card-item { padding:16px 20px; border-radius:10px; border-left:3px solid var(--primary); background:rgba(0,102,204,.04); }
+.vd-card-item--dk { border-left-color:rgba(41,151,255,.7); background:rgba(255,255,255,.07); }
+.vd-card-item p { font-size:14px; color:var(--ink); line-height:1.75; margin:0; }
+.vd-card-item--dk p { color:rgba(255,255,255,.85); }
+
+/* Role cards (2-col intro) */
+.vd-role-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; width:100%; max-width:900px; margin-top:36px; }
+.vd-role-card { border-radius:12px; padding:24px; text-align:left; }
+.vd-role-card--plain { background:#fff; border:1.5px solid var(--hairline); }
+.vd-role-card--hl { background:rgba(0,102,204,.05); border:1.5px solid rgba(0,102,204,.25); }
+.vd-role-card__tag { font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-48); margin-bottom:10px; display:block; }
+.vd-role-card--hl .vd-role-card__tag { color:var(--primary); }
+.vd-role-card__title { font-size:15px; font-weight:800; color:var(--ink); margin-bottom:8px; line-height:1.3; }
+.vd-role-card--hl .vd-role-card__title { color:var(--primary); }
+.vd-role-card__body { font-size:13px; color:var(--ink-48); line-height:1.7; }
+
+/* Feature chips */
+.vd-features { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:900px; margin-top:28px; }
+.vd-feature { display:flex; align-items:flex-start; gap:12px; padding:16px 18px; border-radius:10px; background:#fff; border:1.5px solid var(--hairline); text-align:left; }
+.vd-feature__icon { font-size:22px; flex-shrink:0; line-height:1.4; }
+.vd-feature__text { font-size:12.5px; color:var(--ink-48); line-height:1.6; }
+.vd-feature__text strong { color:var(--ink); display:block; font-size:13px; font-weight:700; margin-bottom:4px; }
+
+/* Lifecycle */
+.vd-cycle { display:flex; flex-direction:column; align-items:center; width:100%; max-width:900px; margin-top:36px; }
+.vd-cycle-row { display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; }
+.vd-cycle-return { width:calc(100% - 80px); max-width:800px; border:1.5px dashed rgba(0,102,204,.22); border-top:none; border-radius:0 0 18px 18px; height:24px; }
+
+/* Dark table */
+.tech-table--dark td { color:rgba(255,255,255,.8) !important; }
+.tech-table--dark th { color:#9dd4ff !important; }
+
+/* Node group cards */
+.vd-node-item { display:flex; flex-direction:column; gap:2px; padding:11px 14px; border-radius:8px; background:rgba(0,0,0,.03); border-left:2px solid var(--hairline); text-align:left; }
+.vd-node-item--hl { background:rgba(0,102,204,.05); border-left-color:var(--primary); }
+.vd-node-item__title { font-size:12.5px; font-weight:700; color:var(--ink); }
+.vd-node-item--hl .vd-node-item__title { color:var(--primary); }
+.vd-node-item__sub { font-size:11px; color:var(--ink-48); line-height:1.4; }
+
+/* Checker state chips */
+.vd-state-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:28px; }
+.vd-state-chip { padding:8px 18px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:.04em; }
+.vd-state-chip--prog { background:rgba(255,165,0,.12); color:#b36000; border:1.5px solid rgba(255,165,0,.4); }
+.vd-state-chip--ok   { background:rgba(39,174,96,.12); color:#1a7a3c; border:1.5px solid rgba(39,174,96,.35); }
+.vd-state-chip--dep  { background:rgba(0,102,204,.1); color:var(--primary); border:1.5px solid rgba(0,102,204,.35); }
+.vd-state-chip--dk-prog { background:rgba(255,165,0,.18); color:#ffc84a; border:1.5px solid rgba(255,165,0,.5); }
+.vd-state-chip--dk-ok   { background:rgba(39,174,96,.2); color:#2ecc71; border:1.5px solid rgba(39,174,96,.5); }
+.vd-state-chip--dk-dep  { background:rgba(41,151,255,.2); color:#9dd4ff; border:1.5px solid rgba(41,151,255,.5); }
+
+/* Condition checklist */
+.vd-checklist { display:flex; flex-direction:column; gap:8px; width:100%; max-width:560px; margin-top:20px; }
+.vd-check-item { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:8px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); }
+.vd-check-icon { font-size:16px; flex-shrink:0; }
+.vd-check-text { font-size:13px; color:rgba(255,255,255,.85); line-height:1.4; }
+
+@media(max-width:680px) {
+  .vd-panels, .vd-role-grid, .vd-features { grid-template-columns:1fr; }
+  .vd-row { gap:6px; }
+  .vd-ah { font-size:16px; }
+}
+</style>
+
+<!-- ════════════════════════════════
+     CASE 1  INTRO
+════════════════════════════════ -->
+<section class="case-intro" id="case1">
+  <div class="bg-img" style="background-image:url('https://ddang-kong.github.io/portfolio-build-manager/assets/slide02_img34.jpg'); opacity:.65;"></div>
+  <div class="bg-grad"></div>
+  <div class="glow glow--blue glow--c" style="opacity:.08;"></div>
+  <div class="case-accent reveal"></div>
+  <p class="case-num reveal reveal-d1">#1</p>
+  <p class="case-eyebrow reveal reveal-d2">Case Study</p>
+  <h2 class="case-title reveal reveal-d3">NC Blade &amp; Soul<br>빌드 관리 분석</h2>
+  <p class="case-sub reveal reveal-d4">
+    개발PM으로 근무하면서, 빌드 관리 구조를 이해하기 위해<br>제가 공부한 내용들을 정리해보았습니다.
+  </p>
+</section>
+
+<!-- ════════════════════════════════
+     01  전체 빌드 파이프라인 개요
+════════════════════════════════ -->
+<section class="bg-white" id="bns-s01">
+  <p class="eyebrow eyebrow--light reveal">01</p>
+  <h2 class="headline headline--light reveal reveal-d1">전체 빌드 파이프라인 개요</h2>
+  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:680px;">
+    Blade &amp; Soul의 작업물이 기획·개발 단계에서 시작해<br>실제 서비스에 반영되기까지 거치는 경로를 단계별로 정리합니다.
+  </p>
+
+  <div class="pipeline-flow reveal reveal-d3">
+    <div class="pipe-node pipe-node--hl" onclick="location.href='#bns-s02'" style="cursor:pointer;">
+      <span class="pipe-node__num">①</span>
+      <span class="pipe-node__name">작업 투입</span>
+      <span class="pipe-node__sub">Perforce<br>Souldev에 Submit</span>
+    </div>
+    <div class="pipe-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    <div class="pipe-node pipe-node--hl" onclick="location.href='#bns-s03'" style="cursor:pointer;">
+      <span class="pipe-node__num">②</span>
+      <span class="pipe-node__name">스트림 분기</span>
+      <span class="pipe-node__sub">월간·주간 분기<br>글로벌 파생</span>
+    </div>
+    <div class="pipe-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    <div class="pipe-node pipe-node--hl" onclick="location.href='#bns-s04'" style="cursor:pointer;">
+      <span class="pipe-node__num">③</span>
+      <span class="pipe-node__name">빌드</span>
+      <span class="pipe-node__sub">모듈들 → 패키지들<br>→ Product</span>
+    </div>
+    <div class="pipe-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    <div class="pipe-node pipe-node--hl" onclick="location.href='#bns-s06'" style="cursor:pointer;">
+      <span class="pipe-node__num">④</span>
+      <span class="pipe-node__name">빌드 검증</span>
+      <span class="pipe-node__sub">CheckerWeb<br>자동 검사</span>
+    </div>
+    <div class="pipe-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    <div class="pipe-node pipe-node--hl" onclick="location.href='#bns-s07'" style="cursor:pointer;">
+      <span class="pipe-node__num">⑤</span>
+      <span class="pipe-node__name">배포</span>
+      <span class="pipe-node__sub">QA망 → 라이브<br>→ 새 스트림 생성</span>
+    </div>
+  </div>
+
+  <p class="sec-label sec-label--light reveal">전체 과정 상세 요약도</p>
+  <div class="vd-steps reveal reveal-d1">
+    <div class="vd-step">
+      <div class="vd-step__bubble">①</div>
+      <div class="vd-step__body">
+        <strong class="vd-step__title">작업 투입</strong>
+        <span class="vd-step__desc">개발자·기획자·아티스트가 Perforce의 Souldev에 Submit한다</span>
+      </div>
+    </div>
+    <div class="vd-step-sep"></div>
+    <div class="vd-step">
+      <div class="vd-step__bubble">②</div>
+      <div class="vd-step__body">
+        <strong class="vd-step__title">스트림 분기</strong>
+        <div class="vd-step__sub">
+          <span>souldev → 한국(ZNCS) 월간 릴리즈 스트림 → 매주 주간 스트림 생성</span>
+          <span>한 달에 한 번 글로벌(ZNCG) 스트림 파생 (지역별 시점 다름)</span>
+        </div>
+      </div>
+    </div>
+    <div class="vd-step-sep"></div>
+    <div class="vd-step">
+      <div class="vd-step__bubble">③</div>
+      <div class="vd-step__body">
+        <strong class="vd-step__title">빌드 (Jenkins)</strong>
+        <span class="vd-step__desc">사람이 직접 실행 또는 정해진 시간마다 자동 실행</span>
+        <div class="vd-step__sub">
+          <span>모듈 빌드 (클라이언트·서버·데이터설계도·게임데이터·그래픽)</span>
+          <span>패키지로 묶음 (그래픽 / 게임데이터 / 프로그램바이너리)</span>
+          <span>패키지들을 합쳐 Product(완성품) 구성</span>
+        </div>
+      </div>
+    </div>
+    <div class="vd-step-sep"></div>
+    <div class="vd-step">
+      <div class="vd-step__bubble">④</div>
+      <div class="vd-step__body">
+        <strong class="vd-step__title">빌드 검증 (CheckerWeb)</strong>
+        <span class="vd-step__desc">패키지가 만들어질 때마다 자동 검사 (데이터 무결성·실행 테스트·게임데이터·랭킹데이터)</span>
+        <div class="vd-step__sub">
+          <span>통과한 패키지만 Product 구성에 사용</span>
+        </div>
+      </div>
+    </div>
+    <div class="vd-step-sep"></div>
+    <div class="vd-step">
+      <div class="vd-step__bubble">⑤</div>
+      <div class="vd-step__body">
+        <strong class="vd-step__title">배포</strong>
+        <div class="vd-step__sub">
+          <span>검증 통과 → QA망 업데이트 → 라이브 서비스 반영</span>
+          <span>(반복) 다음 패치를 위한 새 스트림 생성 → 이전 스트림은 보관 처리</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-label sec-label--light reveal">주요 시스템</p>
+  <div class="tech-table-wrap reveal reveal-d2">
+    <table class="tech-table">
+      <thead><tr><th>시스템</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Perforce</strong></td><td>코드·데이터·에셋을 저장하고 버전을 관리하는 저장소</td></tr>
+        <tr><td><strong>Jenkins</strong></td><td>작업물을 실행 가능한 빌드로 조립하는 자동화 시스템</td></tr>
+        <tr><td><strong>CheckerWeb</strong></td><td>패키지가 정상인지 자동으로 검사하는 시스템</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="body body--light reveal" style="font-size:12px;color:var(--ink-48);text-align:center;margin-top:52px;">이 페이지는 실제 운영 중인 구조를 단순화·일반화하여 설명합니다.</p>
+</section>
+
+<!-- ════════════════════════════════
+     02  스트림의 구조 : Souldev
+════════════════════════════════ -->
+<section class="bg-parchment" id="bns-s02">
+  <p class="eyebrow eyebrow--light reveal">02</p>
+  <h2 class="headline headline--light reveal reveal-d1">스트림의 구조 : Souldev</h2>
+  <p class="subhead subhead--light reveal reveal-d2">Souldev로부터 파생되는 스트림</p>
+
+  <div class="vd-cards reveal reveal-d2">
+    <div class="vd-card-item"><p>모든 작업자는 <strong>souldev라는 코드베이스에 공통적으로 작업물들을 제출</strong>한다.</p></div>
+    <div class="vd-card-item"><p>Souldev 안에는 <strong>한국 본서버(NC)</strong>, <strong>한국 NEO(ZNCS)</strong>, <strong>중국 특화(ZTX)</strong> 세 가지가 공존한다.</p></div>
+    <div class="vd-card-item"><p><strong>한 달에 한 번</strong>, souldev로부터 각각의 릴리즈용 스트림이 생성된다.</p></div>
+    <div class="vd-card-item"><p>규모가 큰 기능은 별도의 <strong>임시 스트림(피처 스트림)</strong>에서 진행한다. 기능이 완성되면 souldev에 합쳐지고, 피처 스트림은 <strong>삭제</strong>된다.</p></div>
+    <div class="vd-card-item"><p>ZTX는 ZNCG에 포함된 <strong>중국 NEO와는 별개</strong> 항목이다.</p></div>
+  </div>
+
+  <p class="sec-label sec-label--light reveal">souldev 구조와 월간 분기, 피처 스트림</p>
+  <div class="vd reveal reveal-d1">
+    <div class="vd-row">
+      <div class="vd-n vd-n--parch" style="min-width:100px;"><span class="vd-nt">모든 작업자</span><span class="vd-ns">개발자·기획자·아티스트</span></div>
+      <span class="vd-ah">→</span>
+      <div class="vd-n vd-n--hl" style="min-width:120px;padding:18px 22px;"><span class="vd-nt">souldev</span><span class="vd-ns">공통 코드베이스</span></div>
+      <span class="vd-ah">→</span>
+      <div class="vd-col" style="gap:5px;align-items:flex-start;">
+        <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">NC 릴리즈 스트림</span><span class="vd-ns">한국 본서버</span></div>
+        <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">ZNCS 릴리즈 스트림</span><span class="vd-ns">한국 NEO</span></div>
+        <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">ZTX 릴리즈 스트림</span><span class="vd-ns">중국 특화</span></div>
+      </div>
+    </div>
+    <div class="vd-lbl">한 달에 한 번, souldev로부터 각각 릴리즈 스트림 생성</div>
+    <hr class="vd-divider">
+    <div class="vd-lbl" style="margin-bottom:10px;">별도 트랙 — 대규모 기능 개발</div>
+    <div class="vd-row">
+      <div class="vd-n vd-n--hl" style="min-width:120px;"><span class="vd-nt">souldev</span></div>
+      <span class="vd-ah" style="font-size:14px;opacity:.4;">─ 복제 ─</span>
+      <span class="vd-ah">→</span>
+      <div class="vd-n vd-n--parch" style="min-width:155px;"><span class="vd-nt">피처 스트림</span><span class="vd-ns">대규모 기능 작업</span></div>
+      <span class="vd-ah" style="font-size:14px;opacity:.4;">─ 완료 ─</span>
+      <span class="vd-ah">→</span>
+      <div class="vd-n vd-n--base" style="min-width:140px;"><span class="vd-nt">souldev에 합침</span></div>
+      <span class="vd-ah">→</span>
+      <div class="vd-n vd-n--del" style="min-width:80px;"><span class="vd-nt">삭제</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     03  스트림의 구조 : 주간 분기와 글로벌 파생
+════════════════════════════════ -->
+<section class="bg-dark" id="bns-s03">
+  <div class="glow glow--blue glow--tl"></div>
+  <div class="glow glow--purple glow--br"></div>
+  <p class="eyebrow eyebrow--dark reveal">03</p>
+  <h2 class="headline headline--dark reveal reveal-d1">스트림의 구조 : 주간 분기와 글로벌 파생</h2>
+  <p class="subhead subhead--dark reveal reveal-d2">주간 업데이트를 위한 스트림을 생성하고, 해외용 파생 스트림을 생성한다</p>
+
+  <div class="vd-cards reveal reveal-d2">
+    <div class="vd-card-item vd-card-item--dk"><p>ZNCS는 릴리즈 스트림을 기준으로, <strong>매주 주간 업데이트용 신규 스트림</strong>을 생성한다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p><strong>한 달에 한 번</strong>, ZNCS의 스트림으로부터 글로벌 빌드인 <strong>ZNCG</strong>가 복제 생성된다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>ZNCG는 서비스 지역(대만, 북미·유럽, 중국, 러시아)에 따라 <strong>분기 시점이 달라</strong> 각기 다른 버전을 사용한다.</p></div>
+  </div>
+
+  <p class="sec-label sec-label--dark reveal">주간 분기 + ZNCG 파생</p>
+  <div class="vd reveal reveal-d1">
+    <div class="vd-row">
+      <div class="vd-n vd-n--dk" style="min-width:100px;"><span class="vd-nt">souldev</span></div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-n vd-n--hl-dk" style="min-width:160px;"><span class="vd-nt">ZNCS 릴리즈 스트림</span><span class="vd-ns">한 달에 한 번 생성</span></div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-row" style="gap:4px;">
+        <div class="vd-n vd-n--dk" style="min-width:72px;"><span class="vd-nt">주간 1</span></div>
+        <span class="vd-ah vd-ah-dk" style="font-size:16px;">→</span>
+        <div class="vd-n vd-n--dk" style="min-width:72px;"><span class="vd-nt">주간 2</span></div>
+        <span class="vd-ah vd-ah-dk" style="font-size:16px;">→</span>
+        <div class="vd-n vd-n--hl-dk" style="min-width:90px;"><span class="vd-nt">주간 3</span><span class="vd-ns">최신</span></div>
+      </div>
+    </div>
+    <div class="vd-lbl vd-lbl-dk">매주 이전 스트림에서 신규 스트림 생성</div>
+    <div class="vd-av vd-av-dk" style="margin:16px 0 4px;">↓</div>
+    <div class="vd-lbl vd-lbl-dk" style="margin-bottom:16px;">한 달에 한 번, ZNCS 스트림에서 복제</div>
+    <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">ZNCG 글로벌 빌드</span><span class="vd-ns">ZNCS 스트림을 기준으로 파생</span></div>
+    <div class="vd-av vd-av-dk">↓</div>
+    <div class="vd-row" style="gap:6px;">
+      <div class="vd-n vd-n--dk" style="min-width:100px;"><span class="vd-nt">대만</span></div>
+      <div class="vd-n vd-n--dk" style="min-width:110px;"><span class="vd-nt">북미·유럽</span></div>
+      <div class="vd-n vd-n--dk" style="min-width:80px;"><span class="vd-nt">중국</span></div>
+      <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">러시아</span></div>
+    </div>
+    <div class="vd-lbl vd-lbl-dk">지역별 분기 시점 차이로 버전 다름</div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     04  빌드 : Jenkins
+════════════════════════════════ -->
+<section class="bg-white" id="bns-s04">
+  <p class="eyebrow eyebrow--light reveal">04</p>
+  <h2 class="headline headline--light reveal reveal-d1">빌드 : Jenkins</h2>
+  <p class="subhead subhead--light reveal reveal-d2">게임 서비스 전체 인프라의 오케스트레이터</p>
+
+  <!-- ① Jenkins 원래 목적 vs BNS 역할 -->
+  <div class="vd-role-grid reveal reveal-d2">
+    <div class="vd-role-card vd-role-card--plain">
+      <span class="vd-role-card__tag">Jenkins 원래 목적</span>
+      <div class="vd-role-card__title">코드 커밋 즉시<br>자동 빌드·배포</div>
+      <div class="vd-role-card__body">2011년 Hudson에서 fork된 오픈소스 자동화 서버. Java 기반, 수천 개의 플러그인 생태계. 코드 커밋 이벤트가 발생하면 빌드·테스트·배포가 자동으로 이어지는 CI/CD를 위해 만들어졌다.</div>
+    </div>
+    <div class="vd-role-card vd-role-card--hl">
+      <span class="vd-role-card__tag">이 환경에서의 역할</span>
+      <div class="vd-role-card__title">빌드·패키징·배포를<br>통합하는 오케스트레이터</div>
+      <div class="vd-role-card__body">단순 CI 도구가 아니다. 빌드 전용 서버부터 실제 게임 서버까지 모두 Jenkins Agent로 연결되어 있으며, 빌드·패키지 관리·배포가 하나의 체계에서 실행된다.</div>
+    </div>
+  </div>
+
+  <!-- ② Jenkins 핵심 구성요소 표 -->
+  <p class="sec-label sec-label--light reveal">Jenkins 핵심 구성요소</p>
+  <div class="tech-table-wrap reveal reveal-d1">
+    <table class="tech-table">
+      <thead><tr><th>구성요소</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Controller (Master)</strong></td><td>Job 스케줄링, Agent 관리, 빌드 이력 보관. Jenkins 시스템 전체를 조율하는 마스터 노드.</td></tr>
+        <tr><td><strong>Agent (Node)</strong></td><td>Controller로부터 Job을 받아 빌드·배포 작업을 직접 수행하는 서버. 역할별로 전용 Agent가 분리된다.</td></tr>
+        <tr><td><strong>Job / Pipeline</strong></td><td>무엇을 어떻게 실행할지 정의한 작업 단위. Groovy 언어 기반 파이프라인 스크립트로 선언된다.</td></tr>
+        <tr><td><strong>Trigger</strong></td><td>Job 실행 시점을 결정. 코드 커밋, 타이머(정해진 시각), 수동 실행, 다른 Job 완료 후 연쇄 실행 등을 지원한다.</td></tr>
+        <tr><td><strong>Executor</strong></td><td>한 Agent에서 동시에 처리 가능한 Job 수. Executor 수에 따라 한 서버에서 병렬 처리 가능한 양이 달라진다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ③ BNS 특화 운영 방식 4가지 -->
+  <p class="sec-label sec-label--light reveal">이 환경에서의 특화 운영 방식</p>
+  <div class="vd-features reveal reveal-d2">
+    <div class="vd-feature">
+      <span class="vd-feature__icon">⏱</span>
+      <div class="vd-feature__text">
+        <strong>타이머 트리거 + 변경 감지</strong>
+        코드 커밋이 아닌 정해진 시간에 자동 발화, 또는 담당자가 수동 실행. 단, Perforce에서 변경사항이 없으면 빌드를 건너뛴다.
+      </div>
+    </div>
+    <div class="vd-feature">
+      <span class="vd-feature__icon">🔗</span>
+      <div class="vd-feature__text">
+        <strong>StreamInfoWeb으로 빌드 대상 동적 결정</strong>
+        Job에 빌드 대상을 하드코딩하지 않는다. 매 빌드 시마다 별도 관리 시스템 API를 실시간 조회하여 대상 스트림과 설정을 그 자리에서 결정한다.
+      </div>
+    </div>
+    <div class="vd-feature">
+      <span class="vd-feature__icon">📁</span>
+      <div class="vd-feature__text">
+        <strong>파이프라인 스크립트를 Perforce에 저장</strong>
+        Groovy 스크립트를 Jenkins 내부가 아닌 Perforce 저장소에 저장한다. 빌드 실행 시마다 최신 스크립트를 가져오므로 수정 사항이 즉시 모든 빌드에 반영된다.
+      </div>
+    </div>
+    <div class="vd-feature">
+      <span class="vd-feature__icon">🖥</span>
+      <div class="vd-feature__text">
+        <strong>실제 게임 서버가 Jenkins Agent</strong>
+        Jenkins에 연결된 Agent 중 상당수가 실제로 게임을 서비스하는 서버다. 배포 Job이 해당 게임 서버 위에서 직접 실행되어 업데이트가 이루어진다.
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 노드 구성 — 2열 패널 -->
+  <p class="sec-label sec-label--light reveal">노드(Agent) 구성 — 총 170여 대, 역할별 전용 분리</p>
+  <div class="vd-panels reveal reveal-d1">
+    <div class="vd-panel" style="gap:8px;">
+      <div class="vd-panel__hd">빌드 전용 서버군</div>
+      <div class="vd-node-item"><div class="vd-node-item__title">클라이언트 바이너리 고속 컴파일</div><div class="vd-node-item__sub">고사양 CPU 전용 머신으로 컴파일 시간 단축</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">서버 바이너리 컴파일</div><div class="vd-node-item__sub">게임 서버 데몬 종류별 빌드를 병렬 처리</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">게임 데이터 패킹</div><div class="vd-node-item__sub">기획 데이터 종류별로 동시 처리</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">그래픽 에셋 쿠킹</div><div class="vd-node-item__sub">GPU 집약적 작업 — 고사양 전용 머신</div></div>
+    </div>
+    <div class="vd-panel vd-panel--hl" style="gap:8px;">
+      <div class="vd-panel__hd vd-panel__hd--hl">배포·게임 서버군</div>
+      <div class="vd-node-item vd-node-item--hl"><div class="vd-node-item__title">실제 게임 서버 (80+대)</div><div class="vd-node-item__sub">배포 Job이 이 서버 위에서 직접 실행됨</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">게임 클라이언트 업데이트</div><div class="vd-node-item__sub">패치 파일을 사용자 다운로드 서버에 반영</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">빌드 검증 전용</div><div class="vd-node-item__sub">CheckerWeb 자동 검사 실행 담당</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">패키지·스트림 인프라</div><div class="vd-node-item__sub">ReleaseWeb / StreamInfoWeb / 스토리지 서버</div></div>
+    </div>
+  </div>
+
+  <!-- ⑤ 5개 빌드 카테고리 — 표 -->
+  <p class="sec-label sec-label--light reveal">5개 빌드 카테고리</p>
+  <p class="body body--light reveal" style="text-align:center;font-size:13px;color:var(--ink-48);max-width:680px;">각 스트림 폴더 아래 5개 카테고리 폴더가 있고, 그 안에 더 세분화된 개별 Job들이 존재한다.</p>
+  <div class="tech-table-wrap reveal reveal-d1" style="margin-top:20px;">
+    <table class="tech-table">
+      <thead><tr><th>카테고리</th><th>역할</th><th>주요 내용</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Binary</strong></td><td>클라이언트 실행파일 컴파일</td><td>게임 메인 실행파일, 플랫폼 바이너리 등</td></tr>
+        <tr><td><strong>BinaryServer</strong></td><td>서버 실행파일 컴파일</td><td>게임 서버를 구성하는 각 데몬 종류마다 독립된 Job</td></tr>
+        <tr><td><strong>Definition</strong></td><td>데이터 구조 스키마 변환</td><td>기획 데이터의 구조 정의 파일을 바이너리로 변환</td></tr>
+        <tr><td><strong>GameData</strong></td><td>게임 수치 데이터 패킹</td><td>캐릭터·아이템·퀘스트·맵 등 종류별로 분리하여 병렬 빌드</td></tr>
+        <tr><td><strong>Graphic</strong></td><td>그래픽 에셋 쿠킹</td><td>3D 모델·이펙트·UI 에셋을 언리얼 엔진 형식으로 변환</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ⑥ 빌드 전체 실행 흐름 -->
+  <p class="sec-label sec-label--light reveal">빌드 전체 실행 흐름</p>
+  <div class="vd-steps reveal reveal-d1" style="max-width:720px;">
+    <div class="vd-step">
+      <div class="vd-step__bubble" style="font-size:12px;">①</div>
+      <div class="vd-step__body">
+        <strong class="vd-step__title">스케줄러 Job 발화</strong>
+        <span class="vd-step__desc">타이머(매일 정해진 시간) 또는 담당자 수동 실행. 빌드 관리 시스템 API를 조회하여 현재 망에 할당된 스트림 목록을 확인하고, 해당 스트림의 빌드 Job을 트리거한다.</span>
+      </div>
+    </div>
+    <div class="vd-step-sep"></div>
+    <div class="vd-step">
+      <div class="vd-step__bubble" style="font-size:12px;">②</div>
+      <div class="vd-step__body">
+        <strong class="vd-step__title">개별 빌드 Job 실행</strong>
+        <span class="vd-step__desc">Perforce에서 최신 소스를 동기화하고 변경사항을 감지한다. 변경사항 없으면 Build Skipped 종료, 있으면 빌드를 실행하고 산출물을 패키지 저장소(ReleaseWeb)에 등록한다.</span>
+        <div class="vd-step__sub"><span>Perforce sync → 변경 감지 → 스킵 or 빌드 → ReleaseWeb 등록</span></div>
+      </div>
+    </div>
+    <div class="vd-step-sep"></div>
+    <div class="vd-step">
+      <div class="vd-step__bubble" style="font-size:12px;">③</div>
+      <div class="vd-step__body">
+        <strong class="vd-step__title">Product 패키지 생성 (정기 실행)</strong>
+        <span class="vd-step__desc">ReleaseWeb에서 바이너리·게임데이터·그래픽 컴포넌트의 최신 버전을 조회한다. 하나라도 새 버전이 생겼으면 세 컴포넌트를 묶어 신규 Product 패키지를 생성한다. 모두 동일하면 건너뛴다.</span>
+        <div class="vd-step__sub"><span>ReleaseWeb 조회 → 변경 감지 → 스킵 or Product 생성</span></div>
+      </div>
+    </div>
+    <div class="vd-step-sep"></div>
+    <div class="vd-step">
+      <div class="vd-step__bubble" style="font-size:12px;">④</div>
+      <div class="vd-step__body">
+        <strong class="vd-step__title">CheckerWeb 자동 등록</strong>
+        <span class="vd-step__desc">Product 생성이 완료되면 즉시 CheckerWeb에 검증 레코드가 자동 등록되고 4가지 자동 검사가 시작된다. 검증이 통과되어야 다음 배포 단계로 이행할 수 있다.</span>
+        <div class="vd-step__sub"><span>Product 생성 → CheckerWeb 레코드 자동 등록 → 자동 검사 시작</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ CI/CD 비교 -->
+  <p class="sec-label sec-label--light reveal">일반적인 CI/CD 체계와의 차이</p>
+  <div class="vd-panels reveal reveal-d1">
+    <div class="vd-panel">
+      <div class="vd-panel__hd">일반적인 CI/CD 체계</div>
+      <div class="vd-col" style="gap:0;width:100%;align-items:stretch;">
+        <div class="vd-n vd-n--base" style="width:100%;"><span class="vd-nt">코드 커밋</span><span class="vd-ns">이벤트 트리거</span></div>
+        <div class="vd-av">↓</div>
+        <div class="vd-n vd-n--base" style="width:100%;"><span class="vd-nt">즉시 자동 빌드</span></div>
+        <div class="vd-av">↓</div>
+        <div class="vd-n vd-n--base" style="width:100%;"><span class="vd-nt">자동 단위·통합 테스트</span></div>
+        <div class="vd-av">↓</div>
+        <div class="vd-n vd-n--base" style="width:100%;"><span class="vd-nt">자동 배포</span></div>
+      </div>
+    </div>
+    <div class="vd-panel vd-panel--hl">
+      <div class="vd-panel__hd vd-panel__hd--hl">이 환경</div>
+      <div class="vd-col" style="gap:0;width:100%;align-items:stretch;">
+        <div class="vd-row" style="width:100%;gap:4px;">
+          <div class="vd-n vd-n--base" style="flex:1;"><span class="vd-nt">타이머 발화</span><span class="vd-ns">매일 정해진 시간</span></div>
+          <div class="vd-n vd-n--base" style="flex:1;"><span class="vd-nt">수동 실행</span><span class="vd-ns">담당자 직접</span></div>
+        </div>
+        <div class="vd-av">↓</div>
+        <div class="vd-n vd-n--hl" style="width:100%;"><span class="vd-nt">StreamInfoWeb 조회</span><span class="vd-ns">빌드 대상 동적 결정 · 변경 없으면 스킵</span></div>
+        <div class="vd-av">↓</div>
+        <div class="vd-n vd-n--hl" style="width:100%;"><span class="vd-nt">5개 카테고리 모듈 빌드</span><span class="vd-ns">클라이언트·서버·스키마·게임데이터·그래픽</span></div>
+        <div class="vd-av">↓</div>
+        <div class="vd-n vd-n--hl" style="width:100%;"><span class="vd-nt">Product 생성 → CheckerWeb 사후 검증</span><span class="vd-ns">자동 단위 테스트 없음 · CheckerWeb이 담당</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     05  빌드 : 패키지와 프로덕트
+════════════════════════════════ -->
+<section class="bg-parchment" id="bns-s05">
+  <p class="eyebrow eyebrow--light reveal">05</p>
+  <h2 class="headline headline--light reveal reveal-d1">빌드 : 패키지와 프로덕트</h2>
+  <p class="subhead subhead--light reveal reveal-d2">모듈에서 패키지로, 패키지에서 Product로</p>
+
+  <div class="vd-cards reveal reveal-d2">
+    <div class="vd-card-item"><p>빌드된 <strong>모듈들</strong>은 그대로 쓰이지 않고, 다시 <strong>3개의 패키지</strong>로 묶인다: 그래픽 패키지, 게임데이터 패키지, 프로그램바이너리 패키지.</p></div>
+    <div class="vd-card-item"><p>각 패키지는 <strong>별도 저장소에 버전별로 등록</strong>된다. 이전 패키지와 비교해 변경된 내용이 있을 때만 새 패키지가 만들어진다.</p></div>
+    <div class="vd-card-item"><p>3개 패키지가 모두 모이면 하나의 <strong>Product(완성품)</strong>로 합쳐진다. Product 단위가 곧 QA망 업데이트와 라이브 배포에 쓰이는 <strong>최종 산출물</strong>이다.</p></div>
+  </div>
+
+  <p class="sec-label sec-label--light reveal">모듈 → 패키지 → Product</p>
+  <div class="vd reveal reveal-d1">
+    <div class="vd-row" style="align-items:center;gap:16px;flex-wrap:nowrap;">
+      <div class="vd-col" style="gap:5px;align-items:stretch;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-48);text-align:center;margin-bottom:4px;">모듈</div>
+        <div class="vd-group">
+          <div class="vd-n vd-n--parch" style="min-width:148px;"><span class="vd-nt">클라이언트 실행파일</span></div>
+          <div class="vd-n vd-n--parch" style="min-width:148px;"><span class="vd-nt">서버 실행파일</span></div>
+        </div>
+        <div style="height:10px;"></div>
+        <div class="vd-n vd-n--parch" style="min-width:148px;"><span class="vd-nt">게임 수치 데이터</span></div>
+        <div style="height:10px;"></div>
+        <div class="vd-n vd-n--parch" style="min-width:148px;"><span class="vd-nt">그래픽 에셋</span></div>
+      </div>
+      <div class="vd-col" style="gap:22px;padding-top:20px;">
+        <span class="vd-ah" style="opacity:.35;">→</span>
+        <span style="display:block;height:10px;"></span>
+        <span class="vd-ah" style="opacity:.35;">→</span>
+        <span style="display:block;height:10px;"></span>
+        <span class="vd-ah" style="opacity:.35;">→</span>
+      </div>
+      <div class="vd-col" style="gap:5px;align-items:stretch;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-48);text-align:center;margin-bottom:4px;">패키지</div>
+        <div class="vd-n vd-n--hl" style="min-width:168px;"><span class="vd-nt">프로그램바이너리</span></div>
+        <div style="height:10px;"></div>
+        <div class="vd-n vd-n--hl" style="min-width:168px;"><span class="vd-nt">게임데이터</span></div>
+        <div style="height:10px;"></div>
+        <div class="vd-n vd-n--hl" style="min-width:168px;"><span class="vd-nt">그래픽</span></div>
+      </div>
+      <span class="vd-ah">→</span>
+      <div class="vd-col" style="gap:0;align-items:center;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-48);text-align:center;margin-bottom:4px;">최종 산출물</div>
+        <div class="vd-n vd-n--product" style="min-width:120px;min-height:140px;justify-content:center;border-radius:14px;"><span class="vd-nt">Product</span><span class="vd-ns">완성품</span></div>
+      </div>
+    </div>
+    <div class="vd-lbl" style="margin-top:20px;">Product = QA망 업데이트 / 라이브 배포에 사용되는 단위</div>
+  </div>
+
+  <p class="sec-label sec-label--light reveal">단위 정리</p>
+  <div class="tech-table-wrap reveal reveal-d2">
+    <table class="tech-table">
+      <thead><tr><th>단계</th><th>설명</th></tr></thead>
+      <tbody>
+        <tr><td><strong>모듈</strong></td><td>가장 작은 빌드 결과 단위</td></tr>
+        <tr><td><strong>패키지</strong></td><td>모듈을 묶은 3종 (그래픽 / 게임데이터 / 프로그램바이너리)</td></tr>
+        <tr><td><strong>Product</strong></td><td>3개 패키지를 합산한 최종 산출물</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     06  빌드 검증 : Checker
+════════════════════════════════ -->
+<section class="bg-dark" id="bns-s06">
+  <div class="glow glow--blue glow--tl"></div>
+  <div class="glow glow--purple glow--br"></div>
+  <p class="eyebrow eyebrow--dark reveal">06</p>
+  <h2 class="headline headline--dark reveal reveal-d1">빌드 검증 : CheckerWeb</h2>
+  <p class="subhead subhead--dark reveal reveal-d2">패키지 정합성 자동 검증 시스템</p>
+
+  <div class="vd-cards reveal reveal-d2">
+    <div class="vd-card-item vd-card-item--dk"><p>검증은 <strong>패키지로 묶이는 시점</strong>에 시작된다. 모듈 빌드 단계에서는 검증이 없다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>패키지가 새로 만들어지면 <strong>자동으로 검증 레코드가 등록</strong>되고 4가지 항목을 자동으로 점검한다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>검증 레코드에는 <strong>실행파일 버전 / 데이터 버전 / Product 버전</strong>이 각각 따로 기록된다. 버전만 보면 어느 스트림에서 빌드된 것인지 추적 가능하다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>ZNCG는 퍼블리셔마다 다른 스트림을 사용하므로, <strong>퍼블리셔별로 독립된 검증 레코드</strong>가 생성된다. 검증도 지역별로 각각 진행된다.</p></div>
+  </div>
+
+  <!-- 검증 상태값 흐름 -->
+  <p class="sec-label sec-label--dark reveal">검증 상태값 흐름</p>
+  <div class="vd reveal reveal-d1">
+    <div class="vd-row">
+      <div class="vd-n vd-n--hl-dk" style="min-width:120px;"><span class="vd-nt">Product 생성</span><span class="vd-ns">Pack Job 완료</span></div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-state-chip vd-state-chip--dk-prog">검증 진행 중</div>
+        <div class="vd-lbl vd-lbl-dk" style="font-size:10px;">4항목 자동 점검</div>
+      </div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-col" style="gap:6px;align-items:center;">
+        <div class="vd-state-chip vd-state-chip--dk-ok">검증 완료</div>
+        <div class="vd-lbl vd-lbl-dk" style="font-size:10px;">배포 가능 판정</div>
+      </div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-col" style="gap:6px;align-items:center;">
+        <div class="vd-state-chip vd-state-chip--dk-dep">배포 진행 중</div>
+        <div class="vd-lbl vd-lbl-dk" style="font-size:10px;">배포 Job 실행 시<br>CheckerWeb 자동 업데이트</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 배포 가능 조건 -->
+  <p class="sec-label sec-label--dark reveal">배포 가능 조건</p>
+  <p class="body body--dark reveal" style="font-size:13px;max-width:560px;text-align:center;color:rgba(255,255,255,.6);margin-bottom:0;">4가지 검사 항목이 모두 통과해야 Product가 배포 단계로 이행된다</p>
+  <div class="vd-checklist reveal reveal-d1">
+    <div class="vd-check-item"><span class="vd-check-icon">✓</span><span class="vd-check-text"><strong>검증 상태 완료</strong> — 4가지 자동 검사가 모두 완료 처리된 상태</span></div>
+    <div class="vd-check-item"><span class="vd-check-icon">✓</span><span class="vd-check-text"><strong>데이터 유효성 이상 없음</strong> — 데이터 파일 패킹 오류가 0건</span></div>
+    <div class="vd-check-item"><span class="vd-check-icon">✓</span><span class="vd-check-text"><strong>실행 크래시 없음</strong> — 실행파일 기동 테스트에서 비정상 종료 0건</span></div>
+    <div class="vd-check-item"><span class="vd-check-icon">✓</span><span class="vd-check-text"><strong>게임·랭킹 데이터 검증 완료</strong> — 기획 데이터 및 순위 데이터 오류 없음</span></div>
+  </div>
+
+  <!-- 검증 흐름 다이어그램 -->
+  <p class="sec-label sec-label--dark reveal">검증 흐름</p>
+  <div class="vd reveal reveal-d1">
+    <div class="vd-row">
+      <div class="vd-n vd-n--dk"><span class="vd-nt">모듈</span></div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-n vd-n--dk"><span class="vd-nt">패키지 생성</span></div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-n vd-n--hl-dk"><span class="vd-nt">검증 자동 등록</span><span class="vd-ns">상태: 진행 중</span></div>
+    </div>
+    <div class="vd-av vd-av-dk">↓</div>
+    <div class="vd-n vd-n--hl-dk" style="min-width:260px;"><span class="vd-nt">4가지 항목 자동 점검</span><span class="vd-ns">데이터 무결성 · 실행 테스트 · 게임데이터 · 랭킹데이터</span></div>
+    <div class="vd-av vd-av-dk">↓</div>
+    <div class="vd-row" style="align-items:flex-start;gap:24px;">
+      <div class="vd-col" style="gap:0;">
+        <div class="vd-n vd-n--ok" style="min-width:190px;"><span class="vd-nt" style="color:#2ecc71;">통과 — 상태: 완료</span><span class="vd-ns" style="color:rgba(46,204,113,.7);">실행파일·데이터·Product 버전 기록</span></div>
+        <div class="vd-av vd-av-dk">↓</div>
+        <div class="vd-n vd-n--hl-dk" style="min-width:190px;"><span class="vd-nt">배포 단계로 이행</span><span class="vd-ns">→ 배포 진행 중으로 자동 전환</span></div>
+      </div>
+      <div class="vd-col" style="gap:0;">
+        <div class="vd-n vd-n--fail" style="min-width:190px;"><span class="vd-nt" style="color:#ff6b6b;">실패 — 문제 있음</span><span class="vd-ns" style="color:rgba(255,107,107,.6);">하나라도 검사 실패 시</span></div>
+        <div class="vd-av vd-av-dk">↓</div>
+        <div class="vd-n vd-n--dk" style="min-width:190px;"><span class="vd-nt">해당 패키지 보류</span><span class="vd-ns">Product 구성에서 제외</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZNCG 퍼블리셔별 독립 검증 -->
+  <p class="sec-label sec-label--dark reveal">ZNCG — 퍼블리셔별 독립 검증</p>
+  <p class="body body--dark reveal" style="font-size:13px;max-width:620px;text-align:center;color:rgba(255,255,255,.6);margin-bottom:20px;">ZNCG 4개 퍼블리셔는 각각 다른 스트림 버전을 사용하므로, CheckerWeb에도 퍼블리셔별로 독립된 레코드가 생성된다</p>
+  <div class="vd reveal reveal-d1">
+    <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">ZNCG Product 생성</span><span class="vd-ns">퍼블리셔마다 별도 스트림</span></div>
+    <div class="vd-av vd-av-dk">↓</div>
+    <div class="vd-row" style="gap:8px;">
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">대만</span></div>
+        <div class="vd-lbl vd-lbl-dk">독립 검증</div>
+      </div>
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">북미·유럽</span></div>
+        <div class="vd-lbl vd-lbl-dk">독립 검증</div>
+      </div>
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">중국</span></div>
+        <div class="vd-lbl vd-lbl-dk">독립 검증</div>
+      </div>
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">러시아</span></div>
+        <div class="vd-lbl vd-lbl-dk">독립 검증</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 검사 항목 표 -->
+  <p class="sec-label sec-label--dark reveal">검사 항목</p>
+  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d2">
+    <table class="tech-table tech-table--dark">
+      <thead><tr><th>검사 항목</th><th>확인 내용</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:#9dd4ff;">데이터 무결성</strong></td><td>데이터 파일이 손상 없이 정상적으로 패킹되었는가</td></tr>
+        <tr><td><strong style="color:#9dd4ff;">실행 테스트</strong></td><td>실제로 실행했을 때 비정상 종료가 발생하지 않는가</td></tr>
+        <tr><td><strong style="color:#9dd4ff;">게임 데이터 검증</strong></td><td>기획 데이터에 오류가 없는가</td></tr>
+        <tr><td><strong style="color:#9dd4ff;">랭킹 데이터 검증</strong></td><td>순위 관련 데이터에 오류가 없는가</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     07  스트림 관리 : 생성과 폐기
+════════════════════════════════ -->
+<section class="bg-white" id="bns-s07">
+  <p class="eyebrow eyebrow--light reveal">07</p>
+  <h2 class="headline headline--light reveal reveal-d1">스트림 관리 : 생성과 폐기</h2>
+  <p class="subhead subhead--light reveal reveal-d2">스트림의 생성에서 폐기까지 전체의 생명 주기 구조</p>
+
+  <div class="vd-cards reveal reveal-d2">
+    <div class="vd-card-item"><p>새 패치가 준비되면 souldev의 최신 상태를 기준으로 <strong>새 스트림이 생성</strong>되고, 그 스트림 전용 빌드 설정이 함께 만들어진다.</p></div>
+    <div class="vd-card-item"><p>새 버전이 운영에 반영되면 이전 버전은 <strong>보관 전용 상태로 전환</strong>된다. 삭제가 아니라, 수정은 막고 조회만 가능하게 잠긴다.</p></div>
+    <div class="vd-card-item"><p>이 생성과 폐기가 반복되며 섹션 01~06에서 다룬 전체 구조가 순환된다.</p></div>
+  </div>
+
+  <p class="sec-label sec-label--light reveal">전체 생명주기 순환</p>
+  <div class="vd-cycle reveal reveal-d1">
+    <div class="vd-cycle-row">
+      <div class="vd-n vd-n--hl" style="min-width:100px;"><span class="vd-nt">souldev</span><span class="vd-ns">공통 작업본</span></div>
+      <span class="vd-ah" style="font-size:16px;opacity:.35;">─ 복제 ─</span>
+      <span class="vd-ah">→</span>
+      <div class="vd-n vd-n--base" style="min-width:110px;"><span class="vd-nt">새 스트림 생성</span></div>
+      <span class="vd-ah">→</span>
+      <div class="vd-n vd-n--base" style="min-width:72px;"><span class="vd-nt">빌드</span></div>
+      <span class="vd-ah">→</span>
+      <div class="vd-n vd-n--base" style="min-width:72px;"><span class="vd-nt">검증</span></div>
+      <span class="vd-ah">→</span>
+      <div class="vd-n vd-n--base" style="min-width:72px;"><span class="vd-nt">배포</span></div>
+      <span class="vd-ah">→</span>
+      <div class="vd-n vd-n--parch" style="min-width:100px;"><span class="vd-nt">이전 버전</span><span class="vd-ns">보관 처리</span></div>
+    </div>
+    <div class="vd-cycle-return"></div>
+    <div style="height:20px;"></div>
+  </div>
+
+  <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:680px;margin-top:52px;">
+    Blade &amp; Soul의 빌드 파이프라인은 작업물이 공통 코드베이스에서 분리되어 빌드·검증·배포를 거치고, 이후 새로운 버전으로 대체되는 순환 구조로 운영된다.
+  </p>
+</section>
+
+
+     10  CASE 2  INTRO
+════════════════════════════════ -->
+<section class="case-intro" id="case2">
+  <div class="bg-img" style="background-image:url('https://ddang-kong.github.io/portfolio-build-manager/assets/slide10_img01.png'); opacity:.65;"></div>
+  <div class="bg-grad"></div>
+  <div class="glow glow--teal glow--c" style="opacity:.07;"></div>
+
+  <div class="case-accent reveal" style="background:#2ecc71;"></div>
+  <p class="case-num reveal reveal-d1">#2</p>
+  <p class="case-eyebrow reveal reveal-d2">Case Study</p>
+  <h2 class="case-title reveal reveal-d3">1인 제작 게임<br>'파티랏슈!!' 글로벌 런칭</h2>
+  <p class="case-sub reveal reveal-d4">21살, 해외 퍼블리셔와의 글로벌 런칭 준비가 전환점이 되었습니다.<br>'효율적이고 리스크를 예방하는 프로세스'에 대한 고민을 하게 된 계기입니다.</p>
+</section>
+
+<!-- ════════════════════════════════
+     11  PUBLISHER
+════════════════════════════════ -->
+<section class="bg-white publisher-section">
+  <div class="publisher-inner">
+    <div class="publisher-left">
+      <p class="eyebrow eyebrow--light reveal">Background</p>
+      <h2 class="headline headline--light reveal reveal-d1">해외 퍼블리셔와<br>출시를 준비하다</h2>
+      <p class="body body--light reveal reveal-d2">&lt;파티랏슈!!&gt;는 99명의 동료를 수집하며 스토리를 클리어하는 '동료 수집형 RPG'로, 20장에 달하는 스토리와 탐험 요소들을 포함한 장편 RPG입니다.</p>
+      <p class="body body--light reveal reveal-d2" style="margin-top:16px;">3년간의 제작 후 2020년에 공개되었다가, 해외 퍼블리셔인 HIKE Inc.(당시 Crest Inc.)로부터 5개 국어 퍼블리싱 협업 제안을 받았습니다. 이에 글로벌 출시를 위한 준비를 진행하게 되었습니다.</p>
+      <p class="body body--light reveal reveal-d2" style="margin-top:16px;">다만 1인 제작 게임이었기 때문에 리소스가 체계적으로 정리되어 있지 않았고, 이에 정리가 필요했습니다.</p>
+      <div class="stats-row reveal reveal-d3">
+        <div class="stat">
+          <p class="stat__num" data-count="5" data-suffix="">5</p>
+          <p class="stat__label stat__label--light">출시 국어</p>
+        </div>
+        <div class="stat">
+          <p class="stat__num" data-count="99" data-suffix="">99</p>
+          <p class="stat__label stat__label--light">수집 동료</p>
+        </div>
+        <div class="stat">
+          <p class="stat__num" data-count="20" data-suffix="">20</p>
+          <p class="stat__label stat__label--light">챕터</p>
+        </div>
+      </div>
+    </div>
+    <div class="publisher-right reveal reveal-d3">
+      <div class="shot"><img src="https://ddang-kong.github.io/portfolio-build-manager/assets/slide11_img01.png" alt="파티랏슈!! 인게임 캐릭터"></div>
+      <div class="shot"><img src="https://ddang-kong.github.io/portfolio-build-manager/assets/slide11_img02.png" alt="파티랏슈!! 인게임 맵"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     12  FRAMEWORK
+════════════════════════════════ -->
+<section class="bg-parchment">
+  <p class="eyebrow eyebrow--light reveal">Process 01</p>
+  <h2 class="headline headline--light reveal reveal-d1">프로덕트의 협업 체계<br>기반 마련</h2>
+  <p class="body body--light reveal reveal-d2" style="text-align:center;">L10N 작업이 필요한 리소스를 분리하여 적용 대상 빌드를 세분화했습니다.<br>총 <strong>3만 줄</strong>의 인게임 텍스트를 포함한 리소스를 분리 추출·분류·관리했습니다.</p>
+
+  <div class="process-list reveal reveal-d3">
+    <div class="process-item process-item--light">
+      <span class="process-n process-n--light">01</span>
+      <span class="process-t process-t--light">게임 기획 문서 정리</span>
+    </div>
+    <div class="process-item process-item--light">
+      <span class="process-n process-n--light">02</span>
+      <span class="process-t process-t--light">게임 내 아트 리소스 정리</span>
+    </div>
+    <div class="process-item process-item--light">
+      <span class="process-n process-n--light">03</span>
+      <span class="process-t process-t--light">게임 내 텍스트 데이터 정리 — 총 3만 줄</span>
+    </div>
+  </div>
+
+  <div class="reveal reveal-d4 partyrush-img-wrap" style="margin-top:40px;width:100%;max-width:860px;">
+    <img src="https://ddang-kong.github.io/portfolio-build-manager/assets/partyrush data.png" alt="파티랏슈 데이터" style="width:100%;display:block;">
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     13  PROCESS DESIGN
+════════════════════════════════ -->
+<section class="bg-dark">
+  <div class="glow glow--teal glow--br"></div>
+
+  <p class="eyebrow eyebrow--dark reveal">Process 02</p>
+  <h2 class="headline headline--dark reveal reveal-d1">프로세스를<br>처음 설계하다</h2>
+  <p class="subhead subhead--dark reveal reveal-d2" style="margin-bottom:0;">1인 제작 환경에서 번역 발주·납품·인게임 적용 전 과정을 혼자&nbsp;진행했습니다.<br>리비전별 번역 파일을 관리하며 국가별 빌드를 제작했습니다.</p>
+
+  <div class="process-list reveal reveal-d3">
+    <div class="process-item process-item--dark">
+      <span class="process-n process-n--dark">01</span>
+      <span class="process-t process-t--dark">번역이 필요한 파일 분류 및 발주</span>
+    </div>
+    <div class="process-item process-item--dark">
+      <span class="process-n process-n--dark">02</span>
+      <span class="process-t process-t--dark">납품 파일 리비전별 관리</span>
+    </div>
+    <div class="process-item process-item--dark">
+      <span class="process-n process-n--dark">03</span>
+      <span class="process-t process-t--dark">국가별 프로젝트 빌드 제작</span>
+    </div>
+    <div class="process-item process-item--dark">
+      <span class="process-n process-n--dark">04</span>
+      <span class="process-t process-t--dark">Steam · STOVE 플랫폼 동시 출시</span>
+    </div>
+  </div>
+
+
+</section>
+
+<!-- ════════════════════════════════
+     14  RETROSPECTIVE
+════════════════════════════════ -->
+<section class="bg-white">
+  <p class="eyebrow eyebrow--light reveal">Retrospective</p>
+  <h2 class="headline headline--light reveal reveal-d1">글로벌 런칭,<br>그리고 회고</h2>
+  <p class="body body--light reveal reveal-d2" style="text-align:center;">&lt;파티랏슈!!&gt;는 2022년, 한국어·영어·일본어·중국어(간체)·중국어(번체)<br>5개 국어로 Steam, STOVE에 출시되었습니다.<br><br>그러나 1인 제작의 한계로 데이터 정합성 검사를 파일 형식 위주로만 체크했고,<br>인게임 적용에 대한 QA 검수 프로세스를 상세히 설계하지 못했습니다.<br>결국 일본어 버전 인게임 후반부에서 데이터 오류로 인한 부정적 피드백이 발생했습니다.<br><br><strong>'리스크를 관리할 수 있는 방법이 없었을까'</strong>라는 아쉬움이,<br><strong>'프로세스' 그 자체</strong>에 대한 깊은 고민의 계기가 되었습니다.</p>
+
+  <div class="shot-single shot reveal reveal-d3">
+    <img src="https://ddang-kong.github.io/portfolio-build-manager/assets/slide14_img02.png" alt="파티랏슈!! Steam 출시 페이지">
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     15  SUMMARY
+════════════════════════════════ -->
+<section class="bg-dark" id="summary">
+  <div class="glow glow--blue glow--tl"></div>
+  <div class="glow glow--purple glow--br"></div>
+
+  <p class="eyebrow eyebrow--dark reveal">그래서 저는</p>
+  <h2 class="headline headline--dark reveal reveal-d1">세 가지 경험이<br>인사이트의 기반입니다</h2>
+
+  <div class="pillars">
+    <div class="pillar reveal reveal-d2">
+      <img class="pillar__img pillar__img--lg" src="https://ddang-kong.github.io/portfolio-build-manager/assets/slide15_img03.png" alt="">
+      <p class="pillar__since">10대 인디게임 제작자</p>
+      <h3 class="pillar__title">1인 인디게임<br>제작자였기에</h3>
+      <p class="pillar__desc">유저 경험 위주의 UX 설계로 작업에 임합니다.</p>
+      <span class="pillar__tag">→ UX 중심 설계</span>
+    </div>
+    <div class="pillar reveal reveal-d3">
+      <img class="pillar__img" src="https://ddang-kong.github.io/portfolio-build-manager/assets/slide15_img05.png" alt="">
+      <p class="pillar__since">글로벌 5개국어 출시</p>
+      <h3 class="pillar__title">글로벌 출시를<br>해봤기에</h3>
+      <p class="pillar__desc">프로세스의 부재가 어떤 리스크를 만드는지 알고 있습니다.</p>
+      <span class="pillar__tag">→ 리스크 관리</span>
+    </div>
+    <div class="pillar reveal reveal-d4">
+      <img class="pillar__img" src="https://ddang-kong.github.io/portfolio-build-manager/assets/slide15_img06.png" alt="">
+      <p class="pillar__since">현업 AI 자동화 도입</p>
+      <h3 class="pillar__title">AI 자동화 기술<br>역량까지</h3>
+      <p class="pillar__desc">팀의 적극적인 기술적 개선을 추구하며, 새로 익히는 것에 앞장섭니다.</p>
+      <span class="pillar__tag">→ 기술 주도 개선</span>
+    </div>
+  </div>
+
+  <p class="body reveal reveal-d5" style="text-align:center;margin-top:48px;font-weight:700;color:var(--on-dark);">
+    UX 위주의 프로세스 설계 + 적극적인 기술 학습과 도입을 추구하겠습니다.
+  </p>
+</section>
+
+<!-- ════════════════════════════════
+     16  CLOSING
+════════════════════════════════ -->
+<section class="closing" id="closing">
+  <div class="glow glow--blue glow--tl" style="top:80px;"></div>
+  <div class="glow glow--purple glow--br"></div>
+
+  <p class="closing__sub reveal" style="margin-bottom:40px;">창작자의 마음가짐을 잊지 않고,<br>그 즐거움이 훼손되지 않도록 돕겠습니다.</p>
+  <h2 class="closing__h reveal reveal-d1">감사합니다.</h2>
+  <div class="cta-row reveal reveal-d2" style="margin-top:56px;">
+    <a href="tel:01022660219" class="pill">010 – 2266 – 0219</a>
+    <a href="mailto:sechan-baram@naver.com" class="pill pill--ghost">sechan-baram@naver.com</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 윤세찬 · Portfolio</p>
+</footer>
+
+<script>
+/* ── IntersectionObserver: reveal ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── Custom Cursor ── */
+const dot  = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mx = -200, my = -200;
+let rx = -200, ry = -200;
+let cursorReady = false;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  if (!cursorReady) {
+    cursorReady = true;
+    dot.classList.add('active');
+    ring.classList.add('active');
+  }
+  /* translate so (0,0) of each element = its centre */
+  dot.style.transform  = `translate(calc(${mx}px - 50%), calc(${my}px - 50%))`;
+});
+
+(function rafLoop() {
+  rx += (mx - rx) * 0.095;
+  ry += (my - ry) * 0.095;
+  ring.style.transform = `translate(calc(${rx}px - 50%), calc(${ry}px - 50%))`;
+  requestAnimationFrame(rafLoop);
+})();
+
+/* Hover states */
+const hoverTargets = 'a, button, .pill, .game-card, .qr-wrap';
+document.querySelectorAll(hoverTargets).forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    dot.classList.add('hovered');
+    ring.classList.add('hovered');
+  });
+  el.addEventListener('mouseleave', () => {
+    dot.classList.remove('hovered');
+    ring.classList.remove('hovered');
+  });
+});
+
+/* Light-section cursor colour switch */
+const lightSections = document.querySelectorAll('.bg-white, .bg-parchment, footer');
+const lightObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      dot.classList.add('on-light');
+      ring.classList.add('on-light');
+    } else {
+      dot.classList.remove('on-light');
+      ring.classList.remove('on-light');
+    }
+  });
+}, { threshold: 0.6 });
+lightSections.forEach(s => lightObserver.observe(s));
+
+/* ── Cover text parallax ── */
+const coverContent = document.getElementById('coverContent');
+let lastX = 0, lastY = 0, ticking = false;
+
+document.addEventListener('mousemove', e => {
+  lastX = e.clientX; lastY = e.clientY;
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      const cx = window.innerWidth  / 2;
+      const cy = window.innerHeight / 2;
+      const dx = (lastX - cx) / cx;   /* -1 … +1 */
+      const dy = (lastY - cy) / cy;
+      coverContent.style.transform = `translate(${dx * -10}px, ${dy * -7}px)`;
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+/* ── Scroll indicator fade ── */
+const scrollInd = document.getElementById('coverScroll');
+window.addEventListener('scroll', () => {
+  if (scrollInd) scrollInd.style.opacity = window.scrollY > 60 ? '0' : '1';
+}, { passive: true });
+
+/* ── Magnetic pill buttons ── */
+document.querySelectorAll('.pill').forEach(btn => {
+  if (btn.closest('#closing')) return;
+  btn.addEventListener('mousemove', e => {
+    const r  = btn.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width  / 2)) * 0.28;
+    const dy = (e.clientY - (r.top  + r.height / 2)) * 0.28;
+    btn.style.transform = `translate(${dx}px, ${dy}px)`;
+  });
+  btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+});
+
+/* ── Counter animation for stat numbers ── */
+function countUp(el, target, suffix) {
+  const dur = 1600;
+  const t0  = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);   /* ease-out-cubic */
+    const val = Math.round(e * target);
+    el.textContent = val.toLocaleString('ko-KR') + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+
+const countObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el     = entry.target;
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    if (!isNaN(target)) countUp(el, target, suffix);
+    countObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
+
+/* ── Section natural fade-in on scroll ── */
+(function() {
+  const sObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('s-in');
+        sObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('section:not(.cover)').forEach(s => sObs.observe(s));
+})();
+
+/* ── Cover text fade: 스크롤에 비례해 문구·연락처 투명화 ── */
+(function() {
+  const targets = [
+    document.getElementById('coverContent'),
+    document.querySelector('.cover__contacts'),
+    document.getElementById('coverScroll'),
+  ].filter(Boolean);
+  if (!targets.length) return;
+
+  const contactsEl = document.querySelector('.cover__contacts');
+  function update() {
+    const vh = window.innerHeight;
+    const p  = Math.max(0, Math.min(1, 1 - window.scrollY / (vh * 0.45)));
+    targets.forEach(el => { el.style.opacity = p.toFixed(3); });
+    if (contactsEl) {
+      const cp = Math.max(0, Math.min(1, 1 - window.scrollY / (vh * 0.12)));
+      contactsEl.style.opacity = cp.toFixed(3);
+    }
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
+
+/* ── Spline fade: opacity 1→0 linearly as scroll reaches Games section ── */
+(function() {
+  const splineEl = document.querySelector('.cover__spline');
+  const gamesEl  = document.getElementById('games');
+  if (!splineEl || !gamesEl) return;
+
+  let gamesY = gamesEl.getBoundingClientRect().top + window.scrollY;
+
+  function update() {
+    const progress = Math.max(0, Math.min(1, window.scrollY / gamesY));
+    splineEl.style.opacity = (1 - progress).toFixed(3);
+  }
+
+  window.addEventListener('resize', () => {
+    gamesY = gamesEl.getBoundingClientRect().top + window.scrollY;
+    update();
+  }, { passive: true });
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+/* ── Case1 (Blade & Soul) bg: scroll-driven fade in as section enters ── */
+(function() {
+  const case1El = document.getElementById('case1');
+  if (!case1El) return;
+  const bgImg = case1El.querySelector('.bg-img');
+  if (!bgImg) return;
+  bgImg.style.opacity = '0';
+  function update() {
+    const vh      = window.innerHeight;
+    const top     = case1El.getBoundingClientRect().top;
+    const progress = Math.max(0, Math.min(1, (vh - top) / vh));
+    bgImg.style.opacity = (progress * 0.20).toFixed(3);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+
+/* ── JS Smooth Scroll (더 안정적인 앵커 이동) ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href === '#') return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    const offset = target.getBoundingClientRect().top + window.scrollY - 44;
+    window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
+  });
+});
+
+/* ── Scroll Progress Bar + Slime ── */
+(function() {
+  const progressBar = document.getElementById('scrollProgress');
+  const slimeEl     = document.getElementById('slimeProg');
+  const SLIME_W = 32;
+  function update() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const p   = max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
+    if (progressBar) progressBar.style.transform = `scaleX(${p})`;
+    if (slimeEl)     slimeEl.style.transform = `translateX(${(p * (window.innerWidth - SLIME_W)).toFixed(1)}px)`;
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
+
+/* ── Active Nav Section ── */
+(function() {
+  const linkMap = {};
+  document.querySelectorAll('.g-nav__links a[href^="#"]').forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    linkMap[id] = a;
+  });
+  const navObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = linkMap[e.target.id];
+      if (link) link.classList.toggle('nav-active', e.isIntersecting);
+    });
+  }, { threshold: 0.35, rootMargin: '-44px 0px 0px 0px' });
+  Object.keys(linkMap).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) navObs.observe(el);
+  });
+})();
+
+/* ── 3D Tilt (site-wide images & cards) ── */
+(function() {
+  function applyTilt(selector, ry, rx, sc) {
+    document.querySelectorAll(selector).forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width  - 0.5) * ry;
+        const y = ((e.clientY - r.top)  / r.height - 0.5) * rx;
+        el.style.transform = `perspective(900px) rotateY(${x}deg) rotateX(${-y}deg) scale(${sc})`;
+      });
+      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+    });
+  }
+  applyTilt('.game-card', 16, 10, 1.015);
+  applyTilt('.shot, .game-banner, .ba-card, .about-img, .about-badge', 12, 8, 1.02);
+  applyTilt('.groundrule-img-wide, .partyrush-img-wrap', 6, 4, 1.01);
+})();
+
+/* ── Eyebrow Text Scramble ── */
+(function() {
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ·—0123456789';
+  function scramble(el) {
+    const target = el.dataset.orig || el.textContent;
+    el.dataset.orig = target;
+    const len = target.length;
+    const dur = Math.min(len * 42, 680);
+    const t0  = performance.now();
+    (function tick(now) {
+      const p = Math.min((now - t0) / dur, 1);
+      let out = '';
+      for (let i = 0; i < len; i++) {
+        if (target[i] === ' ') { out += ' '; continue; }
+        out += (i / len < p)
+          ? target[i]
+          : CHARS[Math.floor(Math.random() * CHARS.length)];
+      }
+      el.textContent = out;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = target;
+    })(t0);
+  }
+  const scrambleObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      setTimeout(() => scramble(e.target), 180);
+      scrambleObs.unobserve(e.target);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.eyebrow, .case-eyebrow').forEach(el => scrambleObs.observe(el));
+})();
+
+/* ── Mobile Nav Hamburger ── */
+(function() {
+  const btn  = document.getElementById('navHamburger');
+  const menu = document.getElementById('navMobile');
+  if (!btn || !menu) return;
+
+  function closeMenu() {
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', () => {
+    const opening = !menu.classList.contains('open');
+    if (opening) {
+      menu.classList.add('open');
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      menu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    } else {
+      closeMenu();
+    }
+  });
+
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', closeMenu);
+  });
+})();
+</script>
+</body>
+</html>
