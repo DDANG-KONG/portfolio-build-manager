@@ -1494,12 +1494,7 @@
 .vd-row { display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; }
 .vd-col { display:flex; flex-direction:column; align-items:center; gap:6px; }
 
-/* Nodes */
-.vd-n {
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:12px 18px; border-radius:10px; gap:3px;
-}
-/* ① 변경: 다크 노드 명도·불투명도 상향 */
+.vd-n { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:12px 18px; border-radius:10px; gap:3px; }
 .vd-n--base  { background:#fff; border:1.5px solid rgba(0,0,0,.1); }
 .vd-n--hl    { background:rgba(0,102,204,.09); border:1.5px solid rgba(0,102,204,.35); }
 .vd-n--parch { background:var(--parchment); border:1.5px solid rgba(0,0,0,.09); }
@@ -1509,8 +1504,10 @@
 .vd-n--ok    { background:rgba(39,174,96,.12); border:1.5px solid rgba(39,174,96,.4); }
 .vd-n--fail  { background:rgba(220,53,69,.1); border:1.5px solid rgba(220,53,69,.35); }
 .vd-n--product { background:var(--primary); border:none; }
+.vd-n--warn  { background:rgba(255,165,0,.1); border:1.5px solid rgba(255,165,0,.4); }
+.vd-n--state { background:rgba(0,102,204,.06); border:1.5px solid rgba(0,102,204,.2); border-radius:20px; padding:8px 20px; }
+.vd-n--state-dk { background:rgba(41,151,255,.18); border:1.5px solid rgba(41,151,255,.5); border-radius:20px; padding:8px 20px; }
 
-/* Node text */
 .vd-nt { font-size:13px; font-weight:700; color:var(--ink); line-height:1.3; }
 .vd-ns { font-size:11px; color:var(--ink-48); line-height:1.4; margin-top:1px; }
 .vd-n--hl .vd-nt   { color:var(--primary); }
@@ -1521,29 +1518,32 @@
 .vd-n--del .vd-nt  { color:#c0392b; }
 .vd-n--ok .vd-nt   { color:#1a7a3c; }
 .vd-n--fail .vd-nt { color:#c0392b; }
+.vd-n--warn .vd-nt { color:#b36000; }
 .vd-n--product .vd-nt { color:#fff; font-size:16px; }
 .vd-n--product .vd-ns { color:rgba(255,255,255,.7); }
+.vd-n--state .vd-nt { color:var(--primary); font-size:12px; }
+.vd-n--state-dk .vd-nt { color:#9dd4ff; font-size:12px; }
 
-/* Arrows */
 .vd-ah { font-size:22px; color:var(--primary); opacity:.55; line-height:1; flex-shrink:0; }
 .vd-av { font-size:20px; color:var(--primary); opacity:.55; line-height:1; text-align:center; padding:2px 0; }
 .vd-ah-dk { color:var(--primary-dark); opacity:.7; }
 .vd-av-dk { color:var(--primary-dark); opacity:.7; }
 
-/* Labels */
 .vd-lbl { font-size:11px; color:var(--ink-48); letter-spacing:.04em; text-align:center; margin:4px 0; }
-.vd-lbl-dk { color:rgba(255,255,255,.58); }  /* ① 명도 상향 */
+.vd-lbl-dk { color:rgba(255,255,255,.58); }
 .vd-divider { width:100%; max-width:860px; border:none; border-top:1px dashed rgba(0,0,0,.1); margin:28px 0; }
+.vd-divider-dk { border-top-color:rgba(255,255,255,.15); }
 
-/* Bracket group */
 .vd-group { border-left:3px solid rgba(0,102,204,.35); padding-left:12px; display:flex; flex-direction:column; gap:5px; }
 
-/* Side-by-side panels */
+/* Panels 2-col */
 .vd-panels { display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%; max-width:900px; margin-top:36px; }
-.vd-panel { display:flex; flex-direction:column; align-items:center; gap:0; border:1.5px solid var(--hairline); border-radius:14px; padding:24px 20px; background:#fff; }
+.vd-panel { display:flex; flex-direction:column; gap:0; border:1.5px solid var(--hairline); border-radius:14px; padding:24px 20px; background:#fff; }
 .vd-panel--hl { border-color:rgba(0,102,204,.3); background:rgba(0,102,204,.04); }
-.vd-panel__hd { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-48); margin-bottom:20px; align-self:flex-start; }
+.vd-panel--dk { border-color:rgba(41,151,255,.3); background:rgba(255,255,255,.05); }
+.vd-panel__hd { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-48); margin-bottom:16px; }
 .vd-panel__hd--hl { color:var(--primary); }
+.vd-panel__hd--dk { color:#9dd4ff; }
 
 /* Step cards */
 .vd-steps { display:flex; flex-direction:column; gap:0; width:100%; max-width:680px; margin-top:36px; }
@@ -1558,14 +1558,14 @@
 .vd-step-sep { display:flex; align-items:center; padding-left:17px; height:28px; }
 .vd-step-sep::before { content:''; display:block; width:1px; height:100%; background:rgba(0,102,204,.2); }
 
-/* Accent cards (S02/S04/S05/S06/S07 readability) */
+/* Accent cards */
 .vd-cards { display:flex; flex-direction:column; gap:10px; width:100%; max-width:720px; margin-top:32px; text-align:left; }
 .vd-card-item { padding:16px 20px; border-radius:10px; border-left:3px solid var(--primary); background:rgba(0,102,204,.04); }
 .vd-card-item--dk { border-left-color:rgba(41,151,255,.7); background:rgba(255,255,255,.07); }
 .vd-card-item p { font-size:14px; color:var(--ink); line-height:1.75; margin:0; }
 .vd-card-item--dk p { color:rgba(255,255,255,.85); }
 
-/* Role cards (Section 04) */
+/* Role cards (2-col intro) */
 .vd-role-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; width:100%; max-width:900px; margin-top:36px; }
 .vd-role-card { border-radius:12px; padding:24px; text-align:left; }
 .vd-role-card--plain { background:#fff; border:1.5px solid var(--hairline); }
@@ -1576,54 +1576,49 @@
 .vd-role-card--hl .vd-role-card__title { color:var(--primary); }
 .vd-role-card__body { font-size:13px; color:var(--ink-48); line-height:1.7; }
 
-/* Feature chips (Section 04) */
-.vd-features { display:flex; gap:10px; flex-wrap:wrap; width:100%; max-width:900px; margin-top:20px; }
-.vd-feature { display:flex; align-items:center; gap:10px; padding:12px 18px; border-radius:10px; background:#fff; border:1.5px solid var(--hairline); flex:1; min-width:200px; text-align:left; }
-.vd-feature__icon { font-size:20px; flex-shrink:0; }
-.vd-feature__text { font-size:12px; color:var(--ink-48); line-height:1.55; }
-.vd-feature__text strong { color:var(--ink); display:block; font-size:13px; margin-bottom:2px; }
+/* Feature chips */
+.vd-features { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:900px; margin-top:28px; }
+.vd-feature { display:flex; align-items:flex-start; gap:12px; padding:16px 18px; border-radius:10px; background:#fff; border:1.5px solid var(--hairline); text-align:left; }
+.vd-feature__icon { font-size:22px; flex-shrink:0; line-height:1.4; }
+.vd-feature__text { font-size:12.5px; color:var(--ink-48); line-height:1.6; }
+.vd-feature__text strong { color:var(--ink); display:block; font-size:13px; font-weight:700; margin-bottom:4px; }
 
-/* ① Lifecycle: remove return label, keep arc */
+/* Lifecycle */
 .vd-cycle { display:flex; flex-direction:column; align-items:center; width:100%; max-width:900px; margin-top:36px; }
 .vd-cycle-row { display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; }
-.vd-cycle-return {
-  width:calc(100% - 80px); max-width:800px;
-  border:1.5px dashed rgba(0,102,204,.22);
-  border-top:none; border-radius:0 0 18px 18px;
-  height:24px; position:relative; margin-top:0;
-}
+.vd-cycle-return { width:calc(100% - 80px); max-width:800px; border:1.5px dashed rgba(0,102,204,.22); border-top:none; border-radius:0 0 18px 18px; height:24px; }
 
-/* ① Dark table text brightness */
+/* Dark table */
 .tech-table--dark td { color:rgba(255,255,255,.8) !important; }
-.tech-table--dark th { color:#7ec8ff !important; }
+.tech-table--dark th { color:#9dd4ff !important; }
+
+/* Node group cards */
+.vd-node-item { display:flex; flex-direction:column; gap:2px; padding:11px 14px; border-radius:8px; background:rgba(0,0,0,.03); border-left:2px solid var(--hairline); text-align:left; }
+.vd-node-item--hl { background:rgba(0,102,204,.05); border-left-color:var(--primary); }
+.vd-node-item__title { font-size:12.5px; font-weight:700; color:var(--ink); }
+.vd-node-item--hl .vd-node-item__title { color:var(--primary); }
+.vd-node-item__sub { font-size:11px; color:var(--ink-48); line-height:1.4; }
+
+/* Checker state chips */
+.vd-state-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:28px; }
+.vd-state-chip { padding:8px 18px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:.04em; }
+.vd-state-chip--prog { background:rgba(255,165,0,.12); color:#b36000; border:1.5px solid rgba(255,165,0,.4); }
+.vd-state-chip--ok   { background:rgba(39,174,96,.12); color:#1a7a3c; border:1.5px solid rgba(39,174,96,.35); }
+.vd-state-chip--dep  { background:rgba(0,102,204,.1); color:var(--primary); border:1.5px solid rgba(0,102,204,.35); }
+.vd-state-chip--dk-prog { background:rgba(255,165,0,.18); color:#ffc84a; border:1.5px solid rgba(255,165,0,.5); }
+.vd-state-chip--dk-ok   { background:rgba(39,174,96,.2); color:#2ecc71; border:1.5px solid rgba(39,174,96,.5); }
+.vd-state-chip--dk-dep  { background:rgba(41,151,255,.2); color:#9dd4ff; border:1.5px solid rgba(41,151,255,.5); }
+
+/* Condition checklist */
+.vd-checklist { display:flex; flex-direction:column; gap:8px; width:100%; max-width:560px; margin-top:20px; }
+.vd-check-item { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:8px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); }
+.vd-check-icon { font-size:16px; flex-shrink:0; }
+.vd-check-text { font-size:13px; color:rgba(255,255,255,.85); line-height:1.4; }
 
 @media(max-width:680px) {
-  .vd-panels, .vd-role-grid { grid-template-columns:1fr; }
-
-/* Section 04: Concept cards (Jenkins 구성요소) */
-.vd-concept-row { display:flex; gap:10px; flex-wrap:wrap; width:100%; max-width:900px; margin-top:28px; }
-.vd-concept-card { flex:1; min-width:140px; padding:16px 14px; border-radius:10px; border:1.5px solid var(--hairline); background:#fff; text-align:left; }
-.vd-concept-card__tag { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--primary); display:block; margin-bottom:6px; }
-.vd-concept-card__title { font-size:13px; font-weight:800; color:var(--ink); margin-bottom:6px; line-height:1.3; }
-.vd-concept-card__body { font-size:11.5px; color:var(--ink-48); line-height:1.6; }
-
-/* Section 04: Build category grid */
-.vd-cat-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; width:100%; max-width:900px; margin-top:20px; }
-.vd-cat-card { padding:16px 14px; border-radius:10px; border:1.5px solid var(--hairline); background:#fff; text-align:left; }
-.vd-cat-card--hl { border-color:rgba(0,102,204,.3); background:rgba(0,102,204,.04); }
-.vd-cat-card__num { font-size:10px; font-weight:700; color:var(--ink-48); letter-spacing:.06em; margin-bottom:8px; display:block; }
-.vd-cat-card__title { font-size:13px; font-weight:800; color:var(--ink); margin-bottom:6px; line-height:1.3; }
-.vd-cat-card__body { font-size:11.5px; color:var(--ink-48); line-height:1.6; }
-
-@media(max-width:860px) {
-  .vd-concept-row { gap:8px; }
-  .vd-concept-card { min-width:120px; }
-  .vd-cat-grid { grid-template-columns:1fr 1fr; }
-}
-
+  .vd-panels, .vd-role-grid, .vd-features { grid-template-columns:1fr; }
   .vd-row { gap:6px; }
   .vd-ah { font-size:16px; }
-  .vd-features { flex-direction:column; }
 }
 </style>
 
@@ -1637,9 +1632,7 @@
   <div class="case-accent reveal"></div>
   <p class="case-num reveal reveal-d1">#1</p>
   <p class="case-eyebrow reveal reveal-d2">Case Study</p>
-  <!-- ② 제목 변경 -->
   <h2 class="case-title reveal reveal-d3">NC Blade &amp; Soul<br>빌드 관리 분석</h2>
-  <!-- ② 소개글 변경 -->
   <p class="case-sub reveal reveal-d4">
     엔씨의 블레이드 &amp; 소울 개발PM에 재직하면서, 빌드 관리 구조를 이해하기 위해 공부하였습니다.<br>제가 이해한 내용을 정리해보았습니다.
   </p>
@@ -1651,12 +1644,10 @@
 <section class="bg-white" id="bns-s01">
   <p class="eyebrow eyebrow--light reveal">01</p>
   <h2 class="headline headline--light reveal reveal-d1">전체 빌드 파이프라인 개요</h2>
-  <!-- ③ 줄바꿈 수정 -->
   <p class="body body--light reveal reveal-d2" style="text-align:center;max-width:680px;">
     Blade &amp; Soul의 작업물이 기획·개발 단계에서 시작해<br>실제 서비스에 반영되기까지 거치는 경로를 단계별로 정리합니다.
   </p>
 
-  <!-- 5단계 클릭 가능 흐름 -->
   <div class="pipeline-flow reveal reveal-d3">
     <div class="pipe-node pipe-node--hl" onclick="location.href='#bns-s02'" style="cursor:pointer;">
       <span class="pipe-node__num">①</span>
@@ -1673,7 +1664,6 @@
     <div class="pipe-node pipe-node--hl" onclick="location.href='#bns-s04'" style="cursor:pointer;">
       <span class="pipe-node__num">③</span>
       <span class="pipe-node__name">빌드</span>
-      <!-- ④⑫ "5모듈" → "모듈들" -->
       <span class="pipe-node__sub">모듈들 → 패키지들<br>→ Product</span>
     </div>
     <div class="pipe-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
@@ -1690,20 +1680,16 @@
     </div>
   </div>
 
-  <!-- 전체 과정 상세 요약 -->
   <p class="sec-label sec-label--light reveal">전체 과정 상세 요약도</p>
   <div class="vd-steps reveal reveal-d1">
-
     <div class="vd-step">
       <div class="vd-step__bubble">①</div>
       <div class="vd-step__body">
         <strong class="vd-step__title">작업 투입</strong>
-        <!-- ⑤ 설명 변경 -->
         <span class="vd-step__desc">개발자·기획자·아티스트가 Perforce의 Souldev에 Submit한다</span>
       </div>
     </div>
     <div class="vd-step-sep"></div>
-
     <div class="vd-step">
       <div class="vd-step__bubble">②</div>
       <div class="vd-step__body">
@@ -1715,14 +1701,12 @@
       </div>
     </div>
     <div class="vd-step-sep"></div>
-
     <div class="vd-step">
       <div class="vd-step__bubble">③</div>
       <div class="vd-step__body">
         <strong class="vd-step__title">빌드 (Jenkins)</strong>
         <span class="vd-step__desc">사람이 직접 실행 또는 정해진 시간마다 자동 실행</span>
         <div class="vd-step__sub">
-          <!-- ④⑫ "5개 모듈" 제거 -->
           <span>모듈 빌드 (클라이언트·서버·데이터설계도·게임데이터·그래픽)</span>
           <span>패키지로 묶음 (그래픽 / 게임데이터 / 프로그램바이너리)</span>
           <span>패키지들을 합쳐 Product(완성품) 구성</span>
@@ -1730,7 +1714,6 @@
       </div>
     </div>
     <div class="vd-step-sep"></div>
-
     <div class="vd-step">
       <div class="vd-step__bubble">④</div>
       <div class="vd-step__body">
@@ -1742,7 +1725,6 @@
       </div>
     </div>
     <div class="vd-step-sep"></div>
-
     <div class="vd-step">
       <div class="vd-step__bubble">⑤</div>
       <div class="vd-step__body">
@@ -1753,10 +1735,8 @@
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- ⑥ 주요 시스템 표 — 배포 시스템 행 제거 -->
   <p class="sec-label sec-label--light reveal">주요 시스템</p>
   <div class="tech-table-wrap reveal reveal-d2">
     <table class="tech-table">
@@ -1768,10 +1748,7 @@
       </tbody>
     </table>
   </div>
-
-  <p class="body body--light reveal" style="font-size:12px;color:var(--ink-48);text-align:center;margin-top:52px;">
-    이 페이지는 실제 운영 중인 구조를 단순화·일반화하여 설명합니다.
-  </p>
+  <p class="body body--light reveal" style="font-size:12px;color:var(--ink-48);text-align:center;margin-top:52px;">이 페이지는 실제 운영 중인 구조를 단순화·일반화하여 설명합니다.</p>
 </section>
 
 <!-- ════════════════════════════════
@@ -1782,39 +1759,20 @@
   <h2 class="headline headline--light reveal reveal-d1">스트림의 구조 : Souldev</h2>
   <p class="subhead subhead--light reveal reveal-d2">Souldev로부터 파생되는 스트림</p>
 
-  <!-- ⑦⑧ 텍스트 수정 + 강조 표시 -->
   <div class="vd-cards reveal reveal-d2">
-    <div class="vd-card-item">
-      <!-- ⑦ -->
-      <p>모든 작업자는 <strong>souldev라는 코드베이스에 공통적으로 작업물들을 제출</strong>한다.</p>
-    </div>
-    <div class="vd-card-item">
-      <p>Souldev 안에는 <strong>한국 본서버(NC)</strong>, <strong>한국 NEO(ZNCS)</strong>, <strong>중국 특화(ZTX)</strong> 세 가지가 공존한다.</p>
-    </div>
-    <div class="vd-card-item">
-      <p><strong>한 달에 한 번</strong>, souldev로부터 각각의 릴리즈용 스트림이 생성된다.</p>
-    </div>
-    <div class="vd-card-item">
-      <p>규모가 큰 기능은 souldev에서 직접 작업하지 않고 별도의 <strong>임시 스트림(피처 스트림)</strong>에서 진행한다. 기능이 완성되면 souldev에 합쳐지고, 피처 스트림은 <strong>삭제</strong>된다.</p>
-    </div>
-    <div class="vd-card-item">
-      <p>ZTX는 ZNCG에 포함된 <strong>중국 NEO와는 별개</strong> 항목이다.</p>
-    </div>
+    <div class="vd-card-item"><p>모든 작업자는 <strong>souldev라는 코드베이스에 공통적으로 작업물들을 제출</strong>한다.</p></div>
+    <div class="vd-card-item"><p>Souldev 안에는 <strong>한국 본서버(NC)</strong>, <strong>한국 NEO(ZNCS)</strong>, <strong>중국 특화(ZTX)</strong> 세 가지가 공존한다.</p></div>
+    <div class="vd-card-item"><p><strong>한 달에 한 번</strong>, souldev로부터 각각의 릴리즈용 스트림이 생성된다.</p></div>
+    <div class="vd-card-item"><p>규모가 큰 기능은 별도의 <strong>임시 스트림(피처 스트림)</strong>에서 진행한다. 기능이 완성되면 souldev에 합쳐지고, 피처 스트림은 <strong>삭제</strong>된다.</p></div>
+    <div class="vd-card-item"><p>ZTX는 ZNCG에 포함된 <strong>중국 NEO와는 별개</strong> 항목이다.</p></div>
   </div>
 
-  <!-- 다이어그램: souldev 분기 -->
   <p class="sec-label sec-label--light reveal">souldev 구조와 월간 분기, 피처 스트림</p>
   <div class="vd reveal reveal-d1">
     <div class="vd-row">
-      <div class="vd-n vd-n--parch" style="min-width:100px;">
-        <span class="vd-nt">모든 작업자</span>
-        <span class="vd-ns">개발자·기획자·아티스트</span>
-      </div>
+      <div class="vd-n vd-n--parch" style="min-width:100px;"><span class="vd-nt">모든 작업자</span><span class="vd-ns">개발자·기획자·아티스트</span></div>
       <span class="vd-ah">→</span>
-      <div class="vd-n vd-n--hl" style="min-width:120px;padding:18px 22px;">
-        <span class="vd-nt">souldev</span>
-        <span class="vd-ns">공통 코드베이스</span>
-      </div>
+      <div class="vd-n vd-n--hl" style="min-width:120px;padding:18px 22px;"><span class="vd-nt">souldev</span><span class="vd-ns">공통 코드베이스</span></div>
       <span class="vd-ah">→</span>
       <div class="vd-col" style="gap:5px;align-items:flex-start;">
         <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">NC 릴리즈 스트림</span><span class="vd-ns">한국 본서버</span></div>
@@ -1823,16 +1781,14 @@
       </div>
     </div>
     <div class="vd-lbl">한 달에 한 번, souldev로부터 각각 릴리즈 스트림 생성</div>
-
     <hr class="vd-divider">
-
     <div class="vd-lbl" style="margin-bottom:10px;">별도 트랙 — 대규모 기능 개발</div>
     <div class="vd-row">
       <div class="vd-n vd-n--hl" style="min-width:120px;"><span class="vd-nt">souldev</span></div>
       <span class="vd-ah" style="font-size:14px;opacity:.4;">─ 복제 ─</span>
       <span class="vd-ah">→</span>
       <div class="vd-n vd-n--parch" style="min-width:155px;"><span class="vd-nt">피처 스트림</span><span class="vd-ns">대규모 기능 작업</span></div>
-      <span class="vd-ah" style="font-size:14px;opacity:.4;">─ 작업 완료 ─</span>
+      <span class="vd-ah" style="font-size:14px;opacity:.4;">─ 완료 ─</span>
       <span class="vd-ah">→</span>
       <div class="vd-n vd-n--base" style="min-width:140px;"><span class="vd-nt">souldev에 합침</span></div>
       <span class="vd-ah">→</span>
@@ -1847,23 +1803,14 @@
 <section class="bg-dark" id="bns-s03">
   <div class="glow glow--blue glow--tl"></div>
   <div class="glow glow--purple glow--br"></div>
-
   <p class="eyebrow eyebrow--dark reveal">03</p>
   <h2 class="headline headline--dark reveal reveal-d1">스트림의 구조 : 주간 분기와 글로벌 파생</h2>
   <p class="subhead subhead--dark reveal reveal-d2">주간 업데이트를 위한 스트림을 생성하고, 해외용 파생 스트림을 생성한다</p>
 
-  <!-- ⑩ 가독성 개선: 카드 스타일 + ⑨ "정상적인 상태" 표현 제거 -->
   <div class="vd-cards reveal reveal-d2">
-    <div class="vd-card-item vd-card-item--dk">
-      <p>ZNCS는 souldev로부터 복제된 릴리즈 스트림을 기준으로, <strong>매주 주간 업데이트용 신규 스트림</strong>을 생성한다.</p>
-    </div>
-    <div class="vd-card-item vd-card-item--dk">
-      <p><strong>한 달에 한 번</strong>, ZNCS의 스트림으로부터 글로벌 빌드인 <strong>ZNCG</strong>가 복제 생성된다.</p>
-    </div>
-    <div class="vd-card-item vd-card-item--dk">
-      <!-- ⑨ "정상적인 상태" 제거 -->
-      <p>ZNCG는 서비스 지역(대만, 북미·유럽, 중국, 러시아)에 따라 <strong>분기 시점이 달라</strong> 각기 다른 버전을 사용한다.</p>
-    </div>
+    <div class="vd-card-item vd-card-item--dk"><p>ZNCS는 릴리즈 스트림을 기준으로, <strong>매주 주간 업데이트용 신규 스트림</strong>을 생성한다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p><strong>한 달에 한 번</strong>, ZNCS의 스트림으로부터 글로벌 빌드인 <strong>ZNCG</strong>가 복제 생성된다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>ZNCG는 서비스 지역(대만, 북미·유럽, 중국, 러시아)에 따라 <strong>분기 시점이 달라</strong> 각기 다른 버전을 사용한다.</p></div>
   </div>
 
   <p class="sec-label sec-label--dark reveal">주간 분기 + ZNCG 파생</p>
@@ -1882,10 +1829,8 @@
       </div>
     </div>
     <div class="vd-lbl vd-lbl-dk">매주 이전 스트림에서 신규 스트림 생성</div>
-
     <div class="vd-av vd-av-dk" style="margin:16px 0 4px;">↓</div>
     <div class="vd-lbl vd-lbl-dk" style="margin-bottom:16px;">한 달에 한 번, ZNCS 스트림에서 복제</div>
-
     <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">ZNCG 글로벌 빌드</span><span class="vd-ns">ZNCS 스트림을 기준으로 파생</span></div>
     <div class="vd-av vd-av-dk">↓</div>
     <div class="vd-row" style="gap:6px;">
@@ -1894,14 +1839,10 @@
       <div class="vd-n vd-n--dk" style="min-width:80px;"><span class="vd-nt">중국</span></div>
       <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">러시아</span></div>
     </div>
-    <!-- ⑨ "정상적인 상태" 제거 -->
     <div class="vd-lbl vd-lbl-dk">지역별 분기 시점 차이로 버전 다름</div>
   </div>
 </section>
 
-<!-- ════════════════════════════════
-     04  빌드 : Jenkins
-════════════════════════════════ -->
 <!-- ════════════════════════════════
      04  빌드 : Jenkins
 ════════════════════════════════ -->
@@ -1910,226 +1851,148 @@
   <h2 class="headline headline--light reveal reveal-d1">빌드 : Jenkins</h2>
   <p class="subhead subhead--light reveal reveal-d2">게임 서비스 전체 인프라의 오케스트레이터</p>
 
-  <!-- 역할 비교 카드 -->
+  <!-- ① Jenkins 원래 목적 vs BNS 역할 -->
   <div class="vd-role-grid reveal reveal-d2">
     <div class="vd-role-card vd-role-card--plain">
       <span class="vd-role-card__tag">Jenkins 원래 목적</span>
-      <div class="vd-role-card__title">코드 커밋이 오면<br>즉시 자동 빌드·배포</div>
-      <div class="vd-role-card__body">2011년 Hudson에서 fork된 오픈소스 자동화 서버. Java 기반, 수천 개의 플러그인 생태계. 개발자가 코드를 커밋하는 순간 빌드·테스트·배포가 자동으로 이어지는 CI/CD를 위해 만들어졌다.</div>
+      <div class="vd-role-card__title">코드 커밋 즉시<br>자동 빌드·배포</div>
+      <div class="vd-role-card__body">2011년 Hudson에서 fork된 오픈소스 자동화 서버. Java 기반, 수천 개의 플러그인 생태계. 코드 커밋 이벤트가 발생하면 빌드·테스트·배포가 자동으로 이어지는 CI/CD를 위해 만들어졌다.</div>
     </div>
     <div class="vd-role-card vd-role-card--hl">
       <span class="vd-role-card__tag">이 환경에서의 역할</span>
-      <div class="vd-role-card__title">빌드·패키징·배포를<br>하나로 통합하는 오케스트레이터</div>
-      <div class="vd-role-card__body">단순한 CI 도구가 아니다. 빌드 전용 서버부터 실제 게임 서버까지 모두 Jenkins에 연결되어 있으며, 빌드뿐 아니라 패키지 관리와 서버 배포까지 하나의 체계에서 실행된다.</div>
+      <div class="vd-role-card__title">빌드·패키징·배포를<br>통합하는 오케스트레이터</div>
+      <div class="vd-role-card__body">단순 CI 도구가 아니다. 빌드 전용 서버부터 실제 게임 서버까지 모두 Jenkins Agent로 연결되어 있으며, 빌드·패키지 관리·배포가 하나의 체계에서 실행된다.</div>
     </div>
   </div>
 
-  <!-- Jenkins 핵심 구성요소 5종 -->
+  <!-- ② Jenkins 핵심 구성요소 표 -->
   <p class="sec-label sec-label--light reveal">Jenkins 핵심 구성요소</p>
-  <div class="vd-concept-row reveal reveal-d1">
-    <div class="vd-concept-card">
-      <span class="vd-concept-card__tag">Controller</span>
-      <div class="vd-concept-card__title">중앙 관리자</div>
-      <div class="vd-concept-card__body">Job 스케줄링, Agent 관리, 빌드 이력 보관. Jenkins 시스템 전체를 조율하는 마스터 노드.</div>
-    </div>
-    <div class="vd-concept-card">
-      <span class="vd-concept-card__tag">Agent (Node)</span>
-      <div class="vd-concept-card__title">실제 작업 실행 서버</div>
-      <div class="vd-concept-card__body">Controller로부터 Job을 받아 빌드·테스트·배포를 직접 수행하는 서버. 역할별로 전용 Agent가 분리된다.</div>
-    </div>
-    <div class="vd-concept-card">
-      <span class="vd-concept-card__tag">Job / Pipeline</span>
-      <div class="vd-concept-card__title">실행할 작업 단위</div>
-      <div class="vd-concept-card__body">무엇을 어떻게 실행할지 정의한 설정. Groovy 언어 기반 파이프라인 스크립트로 선언하며, 여러 단계를 순서대로 정의한다.</div>
-    </div>
-    <div class="vd-concept-card">
-      <span class="vd-concept-card__tag">Trigger</span>
-      <div class="vd-concept-card__title">실행 시점 결정자</div>
-      <div class="vd-concept-card__body">언제 Job을 실행할지 결정. 코드 커밋, 타이머, 수동 실행, 다른 Job 완료 후 연쇄 실행 등 다양한 방식을 지원한다.</div>
-    </div>
-    <div class="vd-concept-card">
-      <span class="vd-concept-card__tag">Executor</span>
-      <div class="vd-concept-card__title">동시 실행 슬롯</div>
-      <div class="vd-concept-card__body">한 Agent에서 동시에 처리 가능한 Job의 수. Executor 수를 늘리면 같은 서버에서 여러 Job을 병렬로 처리할 수 있다.</div>
-    </div>
+  <div class="tech-table-wrap reveal reveal-d1">
+    <table class="tech-table">
+      <thead><tr><th>구성요소</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Controller (Master)</strong></td><td>Job 스케줄링, Agent 관리, 빌드 이력 보관. Jenkins 시스템 전체를 조율하는 마스터 노드.</td></tr>
+        <tr><td><strong>Agent (Node)</strong></td><td>Controller로부터 Job을 받아 빌드·배포 작업을 직접 수행하는 서버. 역할별로 전용 Agent가 분리된다.</td></tr>
+        <tr><td><strong>Job / Pipeline</strong></td><td>무엇을 어떻게 실행할지 정의한 작업 단위. Groovy 언어 기반 파이프라인 스크립트로 선언된다.</td></tr>
+        <tr><td><strong>Trigger</strong></td><td>Job 실행 시점을 결정. 코드 커밋, 타이머(정해진 시각), 수동 실행, 다른 Job 완료 후 연쇄 실행 등을 지원한다.</td></tr>
+        <tr><td><strong>Executor</strong></td><td>한 Agent에서 동시에 처리 가능한 Job 수. Executor 수에 따라 한 서버에서 병렬 처리 가능한 양이 달라진다.</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- BNS 특화 4가지 운영 방식 -->
+  <!-- ③ BNS 특화 운영 방식 4가지 -->
   <p class="sec-label sec-label--light reveal">이 환경에서의 특화 운영 방식</p>
-  <div class="vd-features reveal reveal-d2" style="max-width:900px;">
+  <div class="vd-features reveal reveal-d2">
     <div class="vd-feature">
       <span class="vd-feature__icon">⏱</span>
       <div class="vd-feature__text">
         <strong>타이머 트리거 + 변경 감지</strong>
-        코드 커밋이 아닌 정해진 시간에 자동 발화, 또는 담당자가 수동 실행. 단, Perforce에서 변경사항이 없으면 빌드를 건너뛰어 불필요한 재빌드를 방지한다.
+        코드 커밋이 아닌 정해진 시간에 자동 발화, 또는 담당자가 수동 실행. 단, Perforce에서 변경사항이 없으면 빌드를 건너뛴다.
       </div>
     </div>
     <div class="vd-feature">
       <span class="vd-feature__icon">🔗</span>
       <div class="vd-feature__text">
         <strong>StreamInfoWeb으로 빌드 대상 동적 결정</strong>
-        무엇을 빌드할지 Job에 하드코딩하지 않는다. 매 빌드 시마다 별도 관리 시스템(StreamInfoWeb) API를 실시간으로 조회하여 대상 스트림과 설정을 그 자리에서 결정한다.
+        Job에 빌드 대상을 하드코딩하지 않는다. 매 빌드 시마다 별도 관리 시스템 API를 실시간 조회하여 대상 스트림과 설정을 그 자리에서 결정한다.
       </div>
     </div>
     <div class="vd-feature">
       <span class="vd-feature__icon">📁</span>
       <div class="vd-feature__text">
         <strong>파이프라인 스크립트를 Perforce에 저장</strong>
-        Job의 Groovy 스크립트를 Jenkins 내부가 아닌 Perforce 소스 저장소에 저장한다. 빌드가 실행될 때마다 Perforce에서 최신 스크립트를 가져와 실행하므로, 스크립트 수정이 모든 빌드에 즉시 반영된다.
+        Groovy 스크립트를 Jenkins 내부가 아닌 Perforce 저장소에 저장한다. 빌드 실행 시마다 최신 스크립트를 가져오므로 수정 사항이 즉시 모든 빌드에 반영된다.
       </div>
     </div>
     <div class="vd-feature">
       <span class="vd-feature__icon">🖥</span>
       <div class="vd-feature__text">
         <strong>실제 게임 서버가 Jenkins Agent</strong>
-        Jenkins에 연결된 노드 중 상당수가 실제로 게임을 서비스하는 서버다. 배포 Job이 해당 게임 서버 노드 위에서 직접 실행되어 업데이트가 이루어진다.
+        Jenkins에 연결된 Agent 중 상당수가 실제로 게임을 서비스하는 서버다. 배포 Job이 해당 게임 서버 위에서 직접 실행되어 업데이트가 이루어진다.
       </div>
     </div>
   </div>
 
-  <!-- 노드(Agent) 구성 -->
+  <!-- ④ 노드 구성 — 2열 패널 -->
   <p class="sec-label sec-label--light reveal">노드(Agent) 구성 — 총 170여 대, 역할별 전용 분리</p>
-  <div class="vd-panels reveal reveal-d1" style="grid-template-columns:1fr 1fr;max-width:900px;">
-
-    <div class="vd-panel" style="align-items:flex-start;gap:10px;">
+  <div class="vd-panels reveal reveal-d1">
+    <div class="vd-panel" style="gap:8px;">
       <div class="vd-panel__hd">빌드 전용 서버군</div>
-      <div class="vd-col" style="width:100%;align-items:stretch;gap:8px;">
-        <div class="vd-n vd-n--base" style="width:100%;text-align:left;padding:12px 16px;">
-          <span class="vd-nt" style="text-align:left;">클라이언트 바이너리 고속 컴파일</span>
-          <span class="vd-ns" style="text-align:left;">고사양 CPU 전용 머신으로 컴파일 시간 단축</span>
-        </div>
-        <div class="vd-n vd-n--base" style="width:100%;text-align:left;padding:12px 16px;">
-          <span class="vd-nt" style="text-align:left;">서버 바이너리 컴파일</span>
-          <span class="vd-ns" style="text-align:left;">게임 서버 데몬별 빌드를 병렬 처리</span>
-        </div>
-        <div class="vd-n vd-n--base" style="width:100%;text-align:left;padding:12px 16px;">
-          <span class="vd-nt" style="text-align:left;">게임 데이터 패킹</span>
-          <span class="vd-ns" style="text-align:left;">기획 데이터 종류별로 동시 처리</span>
-        </div>
-        <div class="vd-n vd-n--base" style="width:100%;text-align:left;padding:12px 16px;">
-          <span class="vd-nt" style="text-align:left;">그래픽 에셋 쿠킹</span>
-          <span class="vd-ns" style="text-align:left;">GPU 집약적 작업 — 고사양 머신 전용</span>
-        </div>
-      </div>
+      <div class="vd-node-item"><div class="vd-node-item__title">클라이언트 바이너리 고속 컴파일</div><div class="vd-node-item__sub">고사양 CPU 전용 머신으로 컴파일 시간 단축</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">서버 바이너리 컴파일</div><div class="vd-node-item__sub">게임 서버 데몬 종류별 빌드를 병렬 처리</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">게임 데이터 패킹</div><div class="vd-node-item__sub">기획 데이터 종류별로 동시 처리</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">그래픽 에셋 쿠킹</div><div class="vd-node-item__sub">GPU 집약적 작업 — 고사양 전용 머신</div></div>
     </div>
-
-    <div class="vd-panel vd-panel--hl" style="align-items:flex-start;gap:10px;">
+    <div class="vd-panel vd-panel--hl" style="gap:8px;">
       <div class="vd-panel__hd vd-panel__hd--hl">배포·게임 서버군</div>
-      <div class="vd-col" style="width:100%;align-items:stretch;gap:8px;">
-        <div class="vd-n vd-n--hl" style="width:100%;text-align:left;padding:12px 16px;">
-          <span class="vd-nt" style="text-align:left;color:var(--primary);">실제 게임 서버 (80+대)</span>
-          <span class="vd-ns" style="text-align:left;">배포 Job이 이 서버 위에서 직접 실행됨</span>
-        </div>
-        <div class="vd-n vd-n--base" style="width:100%;text-align:left;padding:12px 16px;">
-          <span class="vd-nt" style="text-align:left;">게임 클라이언트 업데이트</span>
-          <span class="vd-ns" style="text-align:left;">패치 파일을 사용자가 다운받는 서버에 반영</span>
-        </div>
-        <div class="vd-n vd-n--base" style="width:100%;text-align:left;padding:12px 16px;">
-          <span class="vd-nt" style="text-align:left;">빌드 검증 전용</span>
-          <span class="vd-ns" style="text-align:left;">CheckerWeb 자동 검사 실행 담당</span>
-        </div>
-        <div class="vd-n vd-n--base" style="width:100%;text-align:left;padding:12px 16px;">
-          <span class="vd-nt" style="text-align:left;">패키지·스트림 인프라</span>
-          <span class="vd-ns" style="text-align:left;">ReleaseWeb / StreamInfoWeb / 스토리지 서버</span>
-        </div>
-      </div>
+      <div class="vd-node-item vd-node-item--hl"><div class="vd-node-item__title">실제 게임 서버 (80+대)</div><div class="vd-node-item__sub">배포 Job이 이 서버 위에서 직접 실행됨</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">게임 클라이언트 업데이트</div><div class="vd-node-item__sub">패치 파일을 사용자 다운로드 서버에 반영</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">빌드 검증 전용</div><div class="vd-node-item__sub">CheckerWeb 자동 검사 실행 담당</div></div>
+      <div class="vd-node-item"><div class="vd-node-item__title">패키지·스트림 인프라</div><div class="vd-node-item__sub">ReleaseWeb / StreamInfoWeb / 스토리지 서버</div></div>
     </div>
-
   </div>
 
-  <!-- 5개 빌드 카테고리 -->
+  <!-- ⑤ 5개 빌드 카테고리 — 표 -->
   <p class="sec-label sec-label--light reveal">5개 빌드 카테고리</p>
-  <p class="body body--light reveal" style="text-align:center;font-size:13px;color:var(--ink-48);max-width:680px;margin-bottom:0;">각 스트림 폴더 아래 5개 카테고리 폴더가 있고, 그 안에 더 세분화된 개별 Job들이 존재한다.</p>
-  <div class="vd-cat-grid reveal reveal-d1">
-
-    <div class="vd-cat-card">
-      <span class="vd-cat-card__num">Binary</span>
-      <div class="vd-cat-card__title">클라이언트<br>실행파일</div>
-      <div class="vd-cat-card__body">게임 메인 실행파일, 플랫폼 바이너리 등 클라이언트에서 실행되는 파일들을 컴파일한다.</div>
-    </div>
-
-    <div class="vd-cat-card">
-      <span class="vd-cat-card__num">BinaryServer</span>
-      <div class="vd-cat-card__title">서버<br>실행파일</div>
-      <div class="vd-cat-card__body">게임 서버를 구성하는 각 데몬(서버 프로세스) 종류마다 독립된 Job이 존재한다.</div>
-    </div>
-
-    <div class="vd-cat-card">
-      <span class="vd-cat-card__num">Definition</span>
-      <div class="vd-cat-card__title">데이터 구조<br>스키마</div>
-      <div class="vd-cat-card__body">기획자가 작성하는 게임 데이터의 구조 정의 파일을 바이너리 형식으로 변환한다.</div>
-    </div>
-
-    <div class="vd-cat-card vd-cat-card--hl">
-      <span class="vd-cat-card__num" style="color:var(--primary);">GameData</span>
-      <div class="vd-cat-card__title">게임 수치<br>데이터 패킹</div>
-      <div class="vd-cat-card__body">캐릭터·아이템·퀘스트·맵·전투 등 기획 데이터를 종류별로 분리하여 병렬 빌드한다.</div>
-    </div>
-
-    <div class="vd-cat-card">
-      <span class="vd-cat-card__num">Graphic</span>
-      <div class="vd-cat-card__title">그래픽 에셋<br>쿠킹</div>
-      <div class="vd-cat-card__body">3D 모델·이펙트·UI 등 언리얼 엔진 에셋을 게임에서 바로 사용 가능한 형식으로 변환한다.</div>
-    </div>
-
+  <p class="body body--light reveal" style="text-align:center;font-size:13px;color:var(--ink-48);max-width:680px;">각 스트림 폴더 아래 5개 카테고리 폴더가 있고, 그 안에 더 세분화된 개별 Job들이 존재한다.</p>
+  <div class="tech-table-wrap reveal reveal-d1" style="margin-top:20px;">
+    <table class="tech-table">
+      <thead><tr><th>카테고리</th><th>역할</th><th>주요 내용</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Binary</strong></td><td>클라이언트 실행파일 컴파일</td><td>게임 메인 실행파일, 플랫폼 바이너리 등</td></tr>
+        <tr><td><strong>BinaryServer</strong></td><td>서버 실행파일 컴파일</td><td>게임 서버를 구성하는 각 데몬 종류마다 독립된 Job</td></tr>
+        <tr><td><strong>Definition</strong></td><td>데이터 구조 스키마 변환</td><td>기획 데이터의 구조 정의 파일을 바이너리로 변환</td></tr>
+        <tr><td><strong>GameData</strong></td><td>게임 수치 데이터 패킹</td><td>캐릭터·아이템·퀘스트·맵 등 종류별로 분리하여 병렬 빌드</td></tr>
+        <tr><td><strong>Graphic</strong></td><td>그래픽 에셋 쿠킹</td><td>3D 모델·이펙트·UI 에셋을 언리얼 엔진 형식으로 변환</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- 전체 실행 흐름 -->
+  <!-- ⑥ 빌드 전체 실행 흐름 -->
   <p class="sec-label sec-label--light reveal">빌드 전체 실행 흐름</p>
   <div class="vd-steps reveal reveal-d1" style="max-width:720px;">
-
     <div class="vd-step">
       <div class="vd-step__bubble" style="font-size:12px;">①</div>
       <div class="vd-step__body">
         <strong class="vd-step__title">스케줄러 Job 발화</strong>
-        <span class="vd-step__desc">타이머(매일 정해진 시간) 또는 담당자가 수동으로 실행. 빌드 관리 시스템 API를 조회하여 현재 망(QA망·라이브망 등)에 할당된 스트림 목록을 확인하고, 해당 스트림의 개별 빌드 Job을 순차 트리거한다.</span>
+        <span class="vd-step__desc">타이머(매일 정해진 시간) 또는 담당자 수동 실행. 빌드 관리 시스템 API를 조회하여 현재 망에 할당된 스트림 목록을 확인하고, 해당 스트림의 빌드 Job을 트리거한다.</span>
       </div>
     </div>
     <div class="vd-step-sep"></div>
-
     <div class="vd-step">
       <div class="vd-step__bubble" style="font-size:12px;">②</div>
       <div class="vd-step__body">
         <strong class="vd-step__title">개별 빌드 Job 실행</strong>
-        <span class="vd-step__desc">빌드 관리 시스템에서 스트림 상세 설정을 조회해 퍼블리셔별 환경을 구성한다. Perforce에서 최신 소스를 동기화하고 변경사항을 감지한다. 변경사항이 없으면 Build Skipped로 종료, 있으면 빌드를 실행하고 산출물을 패키지 저장소에 등록한다. 완료 시 메일로 결과를 알린다.</span>
-        <div class="vd-step__sub">
-          <span>Perforce sync → 변경 감지 → 스킵 or 빌드 → 패키지 저장소 등록</span>
-        </div>
+        <span class="vd-step__desc">Perforce에서 최신 소스를 동기화하고 변경사항을 감지한다. 변경사항 없으면 Build Skipped 종료, 있으면 빌드를 실행하고 산출물을 패키지 저장소(ReleaseWeb)에 등록한다.</span>
+        <div class="vd-step__sub"><span>Perforce sync → 변경 감지 → 스킵 or 빌드 → ReleaseWeb 등록</span></div>
       </div>
     </div>
     <div class="vd-step-sep"></div>
-
     <div class="vd-step">
       <div class="vd-step__bubble" style="font-size:12px;">③</div>
       <div class="vd-step__body">
-        <strong class="vd-step__title">Product 패키지 생성 Job (정기 실행)</strong>
-        <span class="vd-step__desc">패키지 저장소(ReleaseWeb)에서 각 컴포넌트(프로그램바이너리·게임데이터·그래픽)의 최신 버전을 조회한다. 직전 Product 이후 하나라도 새 버전이 생겼으면 세 컴포넌트를 묶어 신규 Product 패키지를 생성한다. 모두 변경 없으면 건너뛴다.</span>
-        <div class="vd-step__sub">
-          <span>ReleaseWeb 조회 → 컴포넌트 비교 → 변경 없으면 스킵 / 있으면 Product 생성</span>
-        </div>
+        <strong class="vd-step__title">Product 패키지 생성 (정기 실행)</strong>
+        <span class="vd-step__desc">ReleaseWeb에서 바이너리·게임데이터·그래픽 컴포넌트의 최신 버전을 조회한다. 하나라도 새 버전이 생겼으면 세 컴포넌트를 묶어 신규 Product 패키지를 생성한다. 모두 동일하면 건너뛴다.</span>
+        <div class="vd-step__sub"><span>ReleaseWeb 조회 → 변경 감지 → 스킵 or Product 생성</span></div>
       </div>
     </div>
     <div class="vd-step-sep"></div>
-
     <div class="vd-step">
       <div class="vd-step__bubble" style="font-size:12px;">④</div>
       <div class="vd-step__body">
-        <strong class="vd-step__title">검증 시스템(CheckerWeb) 자동 등록</strong>
-        <span class="vd-step__desc">Product 생성이 완료되면 즉시 CheckerWeb에 검증 레코드가 자동으로 등록되고, 4가지 자동 검사가 시작된다. 검증이 통과되어야 다음 배포 단계로 이행할 수 있다.</span>
-        <div class="vd-step__sub">
-          <span>Product 생성 → CheckerWeb 레코드 자동 등록 → 자동 검사 시작</span>
-        </div>
+        <strong class="vd-step__title">CheckerWeb 자동 등록</strong>
+        <span class="vd-step__desc">Product 생성이 완료되면 즉시 CheckerWeb에 검증 레코드가 자동 등록되고 4가지 자동 검사가 시작된다. 검증이 통과되어야 다음 배포 단계로 이행할 수 있다.</span>
+        <div class="vd-step__sub"><span>Product 생성 → CheckerWeb 레코드 자동 등록 → 자동 검사 시작</span></div>
       </div>
     </div>
-
   </div>
 
-  <!-- 일반 CI/CD vs BNS 비교 패널 -->
+  <!-- ⑦ CI/CD 비교 -->
   <p class="sec-label sec-label--light reveal">일반적인 CI/CD 체계와의 차이</p>
   <div class="vd-panels reveal reveal-d1">
     <div class="vd-panel">
       <div class="vd-panel__hd">일반적인 CI/CD 체계</div>
-      <div class="vd-col" style="gap:0;width:100%;">
+      <div class="vd-col" style="gap:0;width:100%;align-items:stretch;">
         <div class="vd-n vd-n--base" style="width:100%;"><span class="vd-nt">코드 커밋</span><span class="vd-ns">이벤트 트리거</span></div>
         <div class="vd-av">↓</div>
         <div class="vd-n vd-n--base" style="width:100%;"><span class="vd-nt">즉시 자동 빌드</span></div>
@@ -2141,49 +2004,34 @@
     </div>
     <div class="vd-panel vd-panel--hl">
       <div class="vd-panel__hd vd-panel__hd--hl">이 환경</div>
-      <div class="vd-col" style="gap:0;width:100%;">
+      <div class="vd-col" style="gap:0;width:100%;align-items:stretch;">
         <div class="vd-row" style="width:100%;gap:4px;">
           <div class="vd-n vd-n--base" style="flex:1;"><span class="vd-nt">타이머 발화</span><span class="vd-ns">매일 정해진 시간</span></div>
-          <div class="vd-n vd-n--base" style="flex:1;"><span class="vd-nt">수동 실행</span><span class="vd-ns">담당자가 직접</span></div>
+          <div class="vd-n vd-n--base" style="flex:1;"><span class="vd-nt">수동 실행</span><span class="vd-ns">담당자 직접</span></div>
         </div>
         <div class="vd-av">↓</div>
-        <div class="vd-n vd-n--hl" style="width:100%;">
-          <span class="vd-nt">StreamInfoWeb 조회</span>
-          <span class="vd-ns">빌드 대상 동적 결정 · 변경 없으면 스킵</span>
-        </div>
+        <div class="vd-n vd-n--hl" style="width:100%;"><span class="vd-nt">StreamInfoWeb 조회</span><span class="vd-ns">빌드 대상 동적 결정 · 변경 없으면 스킵</span></div>
         <div class="vd-av">↓</div>
-        <div class="vd-n vd-n--hl" style="width:100%;">
-          <span class="vd-nt">모듈 빌드 (5개 카테고리)</span>
-          <span class="vd-ns">클라이언트·서버·스키마·게임데이터·그래픽</span>
-        </div>
+        <div class="vd-n vd-n--hl" style="width:100%;"><span class="vd-nt">5개 카테고리 모듈 빌드</span><span class="vd-ns">클라이언트·서버·스키마·게임데이터·그래픽</span></div>
         <div class="vd-av">↓</div>
-        <div class="vd-n vd-n--hl" style="width:100%;">
-          <span class="vd-nt">Product 생성 → CheckerWeb 사후 검증</span>
-          <span class="vd-ns">자동 단위 테스트 없음 · CheckerWeb이 담당</span>
-        </div>
+        <div class="vd-n vd-n--hl" style="width:100%;"><span class="vd-nt">Product 생성 → CheckerWeb 사후 검증</span><span class="vd-ns">자동 단위 테스트 없음 · CheckerWeb이 담당</span></div>
       </div>
     </div>
   </div>
-
 </section>
 
+<!-- ════════════════════════════════
+     05  빌드 : 패키지와 프로덕트
+════════════════════════════════ -->
 <section class="bg-parchment" id="bns-s05">
   <p class="eyebrow eyebrow--light reveal">05</p>
   <h2 class="headline headline--light reveal reveal-d1">빌드 : 패키지와 프로덕트</h2>
   <p class="subhead subhead--light reveal reveal-d2">모듈에서 패키지로, 패키지에서 Product로</p>
 
-  <!-- ⑩ 가독성 개선: 카드 스타일 -->
   <div class="vd-cards reveal reveal-d2">
-    <div class="vd-card-item">
-      <!-- ⑫ "5개 종류로" 제거 -->
-      <p>빌드된 <strong>모듈들</strong>은 그대로 쓰이지 않고, 다시 <strong>3개의 패키지</strong>로 묶인다: 그래픽 패키지, 게임데이터 패키지, 프로그램바이너리 패키지.</p>
-    </div>
-    <div class="vd-card-item">
-      <p>각 패키지는 <strong>별도 저장소에 버전별로 등록</strong>된다. 이전 패키지와 비교해 변경된 내용이 있을 때만 새 패키지가 만들어진다.</p>
-    </div>
-    <div class="vd-card-item">
-      <p>3개 패키지가 모두 모이면 하나의 <strong>Product(완성품)</strong>로 합쳐진다. Product 단위가 곧 QA망 업데이트와 라이브 배포에 쓰이는 <strong>최종 산출물</strong>이다.</p>
-    </div>
+    <div class="vd-card-item"><p>빌드된 <strong>모듈들</strong>은 그대로 쓰이지 않고, 다시 <strong>3개의 패키지</strong>로 묶인다: 그래픽 패키지, 게임데이터 패키지, 프로그램바이너리 패키지.</p></div>
+    <div class="vd-card-item"><p>각 패키지는 <strong>별도 저장소에 버전별로 등록</strong>된다. 이전 패키지와 비교해 변경된 내용이 있을 때만 새 패키지가 만들어진다.</p></div>
+    <div class="vd-card-item"><p>3개 패키지가 모두 모이면 하나의 <strong>Product(완성품)</strong>로 합쳐진다. Product 단위가 곧 QA망 업데이트와 라이브 배포에 쓰이는 <strong>최종 산출물</strong>이다.</p></div>
   </div>
 
   <p class="sec-label sec-label--light reveal">모듈 → 패키지 → Product</p>
@@ -2218,10 +2066,7 @@
       <span class="vd-ah">→</span>
       <div class="vd-col" style="gap:0;align-items:center;">
         <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-48);text-align:center;margin-bottom:4px;">최종 산출물</div>
-        <div class="vd-n vd-n--product" style="min-width:120px;min-height:140px;justify-content:center;border-radius:14px;">
-          <span class="vd-nt">Product</span>
-          <span class="vd-ns">완성품</span>
-        </div>
+        <div class="vd-n vd-n--product" style="min-width:120px;min-height:140px;justify-content:center;border-radius:14px;"><span class="vd-nt">Product</span><span class="vd-ns">완성품</span></div>
       </div>
     </div>
     <div class="vd-lbl" style="margin-top:20px;">Product = QA망 업데이트 / 라이브 배포에 사용되는 단위</div>
@@ -2232,7 +2077,6 @@
     <table class="tech-table">
       <thead><tr><th>단계</th><th>설명</th></tr></thead>
       <tbody>
-        <!-- ⑫ "5개 종류로" 제거 -->
         <tr><td><strong>모듈</strong></td><td>가장 작은 빌드 결과 단위</td></tr>
         <tr><td><strong>패키지</strong></td><td>모듈을 묶은 3종 (그래픽 / 게임데이터 / 프로그램바이너리)</td></tr>
         <tr><td><strong>Product</strong></td><td>3개 패키지를 합산한 최종 산출물</td></tr>
@@ -2247,67 +2091,104 @@
 <section class="bg-dark" id="bns-s06">
   <div class="glow glow--blue glow--tl"></div>
   <div class="glow glow--purple glow--br"></div>
-
   <p class="eyebrow eyebrow--dark reveal">06</p>
-  <h2 class="headline headline--dark reveal reveal-d1">빌드 검증 : Checker</h2>
-  <p class="subhead subhead--dark reveal reveal-d2">패키지 정합성 검사</p>
+  <h2 class="headline headline--dark reveal reveal-d1">빌드 검증 : CheckerWeb</h2>
+  <p class="subhead subhead--dark reveal reveal-d2">패키지 정합성 자동 검증 시스템</p>
 
-  <!-- ⑩ 가독성 개선 -->
   <div class="vd-cards reveal reveal-d2">
-    <div class="vd-card-item vd-card-item--dk">
-      <p>검증은 <strong>모듈 단계가 아니라, 패키지로 묶이는 시점</strong>에 시작된다.</p>
-    </div>
-    <div class="vd-card-item vd-card-item--dk">
-      <p>패키지가 새로 만들어지면 <strong>자동으로 검증이 등록</strong>되고, 4가지 항목을 자동으로 점검한다.</p>
-    </div>
-    <div class="vd-card-item vd-card-item--dk">
-      <p>검증 결과에는 <strong>실행파일 버전, 데이터 버전, 패키지(Product) 버전</strong>이 각각 따로 기록된다.</p>
-    </div>
-    <div class="vd-card-item vd-card-item--dk">
-      <p>해외 서비스(ZNCG)는 지역마다 사용하는 스트림이 다르므로, <strong>검증도 지역별로 독립적으로</strong> 진행된다.</p>
-    </div>
-    <div class="vd-card-item vd-card-item--dk">
-      <p>검증을 통과한 Product만 다음 단계로 넘어간다. 배포가 시작되면 <strong>"배포 진행 중" 상태</strong>로 표시된다.</p>
+    <div class="vd-card-item vd-card-item--dk"><p>검증은 <strong>패키지로 묶이는 시점</strong>에 시작된다. 모듈 빌드 단계에서는 검증이 없다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>패키지가 새로 만들어지면 <strong>자동으로 검증 레코드가 등록</strong>되고 4가지 항목을 자동으로 점검한다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>검증 레코드에는 <strong>실행파일 버전 / 데이터 버전 / Product 버전</strong>이 각각 따로 기록된다. 버전만 보면 어느 스트림에서 빌드된 것인지 추적 가능하다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>ZNCG는 퍼블리셔마다 다른 스트림을 사용하므로, <strong>퍼블리셔별로 독립된 검증 레코드</strong>가 생성된다. 검증도 지역별로 각각 진행된다.</p></div>
+  </div>
+
+  <!-- 검증 상태값 흐름 -->
+  <p class="sec-label sec-label--dark reveal">검증 상태값 흐름</p>
+  <div class="vd reveal reveal-d1">
+    <div class="vd-row">
+      <div class="vd-n vd-n--hl-dk" style="min-width:120px;"><span class="vd-nt">Product 생성</span><span class="vd-ns">Pack Job 완료</span></div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-state-chip vd-state-chip--dk-prog">검증 진행 중</div>
+        <div class="vd-lbl vd-lbl-dk" style="font-size:10px;">4항목 자동 점검</div>
+      </div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-col" style="gap:6px;align-items:center;">
+        <div class="vd-state-chip vd-state-chip--dk-ok">검증 완료</div>
+        <div class="vd-lbl vd-lbl-dk" style="font-size:10px;">배포 가능 판정</div>
+      </div>
+      <span class="vd-ah vd-ah-dk">→</span>
+      <div class="vd-col" style="gap:6px;align-items:center;">
+        <div class="vd-state-chip vd-state-chip--dk-dep">배포 진행 중</div>
+        <div class="vd-lbl vd-lbl-dk" style="font-size:10px;">배포 Job 실행 시<br>CheckerWeb 자동 업데이트</div>
+      </div>
     </div>
   </div>
 
-  <p class="sec-label sec-label--dark reveal">검증 위치와 검사 흐름</p>
+  <!-- 배포 가능 조건 -->
+  <p class="sec-label sec-label--dark reveal">배포 가능 조건</p>
+  <p class="body body--dark reveal" style="font-size:13px;max-width:560px;text-align:center;color:rgba(255,255,255,.6);margin-bottom:0;">4가지 검사 항목이 모두 통과해야 Product가 배포 단계로 이행된다</p>
+  <div class="vd-checklist reveal reveal-d1">
+    <div class="vd-check-item"><span class="vd-check-icon">✓</span><span class="vd-check-text"><strong>검증 상태 완료</strong> — 4가지 자동 검사가 모두 완료 처리된 상태</span></div>
+    <div class="vd-check-item"><span class="vd-check-icon">✓</span><span class="vd-check-text"><strong>데이터 유효성 이상 없음</strong> — 데이터 파일 패킹 오류가 0건</span></div>
+    <div class="vd-check-item"><span class="vd-check-icon">✓</span><span class="vd-check-text"><strong>실행 크래시 없음</strong> — 실행파일 기동 테스트에서 비정상 종료 0건</span></div>
+    <div class="vd-check-item"><span class="vd-check-icon">✓</span><span class="vd-check-text"><strong>게임·랭킹 데이터 검증 완료</strong> — 기획 데이터 및 순위 데이터 오류 없음</span></div>
+  </div>
+
+  <!-- 검증 흐름 다이어그램 -->
+  <p class="sec-label sec-label--dark reveal">검증 흐름</p>
   <div class="vd reveal reveal-d1">
     <div class="vd-row">
       <div class="vd-n vd-n--dk"><span class="vd-nt">모듈</span></div>
       <span class="vd-ah vd-ah-dk">→</span>
       <div class="vd-n vd-n--dk"><span class="vd-nt">패키지 생성</span></div>
       <span class="vd-ah vd-ah-dk">→</span>
-      <div class="vd-n vd-n--hl-dk"><span class="vd-nt">검증 시작</span><span class="vd-ns">상태: 진행 중</span></div>
+      <div class="vd-n vd-n--hl-dk"><span class="vd-nt">검증 자동 등록</span><span class="vd-ns">상태: 진행 중</span></div>
     </div>
     <div class="vd-av vd-av-dk">↓</div>
-    <div class="vd-n vd-n--hl-dk" style="min-width:260px;">
-      <span class="vd-nt">4가지 항목 자동 점검</span>
-      <span class="vd-ns">데이터 무결성 · 실행 테스트 · 게임데이터 · 랭킹데이터</span>
-    </div>
+    <div class="vd-n vd-n--hl-dk" style="min-width:260px;"><span class="vd-nt">4가지 항목 자동 점검</span><span class="vd-ns">데이터 무결성 · 실행 테스트 · 게임데이터 · 랭킹데이터</span></div>
     <div class="vd-av vd-av-dk">↓</div>
     <div class="vd-row" style="align-items:flex-start;gap:24px;">
       <div class="vd-col" style="gap:0;">
-        <div class="vd-n vd-n--ok" style="min-width:190px;">
-          <span class="vd-nt" style="color:#2ecc71;">통과 — 상태: 완료</span>
-          <span class="vd-ns" style="color:rgba(46,204,113,.7);">실행파일·데이터·패키지 버전 기록</span>
-        </div>
+        <div class="vd-n vd-n--ok" style="min-width:190px;"><span class="vd-nt" style="color:#2ecc71;">통과 — 상태: 완료</span><span class="vd-ns" style="color:rgba(46,204,113,.7);">실행파일·데이터·Product 버전 기록</span></div>
         <div class="vd-av vd-av-dk">↓</div>
-        <div class="vd-n vd-n--hl-dk" style="min-width:190px;"><span class="vd-nt">Product 구성에 사용</span></div>
-        <div class="vd-av vd-av-dk">↓</div>
-        <div class="vd-n vd-n--hl-dk" style="min-width:190px;"><span class="vd-nt">배포 시작</span><span class="vd-ns">→ 배포 진행 중으로 전환</span></div>
+        <div class="vd-n vd-n--hl-dk" style="min-width:190px;"><span class="vd-nt">배포 단계로 이행</span><span class="vd-ns">→ 배포 진행 중으로 자동 전환</span></div>
       </div>
       <div class="vd-col" style="gap:0;">
-        <div class="vd-n vd-n--fail" style="min-width:190px;">
-          <span class="vd-nt" style="color:#ff6b6b;">실패 — 문제 있음</span>
-          <span class="vd-ns" style="color:rgba(255,107,107,.6);">하나라도 검사 실패 시</span>
-        </div>
+        <div class="vd-n vd-n--fail" style="min-width:190px;"><span class="vd-nt" style="color:#ff6b6b;">실패 — 문제 있음</span><span class="vd-ns" style="color:rgba(255,107,107,.6);">하나라도 검사 실패 시</span></div>
         <div class="vd-av vd-av-dk">↓</div>
         <div class="vd-n vd-n--dk" style="min-width:190px;"><span class="vd-nt">해당 패키지 보류</span><span class="vd-ns">Product 구성에서 제외</span></div>
       </div>
     </div>
   </div>
 
+  <!-- ZNCG 퍼블리셔별 독립 검증 -->
+  <p class="sec-label sec-label--dark reveal">ZNCG — 퍼블리셔별 독립 검증</p>
+  <p class="body body--dark reveal" style="font-size:13px;max-width:620px;text-align:center;color:rgba(255,255,255,.6);margin-bottom:20px;">ZNCG 4개 퍼블리셔는 각각 다른 스트림 버전을 사용하므로, CheckerWeb에도 퍼블리셔별로 독립된 레코드가 생성된다</p>
+  <div class="vd reveal reveal-d1">
+    <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">ZNCG Product 생성</span><span class="vd-ns">퍼블리셔마다 별도 스트림</span></div>
+    <div class="vd-av vd-av-dk">↓</div>
+    <div class="vd-row" style="gap:8px;">
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">대만</span></div>
+        <div class="vd-lbl vd-lbl-dk">독립 검증</div>
+      </div>
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">북미·유럽</span></div>
+        <div class="vd-lbl vd-lbl-dk">독립 검증</div>
+      </div>
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">중국</span></div>
+        <div class="vd-lbl vd-lbl-dk">독립 검증</div>
+      </div>
+      <div class="vd-col" style="gap:4px;align-items:center;">
+        <div class="vd-n vd-n--dk" style="min-width:90px;"><span class="vd-nt">러시아</span></div>
+        <div class="vd-lbl vd-lbl-dk">독립 검증</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 검사 항목 표 -->
   <p class="sec-label sec-label--dark reveal">검사 항목</p>
   <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d2">
     <table class="tech-table tech-table--dark">
@@ -2330,22 +2211,13 @@
   <h2 class="headline headline--light reveal reveal-d1">스트림 관리 : 생성과 폐기</h2>
   <p class="subhead subhead--light reveal reveal-d2">스트림의 생성에서 폐기까지 전체의 생명 주기 구조</p>
 
-  <!-- ⑩ 가독성 개선 -->
   <div class="vd-cards reveal reveal-d2">
-    <div class="vd-card-item">
-      <p>새 패치가 준비되면 souldev의 최신 상태를 기준으로 <strong>새 스트림이 생성</strong>되고, 그 스트림 전용 빌드 설정이 함께 만들어진다.</p>
-    </div>
-    <div class="vd-card-item">
-      <p>새 버전이 운영에 반영되면 이전 버전은 <strong>보관 전용 상태로 전환</strong>된다. 삭제가 아니라, 수정은 막고 조회만 가능하게 잠긴다.</p>
-    </div>
-    <div class="vd-card-item">
-      <p>이 생성과 폐기가 반복되며 섹션 01~06에서 다룬 전체 구조가 순환된다.</p>
-    </div>
+    <div class="vd-card-item"><p>새 패치가 준비되면 souldev의 최신 상태를 기준으로 <strong>새 스트림이 생성</strong>되고, 그 스트림 전용 빌드 설정이 함께 만들어진다.</p></div>
+    <div class="vd-card-item"><p>새 버전이 운영에 반영되면 이전 버전은 <strong>보관 전용 상태로 전환</strong>된다. 삭제가 아니라, 수정은 막고 조회만 가능하게 잠긴다.</p></div>
+    <div class="vd-card-item"><p>이 생성과 폐기가 반복되며 섹션 01~06에서 다룬 전체 구조가 순환된다.</p></div>
   </div>
 
   <p class="sec-label sec-label--light reveal">전체 생명주기 순환</p>
-
-  <!-- ⑬ 리턴 텍스트 제거: vd-cycle-return::after content '' -->
   <div class="vd-cycle reveal reveal-d1">
     <div class="vd-cycle-row">
       <div class="vd-n vd-n--hl" style="min-width:100px;"><span class="vd-nt">souldev</span><span class="vd-ns">공통 작업본</span></div>
@@ -2361,7 +2233,6 @@
       <span class="vd-ah">→</span>
       <div class="vd-n vd-n--parch" style="min-width:100px;"><span class="vd-nt">이전 버전</span><span class="vd-ns">보관 처리</span></div>
     </div>
-    <!-- ⑬ 텍스트 없는 아크만 유지 -->
     <div class="vd-cycle-return"></div>
     <div style="height:20px;"></div>
   </div>
@@ -2370,6 +2241,30 @@
     Blade &amp; Soul의 빌드 파이프라인은 작업물이 공통 코드베이스에서 분리되어 빌드·검증·배포를 거치고, 이후 새로운 버전으로 대체되는 순환 구조로 운영된다.
   </p>
 </section>
+
+
+     10  CASE 2  INTRO
+════════════════════════════════ -->
+<section class="case-intro" id="case2">
+  <div class="bg-img bg-img--dim35" style="background-image:url('./assets/slide10_img01.png');"></div>
+  <div class="bg-grad"></div>
+  <div class="glow glow--teal glow--c" style="opacity:.07;"></div>
+
+  <div class="case-accent reveal" style="background:#2ecc71;"></div>
+  <p class="case-num reveal reveal-d1">#2</p>
+  <p class="case-eyebrow reveal reveal-d2">Case Study</p>
+  <h2 class="case-title reveal reveal-d3">1인 제작 게임<br>'파티랏슈!!' 글로벌 런칭</h2>
+  <p class="case-sub reveal reveal-d4">21살, 해외 퍼블리셔와의 글로벌 런칭 준비가 전환점이 되었습니다.<br>'효율적이고 리스크를 예방하는 프로세스'에 대한 고민을 하게 된 계기입니다.</p>
+</section>
+
+<!-- ════════════════════════════════
+     11  PUBLISHER
+════════════════════════════════ -->
+<section class="bg-white publisher-section">
+  <div class="publisher-inner">
+    <div class="publisher-left">
+      <p class="eyebrow eyebrow--light reveal">Background</p>
+      <h2 class="headline headline--light reveal reveal-d1">해외 퍼블리셔와<br>출시를 준비하다</h2>
       <p class="body body--light reveal reveal-d2">&lt;파티랏슈!!&gt;는 99명의 동료를 수집하며 스토리를 클리어하는 '동료 수집형 RPG'로, 20장에 달하는 스토리와 탐험 요소들을 포함한 장편 RPG입니다.</p>
       <p class="body body--light reveal reveal-d2" style="margin-top:16px;">3년간의 제작 후 2020년에 공개되었다가, 해외 퍼블리셔인 HIKE Inc.(당시 Crest Inc.)로부터 5개 국어 퍼블리싱 협업 제안을 받았습니다. 이에 글로벌 출시를 위한 준비를 진행하게 되었습니다.</p>
       <p class="body body--light reveal reveal-d2" style="margin-top:16px;">다만 1인 제작 게임이었기 때문에 리소스가 체계적으로 정리되어 있지 않았고, 이에 정리가 필요했습니다.</p>
