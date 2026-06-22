@@ -1094,20 +1094,22 @@
     /* ── Inline code ── */
     code {
       font-family: 'SF Mono', 'Menlo', 'Monaco', Consolas, monospace;
-      font-size: .82em; background: rgba(0,102,204,.07);
-      color: var(--primary); padding: 1px 6px; border-radius: 4px;
-      word-break: break-all; display: inline;
+      font-size: .84em; background: rgba(0,102,204,.07);
+      color: var(--primary); padding: 2px 7px; border-radius: 4px;
+      word-break: break-word; overflow-wrap: break-word; display: inline;
     }
-    .bg-dark code { background: rgba(41,151,255,.13); color: var(--primary-dark); }
+    .bg-dark code { background: rgba(41,151,255,.14); color: var(--primary-dark); }
 
     /* ── Sub-section label ── */
     .sec-label {
       font-size: 11px; font-weight: 700; letter-spacing: .14em;
-      text-transform: uppercase; margin-bottom: 12px; margin-top: 52px;
-      align-self: center;
+      text-transform: uppercase; margin-bottom: 14px; margin-top: 56px;
+      align-self: center; padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,.07); width: 100%; max-width: 900px;
+      text-align: left;
     }
-    .sec-label--light { color: var(--primary); }
-    .sec-label--dark  { color: var(--primary-dark); }
+    .sec-label--light { color: var(--primary); border-top-color: rgba(0,0,0,.07); }
+    .sec-label--dark  { color: var(--primary-dark); border-top-color: rgba(255,255,255,.08); }
 
     /* ── Node grid ── */
     .node-grid {
@@ -1116,7 +1118,7 @@
     }
     .node-card {
       background: rgba(255,255,255,.03); padding: 22px 24px;
-      border: 1px solid rgba(255,255,255,.06); text-align: left;
+      border: 1px solid rgba(255,255,255,.07); text-align: left;
     }
     .node-card:first-child { border-radius: 12px 0 0 0; }
     .node-card:nth-child(3) { border-radius: 0 12px 0 0; }
@@ -1134,15 +1136,15 @@
     }
 
     /* ── Wide process list ── */
-    .process-list--wide { max-width: 900px; }
+    .process-list--wide { max-width: 780px; }
 
     /* ── Info block (callout) ── */
     .info-block {
-      width: 100%; max-width: 900px; margin-top: 24px;
+      width: 100%; max-width: 680px; margin-top: 24px;
       padding: 18px 22px; border-radius: 12px;
       border-left: 3px solid var(--primary);
       background: rgba(0,102,204,.04);
-      text-align: left; font-size: 14px; line-height: 1.7; color: var(--ink-80);
+      text-align: left; font-size: 14px; line-height: 1.75; color: var(--ink-80);
     }
     .info-block--dark {
       border-left-color: var(--primary-dark);
@@ -1152,17 +1154,56 @@
 
     /* ── Stream tree ── */
     .stream-tree {
-      width: 100%; max-width: 680px; margin-top: 36px;
-      background: rgba(0,0,0,.03); border-radius: 12px;
+      width: 100%; max-width: 700px; margin-top: 36px;
+      background: rgba(0,0,0,.035); border-radius: 12px;
+      border: 1px solid rgba(0,0,0,.06);
       padding: 28px 32px; text-align: left; overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .stream-tree pre {
       font-family: 'SF Mono', 'Menlo', 'Monaco', Consolas, monospace;
-      font-size: 12.5px; line-height: 1.8; color: var(--ink-80);
+      font-size: 12.5px; line-height: 1.85; color: var(--ink-80);
       white-space: pre; margin: 0;
     }
     .stream-tree pre strong { color: var(--primary); font-weight: 700; }
     .stream-tree pre em { color: var(--ink-48); font-style: normal; }
+
+    /* ── Tech table: add visual container ── */
+    .tech-table-wrap {
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
+      background: var(--canvas);
+    }
+    .tech-table-wrap--dark {
+      background: rgba(255,255,255,.03);
+      border-color: rgba(255,255,255,.08);
+    }
+    .tech-table-caption { padding: 10px 16px 12px; }
+
+    /* ── 4-card jira layout ── */
+    .jira-cards--4up { max-width: 1060px; }
+    .jira-cards--4up .jira-card { flex: 1 1 200px; }
+    @media (max-width: 900px) {
+      .jira-cards--4up { flex-wrap: wrap; gap: 2px; }
+      .jira-cards--4up .jira-card {
+        flex: 1 1 calc(50% - 2px); max-width: none;
+        border-radius: 12px !important;
+        border: 1px solid var(--hairline) !important;
+      }
+      .jira-cards--4up .jira-card + .jira-card { border-left: 1px solid var(--hairline) !important; }
+    }
+    @media (max-width: 560px) {
+      .jira-cards--4up .jira-card { flex: 1 1 100%; }
+    }
+
+    /* ── Code block inside card ── */
+    .code-params {
+      margin-top: 10px; display: flex; flex-direction: column; gap: 3px;
+    }
+    .code-params code {
+      display: block; font-size: .8em;
+      padding: 3px 9px; border-radius: 4px;
+    }
     /* iOS Safari: prevent URL-bar resize from clipping cover */
     @supports (-webkit-touch-callout: none) {
       .cover { min-height: -webkit-fill-available; }
@@ -1542,7 +1583,7 @@
     </table>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">ZNCS와 ZNCG — 두 서비스의 코드명</p>
+  <p class="sec-label sec-label--light reveal">ZNCS와 ZNCG — 두 서비스의 코드명</p>
   <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
       <thead><tr>
@@ -1582,7 +1623,7 @@
     복제 출처 방향과 Perforce parent(머지 전파) 방향이 다르다는 것을 도식화하면서 이해했습니다.
   </p>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">모든 직군의 작업 투입 경로</p>
+  <p class="sec-label sec-label--light reveal">모든 직군의 작업 투입 경로</p>
   <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:660px;">
     프로그래머·기획자·아티스트 <strong>모두</strong> <code>bns_nc_souldev</code> 스트림 하나에 submit합니다.<br>
     NC, ZNCS, ZTX 세 퍼블리셔가 동일한 코드베이스를 공유합니다.
@@ -1603,7 +1644,7 @@
     <p class="tech-table-caption">코드와 데이터가 같은 스트림 안에 있기 때문에, 배포 버전 스트림 분기 시 코드와 데이터가 함께 묶입니다. 이것이 Jenkins 5개 빌드 카테고리가 같은 폴더 아래 묶인 이유입니다.</p>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">Jenkins 논리명 vs 실제 Perforce 경로</p>
+  <p class="sec-label sec-label--light reveal">Jenkins 논리명 vs 실제 Perforce 경로</p>
   <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:660px;">
     Jenkins와 StreamInfoWeb은 퍼블리셔별 구별을 위해 논리적 이름을 따로 붙여 사용합니다.<br>
     세 이름이 동일한 Perforce 경로를 가리키며, 빌드 시 환경 설정만 다르게 적용됩니다.
@@ -1621,7 +1662,7 @@
     </table>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">스트림 계층 구조 — 복제 출처 기준</p>
+  <p class="sec-label sec-label--light reveal">스트림 계층 구조 — 복제 출처 기준</p>
   <div class="stream-tree reveal reveal-d1">
     <pre>//stream/<strong>bns_nc_souldev</strong>  <em>(NC·ZNCS·ZTX 공통 메인라인)</em>
 │
@@ -1648,7 +1689,7 @@
     스트림은 10200 → 10201 → 10202 순서로 복제되었지만, Perforce parent는 반대 방향(10201의 parent = 10202)입니다. 즉, 10201에서 발생한 버그 픽스는 10202 → 10203 → souldev 방향으로 upstream 머지가 전파됩니다. 처음 접했을 때 이 방향이 헷갈렸고, 도식화를 통해 이해했습니다.
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">스트림 번호 체계</p>
+  <p class="sec-label sec-label--light reveal">스트림 번호 체계</p>
   <div class="process-list process-list--wide reveal reveal-d1">
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">끝자리 0</span>
@@ -1693,7 +1734,7 @@
     </div>
   </div>
 
-  <div class="tech-table-wrap reveal reveal-d3" style="margin-top:40px;">
+  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d3" style="margin-top:40px;">
     <table class="tech-table tech-table--dark">
       <thead><tr>
         <th>항목</th><th>Jenkins 원래 목적</th><th>BNS에서의 실제 사용</th>
@@ -1709,7 +1750,7 @@
     </table>
   </div>
 
-  <p class="sec-label sec-label--dark reveal" style="margin-top:52px;">노드 구성 — 총 170개</p>
+  <p class="sec-label sec-label--dark reveal">노드 구성 — 총 170개</p>
   <div class="node-grid reveal reveal-d1">
     <div class="node-card">
       <div class="node-card__count">11대</div>
@@ -1743,12 +1784,12 @@
     </div>
   </div>
 
-  <p class="sec-label sec-label--dark reveal" style="margin-top:52px;">StreamInfoWeb — Jenkins의 두뇌</p>
+  <p class="sec-label sec-label--dark reveal">StreamInfoWeb — Jenkins의 두뇌</p>
   <p class="body body--dark reveal reveal-d1" style="text-align:center;max-width:660px;">
     Jenkins는 빌드 대상을 스스로 결정하지 않습니다. 매 빌드마다 StreamInfoWeb API를 조회하여<br>
     "어느 스트림을, 어느 퍼블리셔 설정으로 빌드할지"를 동적으로 결정합니다.
   </p>
-  <div class="tech-table-wrap reveal reveal-d2">
+  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d2">
     <table class="tech-table tech-table--dark">
       <thead><tr>
         <th>StreamInfoWeb API</th><th>용도</th>
@@ -1759,7 +1800,7 @@
       </tbody>
     </table>
   </div>
-  <div class="tech-table-wrap reveal reveal-d3">
+  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d3">
     <table class="tech-table tech-table--dark">
       <thead><tr>
         <th>스트림</th><th>mang (망)</th><th>의미</th>
@@ -1777,7 +1818,7 @@
     <p class="tech-table-caption tech-table-caption--dark">mang 값이 StreamInfoWeb에서 변경되면 Jenkins Job 설정을 건드리지 않아도 자동으로 빌드 대상이 바뀝니다.</p>
   </div>
 
-  <p class="sec-label sec-label--dark reveal" style="margin-top:52px;">빌드 전체 실행 순서</p>
+  <p class="sec-label sec-label--dark reveal">빌드 전체 실행 순서</p>
   <div class="process-list process-list--wide reveal reveal-d1">
     <div class="process-item process-item--dark">
       <span class="process-n process-n--dark">①</span>
@@ -1801,8 +1842,8 @@
     </div>
   </div>
 
-  <p class="sec-label sec-label--dark reveal" style="margin-top:52px;">5개 빌드 카테고리</p>
-  <div class="tech-table-wrap reveal reveal-d1">
+  <p class="sec-label sec-label--dark reveal">5개 빌드 카테고리</p>
+  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d1">
     <table class="tech-table tech-table--dark">
       <thead><tr>
         <th>카테고리</th><th>입력 소스</th><th>주요 세부 Job</th><th>설명</th>
@@ -1817,8 +1858,8 @@
     </table>
   </div>
 
-  <p class="sec-label sec-label--dark reveal" style="margin-top:52px;">ZNCG 전용 추가 Job &amp; ReleaseWeb</p>
-  <div class="tech-table-wrap reveal reveal-d1">
+  <p class="sec-label sec-label--dark reveal">ZNCG 전용 추가 Job &amp; ReleaseWeb</p>
+  <div class="tech-table-wrap tech-table-wrap--dark reveal reveal-d1">
     <table class="tech-table tech-table--dark">
       <thead><tr>
         <th>Job</th><th>설명</th>
@@ -1847,7 +1888,7 @@
     상태 필드와 버전 체계를 통해 이해하고자 했습니다.
   </p>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">CheckerWeb 동작 흐름</p>
+  <p class="sec-label sec-label--light reveal">CheckerWeb 동작 흐름</p>
   <div class="process-list process-list--wide reveal reveal-d1">
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">01</span>
@@ -1878,7 +1919,7 @@
     </div>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">버전 3종 세트 — 레코드의 핵심 필드</p>
+  <p class="sec-label sec-label--light reveal">버전 3종 세트 — 레코드의 핵심 필드</p>
   <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
       <thead><tr>
@@ -1893,7 +1934,7 @@
     <p class="tech-table-caption">버전 번호 형식: <code>메이저.마이너.스트림번호.빌드번호</code>. 3번째 자리만 봐도 어느 스트림에서 빌드된 것인지 알 수 있습니다.</p>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">상태 필드</p>
+  <p class="sec-label sec-label--light reveal">상태 필드</p>
   <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
       <thead><tr>
@@ -1910,7 +1951,7 @@
     </table>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">ZNCG 4개 퍼블리셔의 독립 검증 레코드</p>
+  <p class="sec-label sec-label--light reveal">ZNCG 4개 퍼블리셔의 독립 검증 레코드</p>
   <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:660px;">
     ZNCG는 퍼블리셔마다 다른 스트림 버전을 사용하므로 CheckerWeb에도 퍼블리셔별로 독립된 레코드가 생성됩니다.
   </p>
@@ -1928,7 +1969,7 @@
     </table>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">CheckerWeb API 엔드포인트</p>
+  <p class="sec-label sec-label--light reveal">CheckerWeb API 엔드포인트</p>
   <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
       <thead><tr>
@@ -1956,15 +1997,20 @@
     실제 파라미터까지 파악했습니다.
   </p>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">배포 단계 전체 흐름</p>
-  <div class="jira-cards reveal reveal-d1" style="max-width:1060px;">
+  <p class="sec-label sec-label--light reveal">배포 단계 전체 흐름</p>
+  <div class="jira-cards jira-cards--4up reveal reveal-d1">
     <div class="jira-card">
       <span class="jira-card__step">개발 중 공유</span>
       <div class="jira-card__marker">
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-width="1.8" stroke-linecap="round"/></svg>
       </div>
       <h3 class="jira-card__title">SharingClientInternal<br>SharingServer</h3>
-      <p class="jira-card__body">feature 스트림 또는 개발 중 라인을 팀 내부 공유망에 즉시 배포. 정식 버전 스트림이 아닌 개발 중인 스트림을 직접 올릴 수 있음.<br><br>파라미터 예시:<br><code>StreamName = bns_nc_feature_20347</code><br><code>Publisher = ZNCS</code><br><code>HostName = blstream11</code></p>
+      <p class="jira-card__body">feature 스트림 또는 개발 중 라인을 팀 내부 공유망에 즉시 배포. 정식 버전 스트림이 아닌 개발 중인 스트림을 직접 올릴 수 있음.</p>
+      <div class="code-params">
+        <code>StreamName = bns_nc_feature_20347</code>
+        <code>Publisher  = ZNCS</code>
+        <code>HostName   = blstream11</code>
+      </div>
       <span class="jira-card__tag">개발 공유망</span>
     </div>
 
@@ -1999,7 +2045,7 @@
     </div>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">ProductClientQA 파라미터 상세</p>
+  <p class="sec-label sec-label--light reveal">ProductClientQA 파라미터 상세</p>
   <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
       <thead><tr>
@@ -2020,7 +2066,7 @@
     </table>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">ZNCG 4개 퍼블리셔 — 각각 별도 배포</p>
+  <p class="sec-label sec-label--light reveal">ZNCG 4개 퍼블리셔 — 각각 별도 배포</p>
   <p class="body body--light reveal reveal-d1" style="text-align:center;max-width:660px;">
     ZNCG는 퍼블리셔마다 다른 스트림과 서버를 사용하므로 4개 Job을 각각 실행합니다.
   </p>
@@ -2038,7 +2084,7 @@
     </table>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">Live 배포와 Jira 배포 티켓</p>
+  <p class="sec-label sec-label--light reveal">Live 배포와 Jira 배포 티켓</p>
   <div class="process-list process-list--wide reveal reveal-d1">
     <div class="process-item process-item--light">
       <span class="process-n process-n--light">포함 항목</span>
@@ -2050,7 +2096,7 @@
     </div>
   </div>
 
-  <p class="sec-label sec-label--light reveal" style="margin-top:52px;">스트림 생명주기 — StreamTools_SuperMario</p>
+  <p class="sec-label sec-label--light reveal">스트림 생명주기 — StreamTools_SuperMario</p>
   <div class="tech-table-wrap reveal reveal-d1">
     <table class="tech-table">
       <thead><tr>
