@@ -1699,8 +1699,8 @@
       <div class="vd-step__body">
         <strong class="vd-step__title">스트림 분기</strong>
         <div class="vd-step__sub">
-          <span>souldev → 한국(ZNCS) 월간 릴리즈 스트림 → 매주 주간 스트림 생성</span>
-          <span>한 달에 한 번 글로벌(ZNCG) 스트림 파생 (지역별 시점 다름)</span>
+          <span>공통 저장소 → 한국 NEO 월간 릴리즈 스트림 → 매주 주간 스트림 생성</span>
+          <span>한 달에 한 번 글로벌 빌드 스트림 파생 (지역별 시점 다름)</span>
         </div>
       </div>
     </div>
@@ -1764,37 +1764,37 @@
   <p class="subhead subhead--light reveal reveal-d2">Souldev로부터 파생되는 스트림</p>
 
   <div class="vd-cards reveal reveal-d2">
-    <div class="vd-card-item"><p>모든 작업자는 <strong>souldev라는 코드베이스에 공통적으로 작업물들을 제출</strong>한다.</p></div>
-    <div class="vd-card-item"><p>Souldev 안에는 <strong>한국 본서버(NC)</strong>, <strong>한국 NEO(ZNCS)</strong>, <strong>중국 특화(ZTX)</strong> 세 가지가 공존한다.</p></div>
-    <div class="vd-card-item"><p><strong>한 달에 한 번</strong>, souldev로부터 각각의 릴리즈용 스트림이 생성된다.</p></div>
-    <div class="vd-card-item"><p>규모가 큰 기능은 별도의 <strong>임시 스트림(피처 스트림)</strong>에서 진행한다. 기능이 완성되면 souldev에 합쳐지고, 피처 스트림은 <strong>삭제</strong>된다.</p></div>
-    <div class="vd-card-item"><p>ZTX는 ZNCG에 포함된 <strong>중국 NEO와는 별개</strong> 항목이다.</p></div>
+    <div class="vd-card-item"><p>모든 작업자는 <strong>공통 코드베이스에 작업물들을 제출</strong>한다.</p></div>
+    <div class="vd-card-item"><p>공통 저장소 안에는 <strong>한국 본서버(NC)</strong>, <strong>한국 NEO</strong>, <strong>중국 특화(ZTX)</strong> 세 가지가 공존한다.</p></div>
+    <div class="vd-card-item"><p><strong>한 달에 한 번</strong>, 공통 저장소로부터 각각의 릴리즈용 스트림이 생성된다.</p></div>
+    <div class="vd-card-item"><p>규모가 큰 기능은 별도의 <strong>임시 스트림(피처 스트림)</strong>에서 진행한다. 기능이 완성되면 공통 저장소에 합쳐지고, 피처 스트림은 <strong>삭제</strong>된다.</p></div>
+    <div class="vd-card-item"><p>ZTX는 글로벌 빌드에 포함된 <strong>중국 NEO와는 별개</strong> 항목이다.</p></div>
   </div>
 
-  <p class="sec-label sec-label--light reveal">souldev 구조와 월간 분기, 피처 스트림</p>
+  <p class="sec-label sec-label--light reveal">공통 저장소 구조와 월간 분기, 피처 스트림</p>
   <div class="vd reveal reveal-d1">
     <div class="vd-row">
       <div class="vd-n vd-n--parch" style="min-width:100px;"><span class="vd-nt">모든 작업자</span><span class="vd-ns">개발자·기획자·아티스트</span></div>
       <span class="vd-ah">→</span>
-      <div class="vd-n vd-n--hl" style="min-width:120px;padding:18px 22px;"><span class="vd-nt">souldev</span><span class="vd-ns">공통 코드베이스</span></div>
+      <div class="vd-n vd-n--hl" style="min-width:120px;padding:18px 22px;"><span class="vd-nt">공통 저장소</span><span class="vd-ns">공통 코드베이스</span></div>
       <span class="vd-ah">→</span>
       <div class="vd-col" style="gap:5px;align-items:flex-start;">
         <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">NC 릴리즈 스트림</span><span class="vd-ns">한국 본서버</span></div>
-        <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">ZNCS 릴리즈 스트림</span><span class="vd-ns">한국 NEO</span></div>
+        <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">한국 NEO 릴리즈</span><span class="vd-ns">한국 NEO</span></div>
         <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">ZTX 릴리즈 스트림</span><span class="vd-ns">중국 특화</span></div>
       </div>
     </div>
-    <div class="vd-lbl">한 달에 한 번, souldev로부터 각각 릴리즈 스트림 생성</div>
+    <div class="vd-lbl">한 달에 한 번, 공통 저장소로부터 각각 릴리즈 스트림 생성</div>
     <hr class="vd-divider">
     <div class="vd-lbl" style="margin-bottom:10px;">별도 트랙 — 대규모 기능 개발</div>
     <div class="vd-row">
-      <div class="vd-n vd-n--hl" style="min-width:120px;"><span class="vd-nt">souldev</span></div>
+      <div class="vd-n vd-n--hl" style="min-width:120px;"><span class="vd-nt">공통 저장소</span></div>
       <span class="vd-ah" style="font-size:14px;opacity:.4;">─ 복제 ─</span>
       <span class="vd-ah">→</span>
       <div class="vd-n vd-n--parch" style="min-width:155px;"><span class="vd-nt">피처 스트림</span><span class="vd-ns">대규모 기능 작업</span></div>
       <span class="vd-ah" style="font-size:14px;opacity:.4;">─ 완료 ─</span>
       <span class="vd-ah">→</span>
-      <div class="vd-n vd-n--base" style="min-width:140px;"><span class="vd-nt">souldev에 합침</span></div>
+      <div class="vd-n vd-n--base" style="min-width:140px;"><span class="vd-nt">공통 저장소에 합침</span></div>
       <span class="vd-ah">→</span>
       <div class="vd-n vd-n--del" style="min-width:80px;"><span class="vd-nt">삭제</span></div>
     </div>
@@ -1812,17 +1812,17 @@
   <p class="subhead subhead--dark reveal reveal-d2">주간 업데이트를 위한 스트림을 생성하고, 해외용 파생 스트림을 생성한다</p>
 
   <div class="vd-cards reveal reveal-d2">
-    <div class="vd-card-item vd-card-item--dk"><p>ZNCS는 릴리즈 스트림을 기준으로, <strong>매주 주간 업데이트용 신규 스트림</strong>을 생성한다.</p></div>
-    <div class="vd-card-item vd-card-item--dk"><p><strong>한 달에 한 번</strong>, ZNCS의 스트림으로부터 글로벌 빌드인 <strong>ZNCG</strong>가 복제 생성된다.</p></div>
-    <div class="vd-card-item vd-card-item--dk"><p>ZNCG는 서비스 지역(대만, 북미·유럽, 중국, 러시아)에 따라 <strong>분기 시점이 달라</strong> 각기 다른 버전을 사용한다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>한국 NEO 빌드는 릴리즈 스트림을 기준으로, <strong>매주 주간 업데이트용 신규 스트림</strong>을 생성한다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p><strong>한 달에 한 번</strong>, 한국 NEO 스트림으로부터 <strong>글로벌 빌드</strong>가 복제 생성된다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>글로벌 빌드는 서비스 지역(대만, 북미·유럽, 중국, 러시아)에 따라 <strong>분기 시점이 달라</strong> 각기 다른 버전을 사용한다.</p></div>
   </div>
 
-  <p class="sec-label sec-label--dark reveal">주간 분기 + ZNCG 파생</p>
+  <p class="sec-label sec-label--dark reveal">주간 분기 + 글로벌 빌드 파생</p>
   <div class="vd reveal reveal-d1">
     <div class="vd-row">
-      <div class="vd-n vd-n--dk" style="min-width:100px;"><span class="vd-nt">souldev</span></div>
+      <div class="vd-n vd-n--dk" style="min-width:100px;"><span class="vd-nt">공통 저장소</span></div>
       <span class="vd-ah vd-ah-dk">→</span>
-      <div class="vd-n vd-n--hl-dk" style="min-width:160px;"><span class="vd-nt">ZNCS 릴리즈 스트림</span><span class="vd-ns">한 달에 한 번 생성</span></div>
+      <div class="vd-n vd-n--hl-dk" style="min-width:160px;"><span class="vd-nt">한국 NEO 릴리즈</span><span class="vd-ns">한 달에 한 번 생성</span></div>
       <span class="vd-ah vd-ah-dk">→</span>
       <div class="vd-row" style="gap:4px;">
         <div class="vd-n vd-n--dk" style="min-width:72px;"><span class="vd-nt">주간 1</span></div>
@@ -1834,8 +1834,8 @@
     </div>
     <div class="vd-lbl vd-lbl-dk">매주 이전 스트림에서 신규 스트림 생성</div>
     <div class="vd-av vd-av-dk" style="margin:16px 0 4px;">↓</div>
-    <div class="vd-lbl vd-lbl-dk" style="margin-bottom:16px;">한 달에 한 번, ZNCS 스트림에서 복제</div>
-    <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">ZNCG 글로벌 빌드</span><span class="vd-ns">ZNCS 스트림을 기준으로 파생</span></div>
+    <div class="vd-lbl vd-lbl-dk" style="margin-bottom:16px;">한 달에 한 번, 한국 NEO 스트림에서 복제</div>
+    <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">글로벌 빌드</span><span class="vd-ns">한국 NEO 스트림을 기준으로 파생</span></div>
     <div class="vd-av vd-av-dk">↓</div>
     <div class="vd-row" style="gap:6px;">
       <div class="vd-n vd-n--dk" style="min-width:100px;"><span class="vd-nt">대만</span></div>
@@ -2103,7 +2103,7 @@
     <div class="vd-card-item vd-card-item--dk"><p>검증은 <strong>패키지로 묶이는 시점</strong>에 시작된다. 모듈 빌드 단계에서는 검증이 없다.</p></div>
     <div class="vd-card-item vd-card-item--dk"><p>패키지가 새로 만들어지면 <strong>자동으로 검증 레코드가 등록</strong>되고 4가지 항목을 자동으로 점검한다.</p></div>
     <div class="vd-card-item vd-card-item--dk"><p>검증 레코드에는 <strong>실행파일 버전 / 데이터 버전 / Product 버전</strong>이 각각 따로 기록된다. 버전만 보면 어느 스트림에서 빌드된 것인지 추적 가능하다.</p></div>
-    <div class="vd-card-item vd-card-item--dk"><p>ZNCG는 퍼블리셔마다 다른 스트림을 사용하므로, <strong>퍼블리셔별로 독립된 검증 레코드</strong>가 생성된다. 검증도 지역별로 각각 진행된다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>글로벌 빌드는 퍼블리셔마다 다른 스트림을 사용하므로, <strong>퍼블리셔별로 독립된 검증 레코드</strong>가 생성된다. 검증도 지역별로 각각 진행된다.</p></div>
   </div>
 
   <!-- 검증 상태값 흐름 -->
@@ -2166,11 +2166,11 @@
     </div>
   </div>
 
-  <!-- ZNCG 퍼블리셔별 독립 검증 -->
-  <p class="sec-label sec-label--dark reveal">ZNCG — 퍼블리셔별 독립 검증</p>
-  <p class="body body--dark reveal" style="font-size:13px;max-width:620px;text-align:center;color:rgba(255,255,255,.6);margin-bottom:20px;">ZNCG 4개 퍼블리셔는 각각 다른 스트림 버전을 사용하므로, CheckerWeb에도 퍼블리셔별로 독립된 레코드가 생성된다</p>
+  <!-- 글로벌 빌드 퍼블리셔별 독립 검증 -->
+  <p class="sec-label sec-label--dark reveal">글로벌 빌드 — 퍼블리셔별 독립 검증</p>
+  <p class="body body--dark reveal" style="font-size:13px;max-width:620px;text-align:center;color:rgba(255,255,255,.6);margin-bottom:20px;">글로벌 빌드 4개 퍼블리셔는 각각 다른 스트림 버전을 사용하므로, CheckerWeb에도 퍼블리셔별로 독립된 레코드가 생성된다</p>
   <div class="vd reveal reveal-d1">
-    <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">ZNCG Product 생성</span><span class="vd-ns">퍼블리셔마다 별도 스트림</span></div>
+    <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">글로벌 빌드 Product 생성</span><span class="vd-ns">퍼블리셔마다 별도 스트림</span></div>
     <div class="vd-av vd-av-dk">↓</div>
     <div class="vd-row" style="gap:8px;">
       <div class="vd-col" style="gap:4px;align-items:center;">
@@ -2216,7 +2216,7 @@
   <p class="subhead subhead--light reveal reveal-d2">스트림의 생성에서 폐기까지 전체의 생명 주기 구조</p>
 
   <div class="vd-cards reveal reveal-d2">
-    <div class="vd-card-item"><p>새 패치가 준비되면 souldev의 최신 상태를 기준으로 <strong>새 스트림이 생성</strong>되고, 그 스트림 전용 빌드 설정이 함께 만들어진다.</p></div>
+    <div class="vd-card-item"><p>새 패치가 준비되면 공통 저장소의 최신 상태를 기준으로 <strong>새 스트림이 생성</strong>되고, 그 스트림 전용 빌드 설정이 함께 만들어진다.</p></div>
     <div class="vd-card-item"><p>새 버전이 운영에 반영되면 이전 버전은 <strong>보관 전용 상태로 전환</strong>된다. 삭제가 아니라, 수정은 막고 조회만 가능하게 잠긴다.</p></div>
     <div class="vd-card-item"><p>이 생성과 폐기가 반복되며 섹션 01~06에서 다룬 전체 구조가 순환된다.</p></div>
   </div>
@@ -2224,7 +2224,7 @@
   <p class="sec-label sec-label--light reveal">전체 생명주기 순환</p>
   <div class="vd-cycle reveal reveal-d1">
     <div class="vd-cycle-row">
-      <div class="vd-n vd-n--hl" style="min-width:100px;"><span class="vd-nt">souldev</span><span class="vd-ns">공통 작업본</span></div>
+      <div class="vd-n vd-n--hl" style="min-width:100px;"><span class="vd-nt">공통 저장소</span><span class="vd-ns">공통 작업본</span></div>
       <span class="vd-ah" style="font-size:16px;opacity:.35;">─ 복제 ─</span>
       <span class="vd-ah">→</span>
       <div class="vd-n vd-n--base" style="min-width:110px;"><span class="vd-nt">새 스트림 생성</span></div>
