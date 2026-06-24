@@ -1656,7 +1656,7 @@
     <div class="pipe-node pipe-node--hl" onclick="location.href='#bns-s02'" style="cursor:pointer;">
       <span class="pipe-node__num">①</span>
       <span class="pipe-node__name">작업 투입</span>
-      <span class="pipe-node__sub">Perforce<br>Souldev에 Submit</span>
+      <span class="pipe-node__sub">Perforce<br>공통 저장소에 Submit</span>
     </div>
     <div class="pipe-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
     <div class="pipe-node pipe-node--hl" onclick="location.href='#bns-s03'" style="cursor:pointer;">
@@ -1690,7 +1690,7 @@
       <div class="vd-step__bubble">①</div>
       <div class="vd-step__body">
         <strong class="vd-step__title">작업 투입</strong>
-        <span class="vd-step__desc">개발자·기획자·아티스트가 Perforce의 Souldev에 Submit한다</span>
+        <span class="vd-step__desc">개발자·기획자·아티스트가 Perforce 공통 저장소에 Submit한다</span>
       </div>
     </div>
     <div class="vd-step-sep"></div>
@@ -1756,19 +1756,17 @@
 </section>
 
 <!-- ════════════════════════════════
-     02  스트림의 구조 : Souldev
+     02  스트림의 구조 : 공통 저장소
 ════════════════════════════════ -->
 <section class="bg-parchment" id="bns-s02">
   <p class="eyebrow eyebrow--light reveal">02</p>
-  <h2 class="headline headline--light reveal reveal-d1">스트림의 구조 : Souldev</h2>
-  <p class="subhead subhead--light reveal reveal-d2">Souldev로부터 파생되는 스트림</p>
+  <h2 class="headline headline--light reveal reveal-d1">스트림의 구조 : 공통 저장소</h2>
+  <p class="subhead subhead--light reveal reveal-d2">공통 저장소로부터 파생되는 스트림</p>
 
   <div class="vd-cards reveal reveal-d2">
     <div class="vd-card-item"><p>모든 작업자는 <strong>공통 코드베이스에 작업물들을 제출</strong>한다.</p></div>
-    <div class="vd-card-item"><p>공통 저장소 안에는 <strong>한국 본서버(NC)</strong>, <strong>한국 NEO</strong>, <strong>중국 특화(ZTX)</strong> 세 가지가 공존한다.</p></div>
-    <div class="vd-card-item"><p><strong>한 달에 한 번</strong>, 공통 저장소로부터 각각의 릴리즈용 스트림이 생성된다.</p></div>
+    <div class="vd-card-item"><p><strong>한 달에 한 번</strong>, 공통 저장소로부터 릴리즈 스트림이 생성되며, 이를 기준으로 <strong>매주 위클리 릴리즈 스트림</strong>이 파생된다.</p></div>
     <div class="vd-card-item"><p>규모가 큰 기능은 별도의 <strong>임시 스트림(피처 스트림)</strong>에서 진행한다. 기능이 완성되면 공통 저장소에 합쳐지고, 피처 스트림은 <strong>삭제</strong>된다.</p></div>
-    <div class="vd-card-item"><p>ZTX는 글로벌 빌드에 포함된 <strong>중국 NEO와는 별개</strong> 항목이다.</p></div>
   </div>
 
   <p class="sec-label sec-label--light reveal">공통 저장소 구조와 월간 분기, 피처 스트림</p>
@@ -1778,13 +1776,9 @@
       <span class="vd-ah">→</span>
       <div class="vd-n vd-n--hl" style="min-width:120px;padding:18px 22px;"><span class="vd-nt">공통 저장소</span><span class="vd-ns">공통 코드베이스</span></div>
       <span class="vd-ah">→</span>
-      <div class="vd-col" style="gap:5px;align-items:flex-start;">
-        <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">NC 릴리즈 스트림</span><span class="vd-ns">한국 본서버</span></div>
-        <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">한국 NEO 릴리즈</span><span class="vd-ns">한국 NEO</span></div>
-        <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">ZTX 릴리즈 스트림</span><span class="vd-ns">중국 특화</span></div>
-      </div>
+      <div class="vd-n vd-n--base" style="min-width:175px;"><span class="vd-nt">릴리즈 스트림</span><span class="vd-ns">위클리 릴리즈 스트림 생성</span></div>
     </div>
-    <div class="vd-lbl">한 달에 한 번, 공통 저장소로부터 각각 릴리즈 스트림 생성</div>
+    <div class="vd-lbl">한 달에 한 번, 공통 저장소로부터 릴리즈 스트림 생성</div>
     <hr class="vd-divider">
     <div class="vd-lbl" style="margin-bottom:10px;">별도 트랙 — 대규모 기능 개발</div>
     <div class="vd-row">
