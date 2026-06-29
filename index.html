@@ -161,8 +161,9 @@
 
     .subhead {
       font-size: clamp(18px,2.2vw,22px); font-weight: 300;
-      line-height: 1.55; max-width: 680px; margin-bottom: 48px;
+      line-height: 1.55; max-width: 1100px; margin-bottom: 48px;
     }
+    .subhead br, .case-sub br, .body br { white-space: pre; }
     .subhead--light { color: var(--ink-80); }
     .subhead--dark  { color: var(--muted); }
 
@@ -539,7 +540,7 @@
     }
     .case-sub {
       font-size: 18px; font-weight: 300; color: rgba(255,255,255,.82);
-      line-height: 1.6; max-width: 580px;
+      line-height: 1.6; max-width: 1000px;
     }
     .case-intro .bg-grad {
       background: linear-gradient(to bottom,
@@ -2041,7 +2042,7 @@
       <div class="vd-step__body">
         <strong class="vd-step__title">스트림 분기</strong>
         <div class="vd-step__sub">
-          <span>공통 저장소 → 한국 NEO 월간 릴리즈 스트림 → 매주 주간 스트림 생성</span>
+          <span>공통 저장소 → 한국 라이브 월간 릴리즈 스트림 → 매주 주간 스트림 생성</span>
           <span>한 달에 한 번 글로벌 빌드 스트림 파생 (지역별 시점 다름)</span>
         </div>
       </div>
@@ -2148,8 +2149,8 @@
   <p class="subhead subhead--dark reveal reveal-d2">주간 업데이트를 위한 스트림을 생성하고, 해외용 파생 스트림을 생성한다</p>
 
   <div class="vd-cards reveal reveal-d2">
-    <div class="vd-card-item vd-card-item--dk"><p>한국 NEO 빌드는 릴리즈 스트림을 기준으로, <strong>매주 주간 업데이트용 신규 스트림</strong>을 생성한다.</p></div>
-    <div class="vd-card-item vd-card-item--dk"><p><strong>한 달에 한 번</strong>, 한국 NEO 스트림으로부터 <strong>글로벌 빌드</strong>가 복제 생성된다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p>한국 라이브 빌드는 릴리즈 스트림을 기준으로, <strong>매주 주간 업데이트용 신규 스트림</strong>을 생성한다.</p></div>
+    <div class="vd-card-item vd-card-item--dk"><p><strong>한 달에 한 번</strong>, 한국 라이브 스트림으로부터 <strong>글로벌 빌드</strong>가 복제 생성된다.</p></div>
     <div class="vd-card-item vd-card-item--dk"><p>글로벌 빌드는 서비스 지역(대만, 북미·유럽, 중국, 러시아)에 따라 <strong>분기 시점이 달라</strong> 각기 다른 버전을 사용한다.</p></div>
   </div>
 
@@ -2158,7 +2159,7 @@
     <div class="vd-row">
       <div class="vd-n vd-n--dk" style="min-width:100px;"><span class="vd-nt">공통 저장소</span></div>
       <span class="vd-ah vd-ah-dk">→</span>
-      <div class="vd-n vd-n--hl-dk" style="min-width:160px;"><span class="vd-nt">한국 NEO 릴리즈</span><span class="vd-ns">한 달에 한 번 생성</span></div>
+      <div class="vd-n vd-n--hl-dk" style="min-width:160px;"><span class="vd-nt">한국 라이브 릴리즈</span><span class="vd-ns">한 달에 한 번 생성</span></div>
       <span class="vd-ah vd-ah-dk">→</span>
       <div class="vd-row" style="gap:4px;">
         <div class="vd-n vd-n--dk" style="min-width:72px;"><span class="vd-nt">주간 1</span></div>
@@ -2170,8 +2171,8 @@
     </div>
     <div class="vd-lbl vd-lbl-dk">매주 이전 스트림에서 신규 스트림 생성</div>
     <div class="vd-av vd-av-dk" style="margin:16px 0 4px;">↓</div>
-    <div class="vd-lbl vd-lbl-dk" style="margin-bottom:16px;">한 달에 한 번, 한국 NEO 스트림에서 복제</div>
-    <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">글로벌 빌드</span><span class="vd-ns">한국 NEO 스트림을 기준으로 파생</span></div>
+    <div class="vd-lbl vd-lbl-dk" style="margin-bottom:16px;">한 달에 한 번, 한국 라이브 스트림에서 복제</div>
+    <div class="vd-n vd-n--hl-dk" style="min-width:180px;"><span class="vd-nt">글로벌 빌드</span><span class="vd-ns">한국 라이브 스트림을 기준으로 파생</span></div>
     <div class="vd-av vd-av-dk">↓</div>
     <div class="vd-row" style="gap:6px;">
       <div class="vd-n vd-n--dk" style="min-width:100px;"><span class="vd-nt">대만</span></div>
