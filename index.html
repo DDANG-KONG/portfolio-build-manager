@@ -24,7 +24,7 @@
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       font-family: 'Apple SD Gothic Neo', 'AppleSDGothicNeo', 'Noto Sans KR',
@@ -36,6 +36,7 @@
       word-break: keep-all;
       overflow-wrap: break-word;
     }
+    body { overflow-x: hidden; }
 
     /* ── Custom Cursor ── */
     .cursor-dot {
