@@ -273,8 +273,20 @@
       position: absolute; bottom: 148px; left: 50%;
       translate: -50% 0;   /* individual transform — won't conflict with .reveal's transform */
       z-index: 3;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .cover__contactrow {
       display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
       white-space: nowrap;
+    }
+    /* 인쇄 시 Spline이 안 나와 표지가 비어 보이므로, 식별용 검은 박스 라벨 */
+    .cover__printlabel { text-align: center; }
+    .cover__printlabel span {
+      display: inline-block;
+      background: #000; color: #fff;
+      font-size: 14px; font-weight: 600; letter-spacing: -.2px;
+      padding: 7px 16px; border-radius: 6px; white-space: nowrap;
+      border: 1px solid rgba(255,255,255,.25);
     }
     .cover__contacts a {
       font-size: 14px; color: rgba(0,0,0,.75); text-decoration: none;
@@ -1621,8 +1633,11 @@
   </div>
 
   <div class="cover__contacts reveal reveal-d3">
-    <a href="tel:01022660219">010 – 2266 – 0219</a>
-    <a href="mailto:sechan-baram@naver.com">sechan-baram@naver.com</a>
+    <div class="cover__printlabel"><span>윤세찬 포트폴리오</span></div>
+    <div class="cover__contactrow">
+      <a href="tel:01022660219">010 – 2266 – 0219</a>
+      <a href="mailto:sechan-baram@naver.com">sechan-baram@naver.com</a>
+    </div>
   </div>
 
   <div class="cover__scroll" id="coverScroll">
